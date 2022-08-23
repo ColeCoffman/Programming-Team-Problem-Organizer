@@ -1,5 +1,7 @@
 <?php
 
+use Joomla\CMS\Language\Text;
+
 /**
  * @package     Joomla.Administrator
  * @subpackage  com_catalogsystem
@@ -11,4 +13,4 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
 ?>
-<h2>Site Page!</h2>
+<h2><?= Text::_('COM_CATALOGSYSTEM_MSG_TEST') ?></h2>
