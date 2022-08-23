@@ -11,7 +11,7 @@
     <copyright>UCF Programming Team</copyright>
     <license>GPL v3</license>
     <!--  The version string is recorded in the components table -->
-    <version>0.0.2</version>
+    <version>0.0.3</version>
     <!-- The description is optional and defaults to the name -->
     <description>
         Catalog System for UCF Programming Team
@@ -29,7 +29,7 @@
     this XML file is, the namespace must match (ignoring CamelCase). 
     -->
     <namespace path="src/">ProgrammingTeam\Component\CatalogSystem</namespace>
-    
+
     <files folder="site/">
         <folder>src</folder>
         <folder>tmpl</folder>
