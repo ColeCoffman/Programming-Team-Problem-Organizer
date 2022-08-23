@@ -11,4 +11,4 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
 ?>
-<h2>Admin page!</h2>
+<h2>Site Page!</h2>
