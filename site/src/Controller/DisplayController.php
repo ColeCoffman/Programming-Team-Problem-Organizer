@@ -28,6 +28,7 @@ class DisplayController extends BaseController
         $viewFormat = $document->getType();
 
         $view = $this->getView($viewName, $viewFormat);
+        $view->setModel($this->getModel('Message'), true);
 
         $view->document = $document;
         $view->display();
