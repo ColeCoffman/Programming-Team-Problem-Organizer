@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<field
+		name="name"
+		type="text"
+		label="Problem Name"
+		size="40"
+		class="inputbox"
+		required="false" />
+	<field name="category" 
+		type="text"
+		label="Category"
+		required="false"
+		size="40"
+		class="inputbox" />
+	<field name="source" 
+		type="text"
+		label="Source"
+		required="false"
+		size="40"
+		class="inputbox" />
+    <field name="mindif" 
+		type="text"
+		label="Min Difficulty"
+		required="false"
+		size="3"
+        filter = "integer"
+		class="inputbox" />
+    <field name="maxdif" 
+		type="text"
+		label="Max Difficulty"
+		required="false"
+		size="3"
+        filter = "integer"
+		class="inputbox" />
+</form>

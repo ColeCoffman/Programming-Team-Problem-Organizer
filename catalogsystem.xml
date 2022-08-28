@@ -34,6 +34,7 @@
     <files folder="site/">
         <folder>src</folder>
         <folder>tmpl</folder>
+        <folder>models</folder>
     </files>
 
     <languages>

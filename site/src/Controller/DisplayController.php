@@ -29,6 +29,7 @@ class DisplayController extends BaseController
 
         $view = $this->getView($viewName, $viewFormat);
         $view->setModel($this->getModel('Catalog'), true);
+        $view->setModel($this->getModel('CatalogSearch'));
 
         $view->document = $document;
         $view->display();

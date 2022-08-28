@@ -11,6 +11,23 @@
  // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
 ?>
+
+<form action="index.php?option=com_catalogsystem&view=catalog"
+    method="post" name="searchForm" id="searchForm" enctype="multipart/form-data">
+
+	<?php echo $this->form->renderField('name');  ?>
+	
+	<?php echo $this->form->renderField('category');  ?>
+	
+	<?php echo $this->form->renderField('source');  ?>
+    
+    <?php echo $this->form->renderField('mindif');  ?>
+    
+    <?php echo $this->form->renderField('maxdif');  ?>
+	
+	<button type="submit">Filter</button>
+</form>
+
 <table class="table table-striped table-hover">
     <thead>
         <tr>

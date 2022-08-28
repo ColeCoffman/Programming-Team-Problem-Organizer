@@ -27,12 +27,14 @@ class HtmlView extends BaseHtmlView
      */
     protected $items;
     protected $pagination;
+    protected $form;
     
     public function display($template = null)
     {
         // Call the parent display to display the layout file
         $this->items = $this->get('Items');
         $this->pagination = $this->get('Pagination');
+        $this->form = $this->get('form', 'CatalogSearch');
         parent::display($template);
     }
 }
