@@ -27,7 +27,7 @@ class DisplayController extends BaseController
      *
      * @var string
      */
-    protected $default_view = 'main';
+    protected $default_view = 'catalog';
 
     public function display($cachable = false, $urlparams = array())
     {

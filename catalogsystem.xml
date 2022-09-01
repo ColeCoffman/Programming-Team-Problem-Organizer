@@ -31,10 +31,17 @@
     <namespace path="src/">ProgrammingTeam\Component\CatalogSystem</namespace>
     <scriptfile>script.php</scriptfile>
     
+    <install>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+        </sql>
+    </install>
+    
     <files folder="site/">
         <folder>src</folder>
         <folder>tmpl</folder>
         <folder>models</folder>
+        <folder>language</folder>
     </files>
 
     <languages>
@@ -47,7 +54,9 @@
         <!-- List of files and folders to copy. Note the 'folder' attribute.
              This is the name of the folder in your component package to copy FROM -->
         <files folder="admin/">
+            <folder>language</folder>
             <folder>services</folder>
+            <folder>sql</folder>
             <folder>src</folder>
             <folder>tmpl</folder>
         </files>
@@ -57,5 +66,7 @@
             <language tag="en-GB">admin/language/en-GB/en-GB.com_catalogsystem.sys.ini</language>
         </languages>
     </administration>
+
+      
 
 </extension>

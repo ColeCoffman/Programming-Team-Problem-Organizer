@@ -8,11 +8,13 @@
 		class="inputbox"
 		required="false" />
 	<field name="category" 
-		type="text"
+		type="tag"
 		label="Category"
 		required="false"
 		size="40"
-		class="inputbox" />
+		class="inputbox"
+		multiple="true"
+		mode="ajax" />
 	<field name="source" 
 		type="text"
 		label="Source"
