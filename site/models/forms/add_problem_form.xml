@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<field
+		name="name"
+		type="text"
+		label="Problem Name"
+		size="40"
+		class="inputbox"
+		required="true" />
+	<field name="category" 
+		type="text"
+		label="Category"
+		required="false"
+		size="40"
+		class="inputbox" />
+	<field name="source" 
+		type="text"
+		label="Source"
+		required="true"
+		size="40"
+		class="inputbox" />
+    <field name="dif" 
+		type="text"
+		label="Difficulty"
+		required="false"
+		size="3"
+        filter = "integer"
+		class="inputbox" />
+    <field name="firstUse"
+           type = "calendar"
+           label="Initially Used"
+           required = "false" />
+    <field name="set"
+           type = "text"
+           label = "Include in Problem Sets:"
+           required = "false" />
+    
+</form>

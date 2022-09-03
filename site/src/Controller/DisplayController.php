@@ -30,6 +30,7 @@ class DisplayController extends BaseController
         $view = $this->getView($viewName, $viewFormat);
         $view->setModel($this->getModel('Catalog'), true);
         $view->setModel($this->getModel('CatalogSearch'));
+        $view->setModel($this->getModel('AddProblem'));
 
         $view->document = $document;
         $view->display();
