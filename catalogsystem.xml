@@ -19,24 +19,34 @@
 
     <!-- This is the PHP namespace under which the extension's
     code is organised. It should follow this format:
-    
+
     Vendor\Component\ComponentName
 
     "Vendor" can be your company or your own name
-    
-    The "ComponentName" section MUST match the name used 
-    everywhere else for your component. Whatever the name of 
-    this XML file is, the namespace must match (ignoring CamelCase). 
+
+    The "ComponentName" section MUST match the name used
+    everywhere else for your component. Whatever the name of
+    this XML file is, the namespace must match (ignoring CamelCase).
     -->
     <namespace path="src/">ProgrammingTeam\Component\CatalogSystem</namespace>
     <scriptfile>script.php</scriptfile>
-    
+
     <install>
         <sql>
             <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
         </sql>
     </install>
-    
+    <uninstall>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+        </sql>
+    </uninstall>
+    <update>
+        <schemas>
+            <schemapath type="mysql">sql/updates/mysql</schemapath>
+        </schemas>
+    </update>
+
     <files folder="site/">
         <folder>src</folder>
         <folder>tmpl</folder>
@@ -47,7 +57,7 @@
     <languages>
         <language tag="en-GB">site/language/en-GB/en-GB.com_catalogsystem.ini</language>
     </languages>
-            
+
     <administration>
         <!-- The link that will appear in the Admin panel's "Components" menu -->
         <menu link="index.php?option=com_catalogsystem">Catalog System</menu>
@@ -67,6 +77,6 @@
         </languages>
     </administration>
 
-      
+
 
 </extension>
