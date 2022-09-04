@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 28, 2022 at 10:00 PM
+-- Generation Time: Sep 01, 2022 at 11:56 AM
 -- Server version: 10.3.35-MariaDB-log-cll-lve
 -- PHP Version: 7.4.30
 
@@ -38,7 +38,9 @@ CREATE TABLE `Category` (
 --
 
 INSERT INTO `Category` (`id`, `name`) VALUES
-(1, 'Graph Theory');
+(1, 'Graph Theory'),
+(2, 'Arrays'),
+(3, 'Linked Lists');
 
 -- --------------------------------------------------------
 
@@ -126,7 +128,7 @@ CREATE TABLE `Source` (
 --
 
 INSERT INTO `Source` (`id`, `name`, `region`, `super_region`) VALUES
-(1, 'test Sourse', 'test Region', 'Super Test');
+(1, 'test Source', 'test Region', 'Super Test');
 
 -- --------------------------------------------------------
 
@@ -239,7 +241,7 @@ ALTER TABLE `Users`
 -- AUTO_INCREMENT for table `Category`
 --
 ALTER TABLE `Category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `History`

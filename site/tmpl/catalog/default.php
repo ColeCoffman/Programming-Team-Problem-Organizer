@@ -10,6 +10,12 @@
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
+
+use Joomla\CMS\Factory;
+use ProgrammingTeam\Component\CatalogSystem\Site\Helper\ajaxCategories;
+
+JHTML::script(Juri::base() . '/media/com_catalogsystem/js/categories.js');
+
 ?>
 
 <form action="index.php?option=com_catalogsystem&view=catalog"
@@ -51,3 +57,4 @@ defined('_JEXEC') or die('Restricted Access');
     </tbody>
 </table>
 <?php echo $this->pagination->getListFooter(); ?>
+

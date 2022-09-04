@@ -6,6 +6,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Factory;
+use Joomla\CMS\MVC\Controller\FormController;
 
 /**
  * @package     Joomla.Site
@@ -19,7 +20,7 @@ use Joomla\CMS\Factory;
  * Catalog System Component Controller
  * @since  0.0.2
  */
-class DisplayController extends BaseController
+class DisplayController extends FormController
 {
     public function display($cachable = false, $urlparams = array())
     {

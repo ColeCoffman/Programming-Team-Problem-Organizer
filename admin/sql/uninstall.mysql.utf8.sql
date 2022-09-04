@@ -1,1 +1,1 @@
-DROP TABLE `Category`, `History`, `Problem`, `ProblemSet`, `Sets`, `Source`, `Team`, `UserHistory`, `Users`;
+DROP TABLE `category`, `history`, `problem`, `problemset`, `sets`, `source`, `team`, `userhistory`, `users`;

@@ -1,38 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-	<field
-		name="name"
-		type="text"
-		label="Problem Name"
-		size="40"
-		class="inputbox"
-		required="false" />
-	<field name="category" 
-		type="tag"
-		label="Category"
-		required="false"
-		size="40"
-		class="inputbox"
-		multiple="true"
-		mode="ajax" />
-	<field name="source" 
-		type="text"
-		label="Source"
-		required="false"
-		size="40"
-		class="inputbox" />
-    <field name="mindif" 
-		type="text"
-		label="Min Difficulty"
-		required="false"
-		size="3"
-        filter = "integer"
-		class="inputbox" />
-    <field name="maxdif" 
-		type="text"
-		label="Max Difficulty"
-		required="false"
-		size="3"
-        filter = "integer"
-		class="inputbox" />
+	<fieldset addfieldpath="/administrator/components/com_catalogsystem/models/fields">
+		<field 
+			name="name" 
+			type="text" 
+			label="Problem Name" 
+			size="40" 
+			class="inputbox" 
+			required="false"
+		></field>
+		<field 
+			type="category" 
+			extension="com_catalogsystem" 
+			layout="joomla.form.field.list-fancy-select" 
+			name="category" 
+			label="Category" 
+			required="false" 
+			size="40" placeholder=""
+			>
+		</field>
+		<field 
+			name="source" 
+			type="text" 
+			label="Source" 
+			required="false" 
+			size="40" 
+			class="inputbox">
+		</field>
+		<field 
+			name="mindif" 
+			type="text" 
+			label="Min Difficulty" 
+			required="false" 
+			size="3" 
+			filter="integer" 
+			class="inputbox"
+			></field>
+		<field 
+			name="maxdif" 
+			type="text" 
+			label="Max Difficulty" 
+			required="false" 
+			size="3" 
+			filter="integer" 
+			class="inputbox"
+			></field>
+	</fieldset>
 </form>

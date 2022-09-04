@@ -58,8 +58,14 @@ class CatalogModel extends ListModel
         return $query;
     }
 
-    // protected function getCategoryTags()
+    // public function getCategoryTags()
     // {
-    //     $query
+    //     $db = Factory::getDbo();
+    //     $query = $db->getQuery(true);
+    //     $query->select("name")->from($db->quoteName('category'));
+    //     $db->setQuery($query);
+    //     $results = $db->loadColumn();
+    //     // $results = $db->loadResult();
+    //     return $results;
     // }
 }
