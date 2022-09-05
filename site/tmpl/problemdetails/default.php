@@ -11,4 +11,6 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
 
+var_dump($this->item);
+
 ?>

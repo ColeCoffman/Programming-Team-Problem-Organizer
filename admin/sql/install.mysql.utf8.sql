@@ -3,13 +3,13 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 01, 2022 at 11:56 AM
+-- Generation Time: Sep 05, 2022 at 03:01 PM
 -- Server version: 10.3.35-MariaDB-log-cll-lve
 -- PHP Version: 7.4.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-/*SET AUTOCOMMIT = 0;
-START TRANSACTION;*/
+-- SET AUTOCOMMIT = 0;
+-- START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -60,7 +60,7 @@ CREATE TABLE `History` (
 
 INSERT INTO `History` (`id`, `problem_id`, `date`) VALUES
 (1, 0, '2022-08-27'),
-(2, 0, '2022-08-28'),
+(2, 1, '2022-08-28'),
 (3, 1, '2022-08-30');
 
 -- --------------------------------------------------------
@@ -85,7 +85,9 @@ CREATE TABLE `Problem` (
 --
 
 INSERT INTO `Problem` (`id`, `set_id`, `source_id`, `name`, `difficulty`, `category`, `pdf_path`, `zip_url`) VALUES
-(1, 1, 1, 'testName', 3, 1, 'c:/pdf', 'c:/zip');
+(1, 1, 1, 'Test Problem 1', 3, 1, 'c:/pdf', 'c:/zip'),
+(2, 1, 1, 'Test Problem 2', 5, 1, 'c:/pdf2', 'c:/zip2'),
+(3, 1, 1, 'Test Problem 3', 5, 1, 'c:/pdf3', 'c:/zip3');
 
 -- --------------------------------------------------------
 
@@ -94,9 +96,19 @@ INSERT INTO `Problem` (`id`, `set_id`, `source_id`, `name`, `difficulty`, `categ
 --
 
 CREATE TABLE `ProblemSet` (
+  `id` int(11) NOT NULL,
   `set_id` int(11) DEFAULT NULL,
   `problem_id` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `ProblemSet`
+--
+
+INSERT INTO `ProblemSet` (`id`, `set_id`, `problem_id`) VALUES
+(1, 1, 1),
+(2, 2, 1),
+(3, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -109,6 +121,15 @@ CREATE TABLE `Sets` (
   `team_id` int(11) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Sets`
+--
+
+INSERT INTO `Sets` (`id`, `team_id`, `name`) VALUES
+(1, NULL, 'Test Set 1'),
+(2, NULL, 'Test Set 2'),
+(3, NULL, 'Test Set 3');
 
 -- --------------------------------------------------------
 
@@ -197,6 +218,7 @@ ALTER TABLE `Problem`
 -- Indexes for table `ProblemSet`
 --
 ALTER TABLE `ProblemSet`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `set_id` (`set_id`),
   ADD KEY `problem_id` (`problem_id`);
 
@@ -253,13 +275,19 @@ ALTER TABLE `History`
 -- AUTO_INCREMENT for table `Problem`
 --
 ALTER TABLE `Problem`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `ProblemSet`
+--
+ALTER TABLE `ProblemSet`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `Sets`
 --
 ALTER TABLE `Sets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `Source`
