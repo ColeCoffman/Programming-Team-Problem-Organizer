@@ -13,8 +13,10 @@ defined('_JEXEC') or die('Restricted Access');
 
 use Joomla\CMS\Factory;
 use ProgrammingTeam\Component\CatalogSystem\Site\Helper\ajaxCategories;
+use Joomla\CMS\Router\Route;
 
 JHTML::script(Juri::base() . '/media/com_catalogsystem/js/categories.js');
+$urlStr = "index.php?option=com_catalogsystem&view=problemdetails&id=";
 
 ?>
 
@@ -47,7 +49,7 @@ JHTML::script(Juri::base() . '/media/com_catalogsystem/js/categories.js');
     <tbody>
         <?php foreach ($this->items as $i => $row) : ?>
             <tr>
-                <td><?php echo $row->name; ?></td>
+                <td><?php $url = Route::_($urlStr . $row->id); echo "<a href='$url'>$row->name</a>";?></td>
                 <td><?php echo $row->category; ?></td>
                 <td><?php echo $row->difficulty; ?></td>
                 <td><?php echo $row->source; ?></td>
