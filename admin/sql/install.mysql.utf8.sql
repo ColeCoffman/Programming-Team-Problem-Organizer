@@ -262,6 +262,7 @@ COMMIT;
 --
 -- Triggers for Database
 --
+
 CREATE TRIGGER `cleanUpHistory`
     AFTER DELETE ON `com_catalogsystem_problem`
     FOR EACH ROW DELETE FROM com_catalogsystem_history
