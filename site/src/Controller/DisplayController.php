@@ -36,5 +36,14 @@ class DisplayController extends FormController
 
         $view->document = $document;
         $view->display();
+		
+		// Handle POST input for catalog search
+		$app = Factory::getApplication();
+		$input = $app->input;
+		echo '<p>Does POST input exist?<\p>';
+		if ($input->exists('searchForm'))
+		{
+			echo '<p>YES<\p>';
+		}
     }
 }

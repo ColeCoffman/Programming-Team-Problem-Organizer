@@ -36,11 +36,14 @@ class CatalogModel extends ListModel
 
         // -- Name, Category, Difficulty, Source, Last Used
 
-        // SELECT Problem.name AS 'Name', Problem.difficulty AS 'Difficulty', Category.name AS 'Category', Source.name AS 'Source', History.date AS 'lastUsed'
-        // FROM Problem
-        // INNER JOIN Category ON Problem.category=Category.id
-        // INNER JOIN Source ON Problem.source_id=Source.id
-        // INNER JOIN History ON Problem.id=History.problem_id
+        /*
+		SELECT problem.id AS 'id', problem.name AS 'name', problem.difficulty AS 'difficulty', category.name AS 'category', source.name AS 'source', MAX(history.date) AS 'lastUsed'
+		FROM problem
+		LEFT JOIN category ON problem.category = category.id
+		LEFT JOIN source ON problem.source_id = source.id
+		LEFT JOIN history ON problem.id = history.problem_id
+		GROUP BY problem.id
+		*/
 
 
         // Select statement Name, Category, Difficulty, Source, Last Used
@@ -49,9 +52,10 @@ class CatalogModel extends ListModel
             ->select($db->quoteName(array('source.name'), array('source')))
             ->select('MAX('.$db->quoteName('history.date').') AS lastUsed')
             ->from($db->quoteName('problem'), 'problem')
-            ->join('INNER', $db->quoteName('category', 'category') . ' ON (' . $db->quoteName('problem.category') . ' = ' . $db->quoteName('category.id') . ')')
-            ->join('INNER', $db->quoteName('source', 'source') . ' ON (' . $db->quoteName('problem.source_id') . ' = ' . $db->quoteName('source.id') . ')')
-            ->join('INNER', $db->quoteName('history', 'history') . ' ON (' . $db->quoteName('problem.id') . ' = ' . $db->quoteName('history.problem_id') . ')');
+            ->join('LEFT', $db->quoteName('category', 'category') . ' ON (' . $db->quoteName('problem.category') . ' = ' . $db->quoteName('category.id') . ')')
+            ->join('LEFT', $db->quoteName('source', 'source') . ' ON (' . $db->quoteName('problem.source_id') . ' = ' . $db->quoteName('source.id') . ')')
+            ->join('LEFT', $db->quoteName('history', 'history') . ' ON (' . $db->quoteName('problem.id') . ' = ' . $db->quoteName('history.problem_id') . ')')
+			->group($db->quoteName('problem.id'));
 
         // Order by
         // $query->order('name');

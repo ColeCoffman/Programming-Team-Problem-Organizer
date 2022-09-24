@@ -18,9 +18,21 @@ use Joomla\CMS\Router\Route;
 JHTML::script(Juri::base() . '/media/com_catalogsystem/js/categories.js');
 $urlStr = "index.php?option=com_catalogsystem&view=problemdetails&id=";
 
+// Get post input from the form
+$app = Factory::getApplication();
+$input = $app->input;
+if ($input->exists('searchForm'))
+{
+	echo 'Debug: There is POST input<br>';
+}
+else
+{
+	echo 'Debug: No POST input found<br>';
+}
+//<form action="index.php?option=com_catalogsystem&view=catalog" method="post" name="searchForm" id="searchForm" enctype="multipart/form-data">
 ?>
 
-<form action="index.php?option=com_catalogsystem&view=catalog"
+<form action="cataloglink?view=catalog"
     method="post" name="searchForm" id="searchForm" enctype="multipart/form-data">
 
 	<?php echo $this->form->renderField('name');  ?>

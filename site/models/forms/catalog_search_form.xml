@@ -9,24 +9,28 @@
 			class="inputbox" 
 			required="false"
 		></field>
-		<field 
-			type="category" 
-			extension="com_catalogsystem" 
-			layout="joomla.form.field.list-fancy-select" 
-			name="category" 
-			label="Category" 
-			required="false" 
-			size="40" placeholder=""
-			>
-		</field>
-		<field 
-			name="source" 
-			type="text" 
-			label="Source" 
-			required="false" 
-			size="40" 
-			class="inputbox">
-		</field>
+		<field
+			name="category"
+			label="Category"
+			required="false"
+			type="sql"
+			default=""
+			query="SELECT id, name FROM category"
+			key_field="id"
+			value_field="name"
+			layout="joomla.form.field.list-fancy-select"
+		/>
+		<field
+			name="source"
+			label="Source"
+			required="false"
+			type="sql"
+			default=""
+			query="SELECT id, name FROM source"
+			key_field="id"
+			value_field="name"
+			layout="joomla.form.field.list-fancy-select"
+		/>
 		<field 
 			name="mindif" 
 			type="text" 

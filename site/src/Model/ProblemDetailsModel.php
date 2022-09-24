@@ -30,7 +30,7 @@ class ProblemDetailsModel extends ItemModel
      */
     public function getItem($pk= null)
     {
-
+		return NULL;
         $db = Factory::getDbo();
         $uri = Uri::getInstance();
         $idvar = $uri->getVar('id');
