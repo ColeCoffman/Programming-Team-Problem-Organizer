@@ -1,1 +1,1 @@
-DROP TABLE `category`, `history`, `problem`, `problemset`, `sets`, `source`, `team`, `userhistory`, `users`;
+DROP TABLE `com_catalogsystem_category`, `com_catalogsystem_history`, `com_catalogsystem_problem`, `com_catalogsystem_problemset`, `com_catalogsystem_set`, `com_catalogsystem_source`, `com_catalogsystem_team`;
