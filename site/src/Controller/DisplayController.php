@@ -40,10 +40,14 @@ class DisplayController extends FormController
 		// Handle POST input for catalog search
 		$app = Factory::getApplication();
 		$input = $app->input;
-		echo '<p>Does POST input exist?<\p>';
+		echo '<p>TEMPORARY DEBUG: Does POST input exist? ';
 		if ($input->exists('searchForm'))
 		{
-			echo '<p>YES<\p>';
+			echo 'YES';
+		}
+		else
+		{
+			echo 'NO';
 		}
     }
 }
