@@ -37,7 +37,7 @@ class DisplayController extends FormController
         $view->document = $document;
         $view->display();
 		
-		// Handle POST input for catalog search
+		// Handle POST input for catalog search 
 		$app = Factory::getApplication();
 		$input = $app->input;
 		echo '<p>TEMPORARY DEBUG: Does POST input exist? ';
