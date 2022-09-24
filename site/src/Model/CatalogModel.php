@@ -32,33 +32,28 @@ class CatalogModel extends ListModel
         $db = Factory::getDbo();
         $query = $db->getQuery(true);
 
-
-
-        // -- Name, Category, Difficulty, Source, Last Used
-
-        /*
-		SELECT problem.id AS 'id', problem.name AS 'name', problem.difficulty AS 'difficulty', category.name AS 'category', source.name AS 'source', MAX(history.date) AS 'lastUsed'
-		FROM problem
-		LEFT JOIN category ON problem.category = category.id
-		LEFT JOIN source ON problem.source_id = source.id
-		LEFT JOIN history ON problem.id = history.problem_id
-		GROUP BY problem.id
+		/* SQL Query:
+		SELECT p.name AS name, p.difficulty AS difficulty, p.id AS id, c.name AS category, s.name AS source, h.date AS lastUsed
+		FROM com_catalogsystem_problem AS p
+		LEFT JOIN com_catalogsystem_category AS c ON p.category_id = c.id
+		LEFT JOIN com_catalogsystem_source AS s ON p.source_id = s.id
+		LEFT JOIN com_catalogsystem_history AS h ON p.id = h.problem_id
+		GROUP BY p.id
 		*/
-
-
-        // Select statement Name, Category, Difficulty, Source, Last Used
-        $query->select(array('problem.name', 'problem.difficulty', 'problem.id'), array('name', 'difficulty', 'id'))
-            ->select($db->quoteName(array('category.name'), array('category')))
-            ->select($db->quoteName(array('source.name'), array('source')))
-            ->select('MAX('.$db->quoteName('history.date').') AS lastUsed')
-            ->from($db->quoteName('problem'), 'problem')
-            ->join('LEFT', $db->quoteName('category', 'category') . ' ON (' . $db->quoteName('problem.category') . ' = ' . $db->quoteName('category.id') . ')')
-            ->join('LEFT', $db->quoteName('source', 'source') . ' ON (' . $db->quoteName('problem.source_id') . ' = ' . $db->quoteName('source.id') . ')')
-            ->join('LEFT', $db->quoteName('history', 'history') . ' ON (' . $db->quoteName('problem.id') . ' = ' . $db->quoteName('history.problem_id') . ')')
-			->group($db->quoteName('problem.id'));
-
-        // Order by
-        // $query->order('name');
+		
+		// NOTES:
+		// To make a variable safe to use in the string, use:
+		// 'text' . $db->quoteName(variable) . 'more text'
+		// After the rest of the query, use this to order the results:
+		// ->order('name');
+		
+		$query->select('p.name AS name, p.difficulty AS difficulty, p.id AS id, c.name AS category, s.name AS source, h.date AS lastUsed')
+		->from('com_catalogsystem_problem AS p')
+		->join('LEFT','com_catalogsystem_category AS c ON p.category_id = c.id')
+		->join('LEFT','com_catalogsystem_source AS s ON p.source_id = s.id')
+		->join('LEFT','com_catalogsystem_history AS h ON p.id = h.problem_id')
+		->group('p.id');
+		
         return $query;
     }
 

@@ -20,7 +20,7 @@ class CategoryField extends ListField
         $db = Factory::getDbo();
         $query = $db->getQuery(true);
 
-        $query->select("DISTINCT name")->from($db->quoteName('category'))->order('name'); // Add Order
+        $query->select("DISTINCT name")->from($db->quoteName('com_catalogsystem_category'))->order('name'); // Add Order
         $categories = $db->loadObjectList();
         $options = array();
 
