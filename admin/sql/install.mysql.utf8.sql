@@ -25,19 +25,19 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Category`
+-- Table structure for table `com_catalogsystem_category`
 --
 
-CREATE TABLE `Category` (
+CREATE TABLE `com_catalogsystem_category` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `Category`
+-- Dumping data for table `com_catalogsystem_category`
 --
 
-INSERT INTO `Category` (`id`, `name`) VALUES
+INSERT INTO `com_catalogsystem_category` (`id`, `name`) VALUES
 (1, 'Graph Theory'),
 (2, 'Arrays'),
 (3, 'Linked Lists');
@@ -45,67 +45,67 @@ INSERT INTO `Category` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `History`
+-- Table structure for table `com_catalogsystem_history`
 --
 
-CREATE TABLE `History` (
+CREATE TABLE `com_catalogsystem_history` (
   `id` int(11) NOT NULL,
   `problem_id` int(11) DEFAULT NULL,
+  `team_id` int(11) DEFAULT NULL,
   `date` date DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `History`
+-- Dumping data for table `com_catalogsystem_history`
 --
 
-INSERT INTO `History` (`id`, `problem_id`, `date`) VALUES
-(1, 0, '2022-08-27'),
-(2, 1, '2022-08-28'),
-(3, 1, '2022-08-30');
+INSERT INTO `com_catalogsystem_history` (`id`, `problem_id`, `team_id`, `date`) VALUES
+(1, 0, 0, '2022-08-27'),
+(2, 1, 1, '2022-08-28'),
+(3, 1, 0, '2022-08-30');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Problem`
+-- Table structure for table `com_catalogsystem_problem`
 --
 
-CREATE TABLE `Problem` (
+CREATE TABLE `com_catalogsystem_problem` (
   `id` int(11) NOT NULL,
-  `set_id` int(11) DEFAULT NULL,
   `source_id` int(11) DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `difficulty` int(11) DEFAULT NULL,
-  `category` smallint(6) DEFAULT NULL,
-  `pdf_path` varchar(255) DEFAULT NULL,
-  `zip_url` varchar(255) DEFAULT NULL
+  `pdf_link` varchar(255) DEFAULT NULL,
+  `zip_link` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `Problem`
+-- Dumping data for table `com_catalogsystem_problem`
 --
 
-INSERT INTO `Problem` (`id`, `set_id`, `source_id`, `name`, `difficulty`, `category`, `pdf_path`, `zip_url`) VALUES
-(1, 1, 1, 'Test Problem 1', 3, 1, 'c:/pdf', 'c:/zip'),
-(2, 1, 1, 'Test Problem 2', 5, 1, 'c:/pdf2', 'c:/zip2'),
-(3, 1, 1, 'Test Problem 3', 5, 1, 'c:/pdf3', 'c:/zip3');
+INSERT INTO `com_catalogsystem_problem` (`id`, `source_id`, `category_id`, `name`, `difficulty`, `pdf_link`, `zip_link`) VALUES
+(1, 1, 1, 'Test Problem 1', 3, 'c:/pdf', 'c:/zip'),
+(2, 1, 0, 'Test Problem 2', 5, 'c:/pdf2', 'c:/zip2'),
+(3, 1, 1, 'Test Problem 3', 5, 'c:/pdf3', 'c:/zip3');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ProblemSet`
+-- Table structure for table `com_catalogsystem_problemset`
 --
 
-CREATE TABLE `ProblemSet` (
+CREATE TABLE `com_catalogsystem_problemset` (
   `id` int(11) NOT NULL,
   `set_id` int(11) DEFAULT NULL,
   `problem_id` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `ProblemSet`
+-- Dumping data for table `com_catalogsystem_problemset`
 --
 
-INSERT INTO `ProblemSet` (`id`, `set_id`, `problem_id`) VALUES
+INSERT INTO `com_catalogsystem_problemset` (`id`, `set_id`, `problem_id`) VALUES
 (1, 1, 1),
 (2, 2, 1),
 (3, 3, 2);
@@ -113,194 +113,162 @@ INSERT INTO `ProblemSet` (`id`, `set_id`, `problem_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Sets`
+-- Table structure for table `com_catalogsystem_set`
 --
 
-CREATE TABLE `Sets` (
+CREATE TABLE `com_catalogsystem_set` (
   `id` int(11) NOT NULL,
-  `team_id` int(11) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `zip_link` varchar(255) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `com_catalogsystem_set`
+--
+
+INSERT INTO `com_catalogsystem_set` (`id`, `name`, `zip_link`) VALUES
+(1, 'Set1', 'c:/zip'),
+(2, 'Set2', 'c:/zip'),
+(3, 'Set3', 'c:/zip');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `com_catalogsystem_source`
+--
+
+CREATE TABLE `com_catalogsystem_source` (
+  `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `Sets`
+-- Dumping data for table `com_catalogsystem_source`
 --
 
-INSERT INTO `Sets` (`id`, `team_id`, `name`) VALUES
-(1, NULL, 'Test Set 1'),
-(2, NULL, 'Test Set 2'),
-(3, NULL, 'Test Set 3');
+INSERT INTO `com_catalogsystem_source` (`id`, `name`) VALUES
+(1, 'test Source');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Source`
+-- Table structure for table `com_catalogsystem_team`
 --
 
-CREATE TABLE `Source` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `region` varchar(255) DEFAULT NULL,
-  `super_region` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `Source`
---
-
-INSERT INTO `Source` (`id`, `name`, `region`, `super_region`) VALUES
-(1, 'test Source', 'test Region', 'Super Test');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `Team`
---
-
-CREATE TABLE `Team` (
+CREATE TABLE `com_catalogsystem_team` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
-
---
--- Table structure for table `UserHistory`
---
-
-CREATE TABLE `UserHistory` (
-  `history_id` int(11) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `Users`
---
-
-CREATE TABLE `Users` (
-  `id` int(11) NOT NULL,
-  `team_id` int(11) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `permissions` int(11) DEFAULT NULL,
-  `user` varchar(255) DEFAULT NULL,
-  `pass_hash` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `Category`
+-- Indexes for table `com_catalogsystem_category`
 --
-ALTER TABLE `Category`
+ALTER TABLE `com_catalogsystem_category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `History`
+-- Indexes for table `com_catalogsystem_history`
 --
-ALTER TABLE `History`
+ALTER TABLE `com_catalogsystem_history`
   ADD PRIMARY KEY (`id`),
   ADD KEY `problem_id` (`problem_id`);
 
 --
--- Indexes for table `Problem`
+-- Indexes for table `com_catalogsystem_problem`
 --
-ALTER TABLE `Problem`
+ALTER TABLE `com_catalogsystem_problem`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `set_id` (`set_id`),
   ADD KEY `source_id` (`source_id`) USING BTREE;
 
 --
--- Indexes for table `ProblemSet`
+-- Indexes for table `com_catalogsystem_problemset`
 --
-ALTER TABLE `ProblemSet`
+ALTER TABLE `com_catalogsystem_problemset`
   ADD PRIMARY KEY (`id`),
   ADD KEY `set_id` (`set_id`),
   ADD KEY `problem_id` (`problem_id`);
 
 --
--- Indexes for table `Sets`
+-- Indexes for table `com_catalogsystem_set`
 --
-ALTER TABLE `Sets`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `team_id` (`team_id`);
-
---
--- Indexes for table `Source`
---
-ALTER TABLE `Source`
+ALTER TABLE `com_catalogsystem_set`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `Team`
+-- Indexes for table `com_catalogsystem_source`
 --
-ALTER TABLE `Team`
+ALTER TABLE `com_catalogsystem_source`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `UserHistory`
+-- Indexes for table `com_catalogsystem_team`
 --
-ALTER TABLE `UserHistory`
-  ADD KEY `history_id` (`history_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `Users`
---
-ALTER TABLE `Users`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `team_id` (`team_id`);
+ALTER TABLE `com_catalogsystem_team`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `Category`
+-- AUTO_INCREMENT for table `com_catalogsystem_category`
 --
-ALTER TABLE `Category`
+ALTER TABLE `com_catalogsystem_category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `History`
+-- AUTO_INCREMENT for table `com_catalogsystem_history`
 --
-ALTER TABLE `History`
+ALTER TABLE `com_catalogsystem_history`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `Problem`
+-- AUTO_INCREMENT for table `com_catalogsystem_problem`
 --
-ALTER TABLE `Problem`
+ALTER TABLE `com_catalogsystem_problem`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `ProblemSet`
+-- AUTO_INCREMENT for table `com_catalogsystem_problemset`
 --
-ALTER TABLE `ProblemSet`
+ALTER TABLE `com_catalogsystem_problemset`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `Sets`
+-- AUTO_INCREMENT for table `com_catalogsystem_set`
 --
-ALTER TABLE `Sets`
+ALTER TABLE `com_catalogsystem_set`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `Source`
+-- AUTO_INCREMENT for table `com_catalogsystem_source`
 --
-ALTER TABLE `Source`
+ALTER TABLE `com_catalogsystem_source`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `Team`
+-- AUTO_INCREMENT for table `com_catalogsystem_team`
 --
-ALTER TABLE `Team`
+ALTER TABLE `com_catalogsystem_team`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
+
+-- --------------------------------------------------------
+--
+-- Triggers for Database
+--
+CREATE TRIGGER 'cleanUpHistory'
+AFTER DELETE ON 'com_catalogsystem_problem' FOR EACH ROW
+DELETE FROM com_catalogsystem_history WHERE problem_id = OLD.id;
+
+CREATE TRIGGER 'cleanUpProblemSet'
+AFTER DELETE ON 'com_catalogsystem_problem' FOR EACH ROW
+DELETE FROM com_catalogsystem_problemset WHERE problem_id = OLD.id;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
