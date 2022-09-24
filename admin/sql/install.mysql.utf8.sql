@@ -262,13 +262,6 @@ COMMIT;
 --
 -- Triggers for Database
 --
-CREATE TRIGGER 'cleanUpHistory'
-AFTER DELETE ON 'com_catalogsystem_problem' FOR EACH ROW
-DELETE FROM com_catalogsystem_history WHERE problem_id = OLD.id;
-
-CREATE TRIGGER 'cleanUpProblemSet'
-AFTER DELETE ON 'com_catalogsystem_problem' FOR EACH ROW
-DELETE FROM com_catalogsystem_problemset WHERE problem_id = OLD.id;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
