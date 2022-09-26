@@ -40,7 +40,7 @@ JHTML::script(Juri::base() . '/media/com_catalogsystem/js/catalogHelper.js');
 	<button type="submit">Filter</button>
 </form>
 
-<table class="table table-striped table-hover">
+<table class="table table-striped table-hover" id="myTable">
     <thead>
         <tr>
             <th onclick="sortTable(0)">Name</th>
