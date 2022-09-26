@@ -39,7 +39,7 @@ class CatalogModel extends ListModel
 		
 		// Build the WHERE clauses for the SQL Query:
 		// (This defaults to a true statement because the '->where()' function always requires a parameter)
-		$catalogWhere = '1=1';
+		$catalogWhere = '1=1'; 
 		$catalogOrder = 'p.id';
 		if(array_key_exists('name',$data) && $data['name'] !== '')
 		{
