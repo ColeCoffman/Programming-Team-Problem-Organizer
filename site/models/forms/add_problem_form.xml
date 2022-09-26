@@ -48,5 +48,16 @@
            type = "text"
            label = "Include in Problem Sets:"
            required = "false" />
-    
+	<field name="pdfupload"
+		type="file"
+		label="Upload PDF"
+		description="Upload a PDF file of the problem"
+		size="40"
+		class="inputbox" />
+	<field name="zipupload"
+		type="file"
+		label="Upload ZIP"
+		description="Upload a ZIP file for the problem"
+		size="40"
+		class="inputbox" />
 </form>

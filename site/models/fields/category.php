@@ -17,7 +17,7 @@ class CategoryField extends ListField
 
     public function getOptions()
     {
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->getQuery(true);
 
         $query->select("DISTINCT name")->from($db->quoteName('com_catalogsystem_category'))->order('name'); // Add Order

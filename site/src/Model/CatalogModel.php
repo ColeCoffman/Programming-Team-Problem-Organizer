@@ -29,7 +29,7 @@ class CatalogModel extends ListModel
      */
     protected function getListQuery()
     {
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get('DatabaseDriver');
         $query = $db->getQuery(true);
 
 		/* SQL Query:
@@ -56,15 +56,4 @@ class CatalogModel extends ListModel
 		
         return $query;
     }
-
-    // public function getCategoryTags()
-    // {
-    //     $db = Factory::getDbo();
-    //     $query = $db->getQuery(true);
-    //     $query->select("name")->from($db->quoteName('category'));
-    //     $db->setQuery($query);
-    //     $results = $db->loadColumn();
-    //     // $results = $db->loadResult();
-    //     return $results;
-    // }
 }

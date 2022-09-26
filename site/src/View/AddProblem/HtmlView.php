@@ -31,6 +31,9 @@ class HtmlView extends BaseHtmlView
     {
         // Call the parent display to display the layout file
         $this->form = $this->get('form', 'AddProblem');
+        if(!$this->form = $this->get('form', 'AddProblem')){
+            echo "Can't load form<br>";
+        }
         parent::display($template);
     }
 }
