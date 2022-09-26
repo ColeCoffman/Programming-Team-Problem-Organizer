@@ -15,6 +15,8 @@ use Joomla\CMS\Factory;
 use ProgrammingTeam\Component\CatalogSystem\Site\Helper\ajaxCategories;
 use Joomla\CMS\Router\Route;
 
+JHTML::script(Juri::base() . '/media/com_catalogsystem/js/catalogHelper.js');
+
 // JHTML::script(Juri::base() . '/media/com_catalogsystem/js/categories.js');
 ?>
 
@@ -39,11 +41,11 @@ use Joomla\CMS\Router\Route;
 <table class="table table-striped table-hover">
     <thead>
         <tr>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Difficulty</th>
-            <th>Source</th>
-            <th>Last Used</th>
+            <th onclick="sortTable(0)">Name</th>
+            <th onclick="sortTable(1)">Category</th>
+            <th onclick="sortTable(2)">Difficulty</th>
+            <th onclick="sortTable(3)">Source</th>
+            <th onclick="sortTable(4)">Last Used</th>
         </tr>
     </thead>
     <tbody>

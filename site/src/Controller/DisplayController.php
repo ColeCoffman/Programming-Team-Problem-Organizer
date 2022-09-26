@@ -31,8 +31,11 @@ class DisplayController extends FormController
         $view = $this->getView($viewName, $viewFormat);
         $view->setModel($this->getModel('Catalog'), true);
         $view->setModel($this->getModel('CatalogSearch'));
+        $view->setModel($this->getModel('CatalogOp'));
         $view->setModel($this->getModel('AddProblem'));
-         $view->setModel($this->getModel('ProblemDetails'));
+        $view->setModel($this->getModel('ProblemDetails'));
+        $view->setModel($this->getModel('Sets'));
+        $view->setModel($this->getModel('SetSearch'));
 
         $view->document = $document;
         $view->display();

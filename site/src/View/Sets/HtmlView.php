@@ -1,6 +1,6 @@
 <?php
 
-namespace ProgrammingTeam\Component\CatalogSystem\Site\View\ProblemDetails;
+namespace ProgrammingTeam\Component\CatalogSystem\Site\View\Catalog;
 
 defined('_JEXEC') or die;
 
@@ -25,13 +25,17 @@ class HtmlView extends BaseHtmlView
      * @param   string  $template  The name of the layout file to parse.
      * @return  void
      */
-    protected $item;
+    protected $items;
+    protected $pagination;
+    protected $form;
 
     public function display($template = null)
     {
         // Call the parent display to display the layout file
-        $this->item = $this->get('Item', 'ProblemDetails');
+        $this->items = $this->get('Items', 'Sets');
         $this->pagination = $this->get('Pagination');
+        $this->form = $this->get('form', 'SetSearch');
+        $this->categories = $this->get('CategoryTags');
         parent::display($template);
     }
 }
