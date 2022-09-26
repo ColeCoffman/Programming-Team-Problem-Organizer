@@ -16,13 +16,10 @@ use ProgrammingTeam\Component\CatalogSystem\Site\Helper\ajaxCategories;
 use Joomla\CMS\Router\Route;
 
 // JHTML::script(Juri::base() . '/media/com_catalogsystem/js/categories.js');
-$urlStr = "index.php?option=com_catalogsystem&view=problemdetails&id=";
-
-//<form action="index.php?option=com_catalogsystem&view=catalog" method="post" name="searchForm" id="searchForm" enctype="multipart/form-data">
 ?>
 
 <form action="cataloglink?view=catalog"
-    method="post" name="searchForm" id="searchForm" enctype="multipart/form-data">
+    method="post" name="com_catalogsystem.catalogsearch" id="com_catalogsystem.catalogsearch" enctype="multipart/form-data">
 
 	<?php echo $this->form->renderField('name');  ?>
 	
@@ -33,6 +30,8 @@ $urlStr = "index.php?option=com_catalogsystem&view=problemdetails&id=";
     <?php echo $this->form->renderField('mindif');  ?>
     
     <?php echo $this->form->renderField('maxdif');  ?>
+	
+	<?php echo $this->form->renderField('sortby');  ?>
 	
 	<button type="submit">Filter</button>
 </form>
@@ -50,7 +49,7 @@ $urlStr = "index.php?option=com_catalogsystem&view=problemdetails&id=";
     <tbody>
         <?php foreach ($this->items as $i => $row) : ?>
             <tr>
-                <td><?php $url = Route::_($urlStr . $row->id); echo "<a href='$url'>$row->name</a>";?></td>
+                <td><?php $url = Route::_("index.php?option=com_catalogsystem&view=problemdetails&id=" . $row->id); echo "<a href='$url'>$row->name</a>";?></td>
                 <td><?php echo $row->category; ?></td>
                 <td><?php echo $row->difficulty; ?></td>
                 <td><?php echo $row->source; ?></td>

@@ -41,12 +41,12 @@ class CatalogSearchModel extends FormModel
     
     protected function loadFormData()
 	{
-		// Check the session for previously entered form data.
-		$data = Factory::getApplication()->getUserState(
-			'com_catalogsystem.catalogsearch',	// a unique name to identify the data in the session
-			array()	// prefill data if no data found in session
-		);
-
+		// Retrieve the current POST data
+		$app  = Factory::getApplication();
+		$data = $app->input->post->get('jform', array(), "array");
+		
+		// If any of the POST keys are valid, they will be used to initialize this form
+		// (Invalid or missing keys will be ignored without issue)
 		return $data;
 	}
 }
