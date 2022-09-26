@@ -18,7 +18,7 @@ use Joomla\CMS\Router\Route;
 // JHTML::script(Juri::base() . '/media/com_catalogsystem/js/categories.js');
 ?>
 
-<form action="cataloglink?view=catalog"
+<form action="index.php?option=com_catalogsystem&view=catalog"
     method="post" name="com_catalogsystem.catalogsearch" id="com_catalogsystem.catalogsearch" enctype="multipart/form-data">
 
 	<?php echo $this->form->renderField('name');  ?>
