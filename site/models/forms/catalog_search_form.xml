@@ -51,14 +51,5 @@
 			filter="integer" 
 			class="inputbox"
 			></field>
-		<field 
-			name="sortby" 
-			type="list" 
-			default="" 
-			label="Order By">
-				<option value="">Id</option>
-				<option value="p.name">Name</option>
-				<option value="p.difficulty">Difficulty</option>
-		</field>
 	</fieldset>
 </form>

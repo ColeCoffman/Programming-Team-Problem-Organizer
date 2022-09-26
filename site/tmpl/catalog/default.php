@@ -35,19 +35,17 @@ JHTML::script(Juri::base() . '/media/com_catalogsystem/js/catalogHelper.js');
     
     <?php echo $this->form->renderField('maxdif');  ?>
 	
-	<?php echo $this->form->renderField('sortby');  ?>
-	
 	<button type="submit">Filter</button>
 </form>
 
 <table class="table table-striped table-hover" id="myTable">
     <thead>
         <tr>
-            <th onclick="sortTable(0)">Name</th>
-            <th onclick="sortTable(1)">Category</th>
-            <th onclick="sortTable(2)">Difficulty</th>
-            <th onclick="sortTable(3)">Source</th>
-            <th onclick="sortTable(4)">Last Used</th>
+            <th onclick="sortTable(0)">Name ↕</th>
+            <th onclick="sortTable(1)">Category ↕</th>
+            <th onclick="sortTable(2)">Difficulty ↕</th>
+            <th onclick="sortTable(3)">Source ↕</th>
+            <th onclick="sortTable(4)">Last Used ↕</th>
         </tr>
     </thead>
     <tbody>

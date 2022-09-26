@@ -71,10 +71,6 @@ class CatalogModel extends ListModel
 		{
 			$catalogWhere .= ' AND p.difficulty <= "' . $data['maxdif'] . '"';
 		}
-		if(array_key_exists('sortby',$data) && $data['sortby'] !== '')
-		{
-			$catalogOrder = $data['sortby'];
-		}
 		
 		/* SQL Query:
 		SELECT p.name AS name, p.difficulty AS difficulty, p.id AS id, c.name AS category, s.name AS source, h.date AS lastUsed
@@ -96,8 +92,7 @@ class CatalogModel extends ListModel
 		->join('LEFT','com_catalogsystem_source AS s ON p.source_id = s.id')
 		->join('LEFT','com_catalogsystem_history AS h ON p.id = h.problem_id')
 		->where($catalogWhere)
-		->group('p.id')
-		->order($catalogOrder);
+		->group('p.id');
 		
 		if($localDebug) echo '<br/> Catalog SQL Query: <br/>' . $catalogQuery->__toString();
 		
