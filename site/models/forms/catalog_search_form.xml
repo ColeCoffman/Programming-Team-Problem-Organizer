@@ -19,6 +19,7 @@
 			key_field="id"
 			value_field="name"
 			layout="joomla.form.field.list-fancy-select"
+			multiple="true"
 		/>
 		<field
 			name="source"
@@ -30,6 +31,7 @@
 			key_field="id"
 			value_field="name"
 			layout="joomla.form.field.list-fancy-select"
+			multiple="true"
 		/>
 		<field 
 			name="mindif" 

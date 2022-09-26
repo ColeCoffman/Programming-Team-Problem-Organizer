@@ -15,7 +15,7 @@ use Joomla\CMS\Factory;
 use ProgrammingTeam\Component\CatalogSystem\Site\Helper\ajaxCategories;
 use Joomla\CMS\Router\Route;
 
-JHTML::script(Juri::base() . '/media/com_catalogsystem/js/categories.js');
+// JHTML::script(Juri::base() . '/media/com_catalogsystem/js/categories.js');
 $urlStr = "index.php?option=com_catalogsystem&view=problemdetails&id=";
 
 //<form action="index.php?option=com_catalogsystem&view=catalog" method="post" name="searchForm" id="searchForm" enctype="multipart/form-data">

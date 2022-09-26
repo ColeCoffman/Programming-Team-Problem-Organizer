@@ -54,6 +54,12 @@
         <folder>language</folder>
     </files>
 
+    <media folder="media" destination="com_catalogsystem">
+		<folder>css</folder>
+		<folder>js</folder>
+        <folder>ajax</folder>
+	</media>
+
     <languages>
         <language tag="en-GB">site/language/en-GB/en-GB.com_catalogsystem.ini</language>
     </languages>
