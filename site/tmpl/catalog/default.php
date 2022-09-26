@@ -18,6 +18,8 @@ use Joomla\CMS\Router\Route;
 JHTML::script(Juri::base() . '/media/com_catalogsystem/js/catalogHelper.js');
 
 // JHTML::script(Juri::base() . '/media/com_catalogsystem/js/categories.js');
+
+
 ?>
 
 <form action="index.php?option=com_catalogsystem&view=catalog"

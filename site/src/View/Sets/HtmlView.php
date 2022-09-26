@@ -1,6 +1,6 @@
 <?php
 
-namespace ProgrammingTeam\Component\CatalogSystem\Site\View\Catalog;
+namespace ProgrammingTeam\Component\CatalogSystem\Site\View\Sets;
 
 defined('_JEXEC') or die;
 

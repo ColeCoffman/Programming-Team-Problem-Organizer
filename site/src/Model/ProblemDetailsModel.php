@@ -30,7 +30,7 @@ class ProblemDetailsModel extends ItemModel
      */
     public function getItem($pk= null)
     {
-		return NULL;
+		//return NULL;
         $db = Factory::getContainer()->get('DatabaseDriver');
         $uri = Uri::getInstance();
         $idvar = $uri->getVar('id');
@@ -44,9 +44,9 @@ class ProblemDetailsModel extends ItemModel
 	    $query->select(array('problem.name', 'problem.difficulty', 'problem.id', 'problem.zip_url', 'problem.pdf_path'), array('name', 'difficulty', 'id', 'zipUrl', 'pdfPath'))
 		    ->select($db->quoteName(array('category.name'), array('category')))
 		    ->select($db->quoteName(array('source.name'), array('source')))
-		    ->from($db->quoteName('problem'), 'problem')
-		    ->join('INNER', $db->quoteName('category', 'category') . ' ON (' . $db->quoteName('problem.category') . ' = ' . $db->quoteName('category.id') . ')')
-		    ->join('INNER', $db->quoteName('source', 'source') . ' ON (' . $db->quoteName('problem.source_id') . ' = ' . $db->quoteName('source.id') . ')')
+		    ->from($db->quoteName('com_catalogsystem_problem'), 'problem')
+		    ->join('INNER', $db->quoteName('com_catalogsystem_category', 'category') . ' ON (' . $db->quoteName('problem.category') . ' = ' . $db->quoteName('category.id') . ')')
+		    ->join('INNER', $db->quoteName('com_catalogsystem_source', 'source') . ' ON (' . $db->quoteName('problem.source_id') . ' = ' . $db->quoteName('source.id') . ')')
 		    ->where($db->quoteName('problem.id') . " = " . $db->quote($idvar));
 
         
@@ -61,7 +61,7 @@ class ProblemDetailsModel extends ItemModel
 
 	    $historyQuery = $db->getQuery(true);
 		$historyQuery->select(array('history.date'))
-			->from($db->quoteName('history', 'history'))
+			->from($db->quoteName('com_catalogsystem_history', 'history'))
 			->where($db->quoteName('history.problem_id') . " = " . $db->quote($idvar))
 			->order('date DESC');
 
@@ -72,8 +72,8 @@ class ProblemDetailsModel extends ItemModel
 
 	    $SetsQuery = $db->getQuery(true);
 	    $SetsQuery->select(array('sets.name'))
-		    ->from($db->quoteName('sets', 'sets'))
-		    ->join('INNER', $db->quoteName('problemset', 'problemset') . ' ON (' . $db->quoteName('problemset.problem_id') . ' = ' . $db->quote($idvar) . ')')
+		    ->from($db->quoteName('com_catalogsystem_sets', 'sets'))
+		    ->join('INNER', $db->quoteName('com_catalogsystem_problemset', 'problemset') . ' ON (' . $db->quoteName('problemset.problem_id') . ' = ' . $db->quote($idvar) . ')')
 		    ->where($db->quoteName('sets.id') . " = " . $db->quoteName('problemset.set_id'))
 		    ->order('name ASC');
 
