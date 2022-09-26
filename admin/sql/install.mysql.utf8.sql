@@ -40,7 +40,8 @@ CREATE TABLE `com_catalogsystem_category` (
 INSERT INTO `com_catalogsystem_category` (`id`, `name`) VALUES
 (1, 'Graph Theory'),
 (2, 'Arrays'),
-(3, 'Linked Lists');
+(3, 'Linked Lists'),
+(4, 'Recursion');
 
 -- --------------------------------------------------------
 
@@ -60,9 +61,11 @@ CREATE TABLE `com_catalogsystem_history` (
 --
 
 INSERT INTO `com_catalogsystem_history` (`id`, `problem_id`, `team_id`, `date`) VALUES
-(1, 0, 0, '2022-08-27'),
-(2, 1, 1, '2022-08-28'),
-(3, 1, 0, '2022-08-30');
+(1, 1, 1, '2022-08-27'),
+(2, 2, 2, '2022-08-28'),
+(3, 2, 1, '2022-08-30'),
+(4, 3, 1, '2022-09-02'),
+(5, 4, 1, '2021-12-13');
 
 -- --------------------------------------------------------
 
@@ -85,9 +88,11 @@ CREATE TABLE `com_catalogsystem_problem` (
 --
 
 INSERT INTO `com_catalogsystem_problem` (`id`, `source_id`, `category_id`, `name`, `difficulty`, `pdf_link`, `zip_link`) VALUES
-(1, 1, 1, 'Test Problem 1', 3, 'c:/pdf', 'c:/zip'),
-(2, 1, 0, 'Test Problem 2', 5, 'c:/pdf2', 'c:/zip2'),
-(3, 1, 1, 'Test Problem 3', 5, 'c:/pdf3', 'c:/zip3');
+(1, 1, 1, 'Funny Pandas', 3, 'c:/pdf', 'c:/zip'),
+(2, 3, 3, 'Musical Chairs', 5, 'c:/pdf2', 'c:/zip2'),
+(3, 2, 2, 'Windmill Nodes', 4, 'c:/pdf3', 'c:/zip3'),
+(4, 3, 4, 'Rubix Juggle', 8, 'c:/pdf3', 'c:/zip3'),
+(5, 2, 3, 'Spaceship Tunes', 1, 'c:/pdf3', 'c:/zip3');
 
 -- --------------------------------------------------------
 
@@ -107,8 +112,11 @@ CREATE TABLE `com_catalogsystem_problemset` (
 
 INSERT INTO `com_catalogsystem_problemset` (`id`, `set_id`, `problem_id`) VALUES
 (1, 1, 1),
-(2, 2, 1),
-(3, 3, 2);
+(2, 2, 2),
+(3, 3, 2),
+(4, 4, 3),
+(5, 4, 1),
+(6, 5, 3);
 
 -- --------------------------------------------------------
 
@@ -127,9 +135,9 @@ CREATE TABLE `com_catalogsystem_set` (
 --
 
 INSERT INTO `com_catalogsystem_set` (`id`, `name`, `zip_link`) VALUES
-(1, 'Set1', 'c:/zip'),
-(2, 'Set2', 'c:/zip'),
-(3, 'Set3', 'c:/zip');
+(1, 'Set1', 'c:/zipset1'),
+(2, 'Set2', 'c:/zipset2'),
+(3, 'Set3', 'c:/zipset3');
 
 -- --------------------------------------------------------
 
@@ -147,7 +155,9 @@ CREATE TABLE `com_catalogsystem_source` (
 --
 
 INSERT INTO `com_catalogsystem_source` (`id`, `name`) VALUES
-(1, 'test Source');
+(1, 'New York 2022'),
+(2, 'Orlando 2021'),
+(3, 'Washington DC 2022');
 
 -- --------------------------------------------------------
 

@@ -88,9 +88,7 @@ class CatalogModel extends ListModel
 		$db = Factory::getContainer()->get('DatabaseDriver');
 		$catalogQuery = $db->getQuery(true);
 		
-		// NOTES:
-		// To make a variable safe to use in the string, use:
-		// 'text' . $db->quoteName(variable) . 'more text'
+		// TODO: Known error: 'h.date AS lastUsed' uses the first id, which is the oldest date, not the newest
 		
 		$catalogQuery->select('p.name AS name, p.difficulty AS difficulty, p.id AS id, c.name AS category, s.name AS source, h.date AS lastUsed')
 		->from('com_catalogsystem_problem AS p')
