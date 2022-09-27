@@ -39,41 +39,43 @@ class CatalogModel extends ListModel
 		
 		// Build the WHERE clauses for the SQL Query:
 		// (This defaults to a true statement because the '->where()' function always requires a parameter)
-		$catalogWhere = '1=1'; 
-		$catalogOrder = 'p.id';
-		if(array_key_exists('name',$data) && $data['name'] !== '')
+		$catalogWhere = '1=1';
+		if(array_key_exists('catalog_name',$data) && $data['catalog_name'] !== '')
 		{
-			$catalogWhere .= ' AND p.name LIKE "%' . $data['name'] . '%"';
+			$catalogWhere .= ' AND p.name LIKE "%' . $data['catalog_name'] . '%"';
 		}
-		if(array_key_exists('category',$data) && count($data['category']) > 0)
+		if(array_key_exists('catalog_category',$data) && count($data['catalog_category']) > 0)
 		{
 			$catalogWhere .= ' AND (0=1';
-			foreach ($data['category'] as $cid)
+			foreach ($data['catalog_category'] as $cid)
 			{
 				$catalogWhere .= ' OR c.id = "' . $cid . '"';
 			}
 			$catalogWhere .= ')';
 		}
-		if(array_key_exists('source',$data) && count($data['source']) > 0)
+		if(array_key_exists('catalog_source',$data) && count($data['catalog_source']) > 0)
 		{
 			$catalogWhere .= ' AND (0=1';
-			foreach ($data['source'] as $sid)
+			foreach ($data['catalog_source'] as $sid)
 			{
 				$catalogWhere .= ' OR s.id = "' . $sid . '"';
 			}
 			$catalogWhere .= ')';
 		}
-		if(array_key_exists('mindif',$data) && $data['mindif'] !== '')
+		if(array_key_exists('catalog_mindif',$data) && $data['catalog_mindif'] !== '')
 		{
-			$catalogWhere .= ' AND p.difficulty >= "' . $data['mindif'] . '"';
+			$catalogWhere .= ' AND p.difficulty >= "' . $data['catalog_mindif'] . '"';
 		}
-		if(array_key_exists('maxdif',$data) && $data['maxdif'] !== '')
+		if(array_key_exists('catalog_maxdif',$data) && $data['catalog_maxdif'] !== '')
 		{
-			$catalogWhere .= ' AND p.difficulty <= "' . $data['maxdif'] . '"';
+			$catalogWhere .= ' AND p.difficulty <= "' . $data['catalog_maxdif'] . '"';
 		}
 		
-		/* SQL Query:
-		SELECT p.name AS name, p.difficulty AS difficulty, p.id AS id, c.name AS category, s.name AS source, h.date AS lastUsed
+		
+		$db = Factory::getContainer()->get('DatabaseDriver');
+		$catalogQuery = $db->getQuery(true);
+		/*
+		SELECT p.name AS name, p.difficulty AS difficulty, p.id AS id, c.name AS category, s.name AS source, MAX(h.date) AS lastUsed
 		FROM com_catalogsystem_problem AS p
 		LEFT JOIN com_catalogsystem_category AS c ON p.category_id = c.id
 		LEFT JOIN com_catalogsystem_source AS s ON p.source_id = s.id
@@ -81,12 +83,7 @@ class CatalogModel extends ListModel
 		WHERE {procedurally generated conditions}
 		GROUP BY p.id
 		*/
-		$db = Factory::getContainer()->get('DatabaseDriver');
-		$catalogQuery = $db->getQuery(true);
-		
-		// TODO: Known error: 'h.date AS lastUsed' uses the first id, which is the oldest date, not the newest
-		
-		$catalogQuery->select('p.name AS name, p.difficulty AS difficulty, p.id AS id, c.name AS category, s.name AS source, h.date AS lastUsed')
+		$catalogQuery->select('p.name AS name, p.difficulty AS difficulty, p.id AS id, c.name AS category, s.name AS source, MAX(h.date) AS lastUsed')
 		->from('com_catalogsystem_problem AS p')
 		->join('LEFT','com_catalogsystem_category AS c ON p.category_id = c.id')
 		->join('LEFT','com_catalogsystem_source AS s ON p.source_id = s.id')
@@ -97,37 +94,5 @@ class CatalogModel extends ListModel
 		if($localDebug) echo '<br/> Catalog SQL Query: <br/>' . $catalogQuery->__toString();
 		
 		return $catalogQuery;
-		
-		
-		
-		
-		/*
-        $db = Factory::getContainer()->get('DatabaseDriver');
-        $query = $db->getQuery(true);
-
-		/* SQL Query:
-		SELECT p.name AS name, p.difficulty AS difficulty, p.id AS id, c.name AS category, s.name AS source, h.date AS lastUsed
-		FROM com_catalogsystem_problem AS p
-		LEFT JOIN com_catalogsystem_category AS c ON p.category_id = c.id
-		LEFT JOIN com_catalogsystem_source AS s ON p.source_id = s.id
-		LEFT JOIN com_catalogsystem_history AS h ON p.id = h.problem_id
-		GROUP BY p.id
-		/
-		
-		// NOTES:
-		// To make a variable safe to use in the string, use:
-		// 'text' . $db->quoteName(variable) . 'more text'
-		// After the rest of the query, use this to order the results:
-		// ->order('name');
-		
-		$query->select('p.name AS name, p.difficulty AS difficulty, p.id AS id, c.name AS category, s.name AS source, h.date AS lastUsed')
-		->from('com_catalogsystem_problem AS p')
-		->join('LEFT','com_catalogsystem_category AS c ON p.category_id = c.id')
-		->join('LEFT','com_catalogsystem_source AS s ON p.source_id = s.id')
-		->join('LEFT','com_catalogsystem_history AS h ON p.id = h.problem_id')
-		->group('p.id');
-		
-		return $query;
-		*/
     }
 }

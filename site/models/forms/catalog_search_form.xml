@@ -2,7 +2,7 @@
 <form>
 	<fieldset addfieldpath="/administrator/components/com_catalogsystem/models/fields">
 		<field 
-			name="name" 
+			name="catalog_name" 
 			type="text" 
 			label="Problem Name" 
 			size="40" 
@@ -10,7 +10,7 @@
 			required="false"
 		></field>
 		<field
-			name="category"
+			name="catalog_category"
 			label="Category"
 			required="false"
 			type="sql"
@@ -22,7 +22,7 @@
 			multiple="true"
 		/>
 		<field
-			name="source"
+			name="catalog_source"
 			label="Source"
 			required="false"
 			type="sql"
@@ -34,7 +34,7 @@
 			multiple="true"
 		/>
 		<field 
-			name="mindif" 
+			name="catalog_mindif" 
 			type="text" 
 			label="Min Difficulty" 
 			required="false" 
@@ -43,7 +43,7 @@
 			class="inputbox"
 			></field>
 		<field 
-			name="maxdif" 
+			name="catalog_maxdif" 
 			type="text" 
 			label="Max Difficulty" 
 			required="false" 

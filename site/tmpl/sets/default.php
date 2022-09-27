@@ -20,10 +20,10 @@ $urlStr = "index.php?option=com_catalogsystem&view=catalog&set=";
 
 ?>
 
-<form action="index.php?option=com_catalogsystem&view=catalog"
-    method="post" name="searchForm" id="searchForm" enctype="multipart/form-data">
+<form action="index.php?option=com_catalogsystem&view=sets"
+    method="post" name="setsForm" id="setsForm" enctype="multipart/form-data">
 
-	<?php echo $this->form->renderField('name');  ?>
+	<?php echo $this->form->renderField('sets_name');  ?>
 	
 	<button type="submit">Filter</button>
 </form>

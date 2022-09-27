@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-    <layout title="COM_CATALOGSYSTEM_MENU_TITLE">
-        <message><![CDATA[COM_CATALOGSYSTEM_MENU_TITLE_DESC]]></message>
+    <layout title="Catalog (Coach)">
+        <message><![CDATA[This is the coach view for the catalog page]]></message>
     </layout>
 </metadata>

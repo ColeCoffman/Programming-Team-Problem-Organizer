@@ -24,15 +24,15 @@ $urlStr = "index.php?option=com_catalogsystem&view=problemdetails&id=";
 <form action="index.php?option=com_catalogsystem&view=catalogc"
     method="post" name="searchForm" id="searchForm" enctype="multipart/form-data">
 
-	<?php echo $this->form->renderField('name');  ?>
+	<?php echo $this->form->renderField('catalog_name');  ?>
 	
-	<?php echo $this->form->renderField('category');  ?>
+	<?php echo $this->form->renderField('catalog_category');  ?>
 	
-	<?php echo $this->form->renderField('source');  ?>
+	<?php echo $this->form->renderField('catalog_source');  ?>
     
-    <?php echo $this->form->renderField('mindif');  ?>
+    <?php echo $this->form->renderField('catalog_mindif');  ?>
     
-    <?php echo $this->form->renderField('maxdif');  ?>
+    <?php echo $this->form->renderField('catalog_maxdif');  ?>
 	
 	<button type="submit">Filter</button>
 </form>

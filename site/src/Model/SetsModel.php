@@ -29,44 +29,39 @@ class SetsModel extends ListModel
      */
     protected function getListQuery()
     {
-        $db = Factory::getDbo();
-        $query = $db->getQuery(true);
+        // enable/disable debug displays for this method
+		$localDebug = false;
+		
+		// Retrieve the POST data
+		$app  = Factory::getApplication();
+		$data = $app->input->post->get('jform', array(), "array");
+		
+		// Build the WHERE clauses for the SQL Query:
+		// (This defaults to a true statement because the '->where()' function always requires a parameter)
+		$setsWhere = '1=1';
+		if(array_key_exists('sets_name',$data) && $data['sets_name'] !== '')
+		{
+			$setsWhere .= ' AND e.name LIKE "%' . $data['sets_name'] . '%"';
+		}
 
-
-
-        // -- Name, Category, Difficulty, Source, Last Used
-
-        // SELECT Problem.name AS 'Name', Problem.difficulty AS 'Difficulty', Category.name AS 'Category', Source.name AS 'Source', History.date AS 'lastUsed'
-        // FROM Problem
-        // INNER JOIN Category ON Problem.category=Category.id
-        // INNER JOIN Source ON Problem.source_id=Source.id
-        // INNER JOIN History ON Problem.id=History.problem_id
-
-
-        // Select statement Name, Category, Difficulty, Source, Last Used
-        $query->select(array('sets.name'), array('name', 'difficulty', 'id'))
-            ->select($db->quoteName(array('category.name'), array('category')))
-            ->select($db->quoteName(array('source.name'), array('source')))
-            ->select('MAX('.$db->quoteName('history.date').') AS lastUsed')
-            ->from($db->quoteName('problem'), 'problem')
-            ->join('LEFT', $db->quoteName('category', 'category') . ' ON (' . $db->quoteName('problem.category') . ' = ' . $db->quoteName('category.id') . ')')
-            ->join('LEFT', $db->quoteName('source', 'source') . ' ON (' . $db->quoteName('problem.source_id') . ' = ' . $db->quoteName('source.id') . ')')
-            ->join('LEFT', $db->quoteName('history', 'history') . ' ON (' . $db->quoteName('problem.id') . ' = ' . $db->quoteName('history.problem_id') . ')')
-			->group($db->quoteName('problem.id'));
-
-        // Order by
-        // $query->order('name');
-        return $query;
+		
+		$db = Factory::getContainer()->get('DatabaseDriver');
+		$setsQuery = $db->getQuery(true);
+		/*
+		SELECT e.id AS set_id, e.name AS name, e.zip_link AS zip, COUNT(ps.problem_id) AS numProblems
+		FROM com_catalogsystem_set AS e
+		LEFT JOIN com_catalogsystem_problemset AS ps ON e.id = ps.set_id
+		WHERE {procedurally generated}
+		GROUP BY e.id
+		*/
+        $setsQuery->select('e.id AS set_id, e.name AS name, e.zip_link AS zip, COUNT(ps.problem_id) AS numProblems')
+		->from('com_catalogsystem_set AS e')
+		->join('LEFT','com_catalogsystem_problemset AS ps ON e.id = ps.set_id')
+		->where($setsWhere)
+		->group('e.id');
+		
+		if($localDebug) echo '<br/> Catalog SQL Query: <br/>' . $setsQuery->__toString();
+		
+		return $setsQuery;
     }
-
-    // public function getCategoryTags()
-    // {
-    //     $db = Factory::getDbo();
-    //     $query = $db->getQuery(true);
-    //     $query->select("name")->from($db->quoteName('category'));
-    //     $db->setQuery($query);
-    //     $results = $db->loadColumn();
-    //     // $results = $db->loadResult();
-    //     return $results;
-    // }
 }

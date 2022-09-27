@@ -2,7 +2,7 @@
 <form>
 	<fieldset addfieldpath="/administrator/components/com_catalogsystem/models/fields">
 		<field 
-			name="name" 
+			name="sets_name" 
 			type="text" 
 			label="Set Name" 
 			size="40" 

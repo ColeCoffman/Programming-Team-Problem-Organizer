@@ -25,15 +25,15 @@ JHTML::script(Juri::base() . '/media/com_catalogsystem/js/catalogHelper.js');
 <form action="index.php?option=com_catalogsystem&view=catalog"
     method="post" name="com_catalogsystem.catalogsearch" id="com_catalogsystem.catalogsearch" enctype="multipart/form-data">
 
-	<?php echo $this->form->renderField('name');  ?>
+	<?php echo $this->form->renderField('catalog_name');  ?>
 	
-	<?php echo $this->form->renderField('category');  ?>
+	<?php echo $this->form->renderField('catalog_category');  ?>
 	
-	<?php echo $this->form->renderField('source');  ?>
+	<?php echo $this->form->renderField('catalog_source');  ?>
     
-    <?php echo $this->form->renderField('mindif');  ?>
+    <?php echo $this->form->renderField('catalog_mindif');  ?>
     
-    <?php echo $this->form->renderField('maxdif');  ?>
+    <?php echo $this->form->renderField('catalog_maxdif');  ?>
 	
 	<button type="submit">Filter</button>
 </form>

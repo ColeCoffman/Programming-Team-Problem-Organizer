@@ -111,7 +111,7 @@ CREATE TABLE `com_catalogsystem_problemset` (
 --
 
 INSERT INTO `com_catalogsystem_problemset` (`id`, `set_id`, `problem_id`) VALUES
-(1, 1, 1),
+(1, 3, 1),
 (2, 2, 2),
 (3, 2, 3),
 (4, 3, 4),
@@ -135,9 +135,9 @@ CREATE TABLE `com_catalogsystem_set` (
 --
 
 INSERT INTO `com_catalogsystem_set` (`id`, `name`, `zip_link`) VALUES
-(1, 'Set1', 'c:/zipset1'),
-(2, 'Set2', 'c:/zipset2'),
-(3, 'Set3', 'c:/zipset3');
+(1, 'Long Problems', 'c:/zipset1'),
+(2, 'Emma\'s Practice', 'c:/zipset2'),
+(3, 'Charlie\'s Practice', 'c:/zipset3');
 
 -- --------------------------------------------------------
 
