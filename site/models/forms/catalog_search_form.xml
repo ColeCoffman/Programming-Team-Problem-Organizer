@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 	<fieldset addfieldpath="/administrator/components/com_catalogsystem/models/fields">
-		<field 
-			name="catalog_name" 
-			type="text" 
-			label="Problem Name" 
-			size="40" 
-			class="inputbox" 
+		<field
+			name="catalog_name"
+			type="text"
+			label="Problem Name"
+			size="40"
+			class="inputbox"
 			required="false"
 		></field>
 		<field
@@ -15,6 +15,7 @@
 			required="false"
 			type="sql"
 			default=""
+			class="inputbox"
 			query="SELECT id, name FROM com_catalogsystem_set"
 			key_field="id"
 			value_field="name"
@@ -27,6 +28,7 @@
 			required="false"
 			type="sql"
 			default=""
+			class="inputbox"
 			query="SELECT id, name FROM com_catalogsystem_category"
 			key_field="id"
 			value_field="name"
@@ -39,28 +41,29 @@
 			required="false"
 			type="sql"
 			default=""
+			class="inputbox"
 			query="SELECT id, name FROM com_catalogsystem_source"
 			key_field="id"
 			value_field="name"
 			layout="joomla.form.field.list-fancy-select"
 			multiple="true"
 		/>
-		<field 
-			name="catalog_mindif" 
-			type="text" 
-			label="Min Difficulty" 
-			required="false" 
-			size="3" 
-			filter="integer" 
+		<field
+			name="catalog_mindif"
+			type="text"
+			label="Min Difficulty"
+			required="false"
+			size="8"
+			filter="integer"
 			class="inputbox"
 			></field>
-		<field 
-			name="catalog_maxdif" 
-			type="text" 
-			label="Max Difficulty" 
-			required="false" 
-			size="3" 
-			filter="integer" 
+		<field
+			name="catalog_maxdif"
+			type="text"
+			label="Max Difficulty"
+			required="false"
+			size="8"
+			filter="integer"
 			class="inputbox"
 			></field>
 	</fieldset>

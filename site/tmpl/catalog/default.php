@@ -15,32 +15,42 @@ use Joomla\CMS\Factory;
 use ProgrammingTeam\Component\CatalogSystem\Site\Helper\ajaxCategories;
 use Joomla\CMS\Router\Route;
 
-JHTML::script(Juri::base() . '/media/com_catalogsystem/js/catalogHelper.js');
+$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa->useStyle('catalog')
+    ->useScript('catalogHelper');
+//JHTML::script(Juri::base() . '/media/com_catalogsystem/js/catalogHelper.js');
 
 // JHTML::script(Juri::base() . '/media/com_catalogsystem/js/categories.js');
 
 
 ?>
 
-<form action="index.php?option=com_catalogsystem&view=catalog"
+<form class= "search-box" action="index.php?option=com_catalogsystem&view=catalog"
     method="post" name="com_catalogsystem.catalogsearch" id="com_catalogsystem.catalogsearch" enctype="multipart/form-data">
-
-	<?php echo $this->form->renderField('catalog_name');  ?>
-	
-	<?php echo $this->form->renderField('catalog_set');  ?>
-	
-	<?php echo $this->form->renderField('catalog_category');  ?>
-	
-	<?php echo $this->form->renderField('catalog_source');  ?>
-    
-    <?php echo $this->form->renderField('catalog_mindif');  ?>
-    
-    <?php echo $this->form->renderField('catalog_maxdif');  ?>
-	
-	<button type="submit">Filter</button>
+    <div>
+      <div>
+        <?php echo $this->form->renderField('catalog_name');  ?>
+      </div>
+      <div>
+        <?php echo $this->form->renderField('catalog_set');  ?>
+      </div>
+       <div>
+  	    <?php echo $this->form->renderField('catalog_category');  ?>
+       </div>
+       <div>
+         <?php echo $this->form->renderField('catalog_source');  ?>
+       </div>
+       <div style = "display: flex; flex-wrap: wrap;">
+            <?php echo $this->form->renderField('catalog_mindif');  ?>
+           <?php echo $this->form->renderField('catalog_maxdif');  ?>
+       </div>
+    </div>
+    <div class= "end-content">
+  	   <button class = "submit-button" type="submit">Filter</button>
+     </div>
 </form>
 
-<table class="table table-striped table-hover" id="myTable">
+<table class="catalog_table" id="myTable">
     <thead>
         <tr>
             <th onclick="sortTable(0)">Name ↕</th>
@@ -63,4 +73,3 @@ JHTML::script(Juri::base() . '/media/com_catalogsystem/js/catalogHelper.js');
     </tbody>
 </table>
 <?php echo $this->pagination->getListFooter(); ?>
-

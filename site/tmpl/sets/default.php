@@ -15,20 +15,24 @@ use Joomla\CMS\Factory;
 use ProgrammingTeam\Component\CatalogSystem\Site\Helper\ajaxCategories;
 use Joomla\CMS\Router\Route;
 
-JHTML::script(Juri::base() . '/media/com_catalogsystem/js/categories.js');
+$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa->useStyle('catalog');
+//JHTML::script(Juri::base() . '/media/com_catalogsystem/js/categories.js');
 $urlStr = "index.php?option=com_catalogsystem&view=catalog&set=";
 
 ?>
 
-<form action="index.php?option=com_catalogsystem&view=sets"
+<form class= "search-box" action="index.php?option=com_catalogsystem&view=sets"
     method="post" name="setsForm" id="setsForm" enctype="multipart/form-data">
 
 	<?php echo $this->form->renderField('sets_name');  ?>
-	
-	<button type="submit">Filter</button>
+
+  <div class= "end-content">
+     <button class = "submit-button" type="submit">Filter</button>
+   </div>
 </form>
 
-<table class="table table-striped table-hover">
+<table class="catalog_table">
     <thead>
         <tr>
             <th>Name</th>
@@ -47,4 +51,3 @@ $urlStr = "index.php?option=com_catalogsystem&view=catalog&set=";
     </tbody>
 </table>
 <?php echo $this->pagination->getListFooter(); ?>
-

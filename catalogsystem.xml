@@ -57,6 +57,7 @@
     <media folder="media" destination="com_catalogsystem">
 		<folder>css</folder>
 		<folder>js</folder>
+    <filename>joomla.asset.json</filename>
 	</media>
 
     <languages>

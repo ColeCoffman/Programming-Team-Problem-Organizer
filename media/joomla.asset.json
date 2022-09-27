@@ -1,0 +1,29 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "com_catalogsystem",
+  "version": "1.0.0",
+  "description": "Catalog System",
+  "license": "GPL-2.0+",
+  "assets": [
+    {
+      "name": "catalog",
+      "type": "style",
+      "uri": "com_catalogsystem/catalog.css"
+    },
+    {
+      "name": "style.css",
+      "type": "style",
+      "uri": "com_catalogsystem/style.css"
+    },
+    {
+      "name": "script",
+      "type": "script",
+      "uri": "com_catalogsystem/script.js"
+    },
+    {
+      "name": "catalogHelper",
+      "type": "script",
+      "uri": "com_catalogsystem/catalogHelper.js"
+    }
+  ]
+}
