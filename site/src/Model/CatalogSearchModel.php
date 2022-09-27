@@ -45,6 +45,20 @@ class CatalogSearchModel extends FormModel
 		$app  = Factory::getApplication();
 		$data = $app->input->post->get('jform', array(), "array");
 		
+		// Retrive URL data and format the data into an array of keys and values
+		$queryStrings = explode('&',$_SERVER['QUERY_STRING']);
+		$urlData = array();
+		foreach($queryStrings as $queryStr)
+		{
+			$queryStrParts = explode('=',$queryStr);
+			if(count($queryStrParts) == 2) $urlData[$queryStrParts[0]] = $queryStrParts[1];
+		}
+		// If there is a URL set, use it to overwrite the POST set
+		if(array_key_exists('set',$urlData) && $urlData['set'] !== '')
+		{
+			$data['catalog_set'] = array($urlData['set']);
+		}
+		
 		// If any of the POST keys are valid, they will be used to initialize this form
 		// (Invalid or missing keys will be ignored without issue)
 		return $data;

@@ -26,6 +26,8 @@ $urlStr = "index.php?option=com_catalogsystem&view=problemdetails&id=";
 
 	<?php echo $this->form->renderField('catalog_name');  ?>
 	
+	<?php echo $this->form->renderField('catalog_set');  ?>
+	
 	<?php echo $this->form->renderField('catalog_category');  ?>
 	
 	<?php echo $this->form->renderField('catalog_source');  ?>

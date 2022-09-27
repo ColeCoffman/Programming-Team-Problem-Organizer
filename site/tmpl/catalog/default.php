@@ -27,6 +27,8 @@ JHTML::script(Juri::base() . '/media/com_catalogsystem/js/catalogHelper.js');
 
 	<?php echo $this->form->renderField('catalog_name');  ?>
 	
+	<?php echo $this->form->renderField('catalog_set');  ?>
+	
 	<?php echo $this->form->renderField('catalog_category');  ?>
 	
 	<?php echo $this->form->renderField('catalog_source');  ?>
