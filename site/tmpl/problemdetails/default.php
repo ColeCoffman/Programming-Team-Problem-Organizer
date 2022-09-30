@@ -24,8 +24,8 @@ defined('_JEXEC') or die('Restricted Access');
         echo "<h3>Difficulty: $info->difficulty</h3>";
         echo "<h3>Source: $info->source</h3>";
         echo "<h4>Associated Resources:</h4>";
-        echo "<p>Problem PDF: $info->pdf_path</p>";
-        echo "<p>Link to ZIP: $info->zip_url</p>";
+        echo "<p>Problem PDF: $info->pdf_link</p>";
+        echo "<p>Link to ZIP: $info->zip_link</p>";
         echo "<h4>Use History:</h4>";
         
         echo "<table class='table table-striped table-hover'>

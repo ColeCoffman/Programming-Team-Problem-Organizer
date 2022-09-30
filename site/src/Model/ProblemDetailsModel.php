@@ -41,13 +41,13 @@ class ProblemDetailsModel extends ItemModel
 		}
 
         // Select statement Name, Category, Difficulty, Source, Last Used
-	    $query->select(array('problem.name', 'problem.difficulty', 'problem.id', 'problem.zip_url', 'problem.pdf_path'), array('name', 'difficulty', 'id', 'zipUrl', 'pdfPath'))
+	    $query->select(array('com_catalogsystem_problem.name', 'com_catalogsystem_problem.difficulty', 'com_catalogsystem_problem.id', 'com_catalogsystem_problem.zip_link', 'com_catalogsystem_problem.pdf_link'), array('name', 'difficulty', 'id', 'zipUrl', 'pdfPath'))
 		    ->select($db->quoteName(array('category.name'), array('category')))
 		    ->select($db->quoteName(array('source.name'), array('source')))
 		    ->from($db->quoteName('com_catalogsystem_problem'), 'problem')
-		    ->join('INNER', $db->quoteName('com_catalogsystem_category', 'category') . ' ON (' . $db->quoteName('problem.category') . ' = ' . $db->quoteName('category.id') . ')')
-		    ->join('INNER', $db->quoteName('com_catalogsystem_source', 'source') . ' ON (' . $db->quoteName('problem.source_id') . ' = ' . $db->quoteName('source.id') . ')')
-		    ->where($db->quoteName('problem.id') . " = " . $db->quote($idvar));
+		    ->join('INNER', $db->quoteName('com_catalogsystem_category', 'category') . ' ON (' . $db->quoteName('com_catalogsystem_problem.category_id') . ' = ' . $db->quoteName('category.id') . ')')
+		    ->join('INNER', $db->quoteName('com_catalogsystem_source', 'source') . ' ON (' . $db->quoteName('source.id') . ' = ' . $db->quoteName('com_catalogsystem_problem.source_id') . ')')
+		    ->where($db->quoteName('com_catalogsystem_problem.id') . " = " . $db->quote($idvar));
 
         
         // Order by
@@ -72,7 +72,7 @@ class ProblemDetailsModel extends ItemModel
 
 	    $SetsQuery = $db->getQuery(true);
 	    $SetsQuery->select(array('sets.name'))
-		    ->from($db->quoteName('com_catalogsystem_sets', 'sets'))
+		    ->from($db->quoteName('com_catalogsystem_set', 'sets'))
 		    ->join('INNER', $db->quoteName('com_catalogsystem_problemset', 'problemset') . ' ON (' . $db->quoteName('problemset.problem_id') . ' = ' . $db->quote($idvar) . ')')
 		    ->where($db->quoteName('sets.id') . " = " . $db->quoteName('problemset.set_id'))
 		    ->order('name ASC');
