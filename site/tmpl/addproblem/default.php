@@ -14,6 +14,7 @@ defined('_JEXEC') or die('Restricted Access');
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $app  = Factory::getApplication();
     $data = $app->input->post->get('jform', array(), "array");
@@ -58,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Create a new query object.
     $query = $db->getQuery(true);
     
+    $query->insert($db->quoteName('com_catalogsystem_problem'));
     $problemColumns = array("source_id", "category_id", "name", "difficulty", "pdf_link", "zip_link");
     $problemValues = array($data['set_id'], $data['source_id'], $data['name'], $data['difficulty'], $data['category']);
     
