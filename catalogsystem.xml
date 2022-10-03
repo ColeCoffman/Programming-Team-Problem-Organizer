@@ -41,11 +41,13 @@
             <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
         </sql>
     </uninstall>
+	<!-- The sql/updates folder was removed because it was out of date
     <update>
         <schemas>
             <schemapath type="mysql">sql/updates/mysql</schemapath>
         </schemas>
     </update>
+	-->
 
     <files folder="site/">
         <folder>src</folder>

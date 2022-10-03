@@ -19,6 +19,10 @@ function sortTable(n) {
       one from current row and one from the next: */
       x = rows[i].getElementsByTagName("TD")[n];
       y = rows[i + 1].getElementsByTagName("TD")[n];
+    if (x.childElementCount !== 0){
+        x = x.firstElementChild;
+        y = y.firstElementChild;
+    }
       /* Check if the two rows should switch place,
       based on the direction, asc or desc: */
       if (dir == "asc") {

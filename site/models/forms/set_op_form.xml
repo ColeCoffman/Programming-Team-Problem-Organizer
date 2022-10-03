@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fields name="op">
+        <fieldset name="opPanel">
+            <field name="desiredOp" type="radio" default="0" label="Select an Operation" description="">
+                <option value="0">Record Use</option>
+                <option value="2">Delete</option>
+            </field>
+            <field name="useDate" type="calendar" label="Select Date" showon="desiredOp:0"/>
+        </fieldset>
+    </fields>
+</form>
