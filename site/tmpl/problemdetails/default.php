@@ -20,15 +20,27 @@ defined('_JEXEC') or die('Restricted Access');
         echo "<h3>Include a valid id in the URL to view problem details.</h3>";
     }else{
         $info = $this->item;
-		$zipDownload = $uri . "media/com_catalogsystem/uploads/zip/" . $info->zip_link;
-	    $pdfDownload = $uri . "media/com_catalogsystem/uploads/pdf/" . $info->pdf_link;
+		if($info->zip_link != null){
+			$zipDownload = $uri . "media/com_catalogsystem/uploads/zip/" . $info->zip_link;
+		}
+		if($info->pdf_link != null){
+			$pdfDownload = $uri . "media/com_catalogsystem/uploads/pdf/" . $info->pdf_link;
+		}
         echo "<h2>$info->name</h2>";
         echo "<h3>Category: $info->category</h3>";
         echo "<h3>Difficulty: $info->difficulty</h3>";
         echo "<h3>Source: $info->source</h3>";
         echo "<h4>Associated Resources:</h4>";
-	    echo "<p>Problem PDF: <a href='$pdfDownload'>Download</a></p>";
-        echo "<p>Link to ZIP: <a href='$zipDownload' download>Download</a></p>";
+		if($info->zip_link != null){
+			echo "<p>Problem PDF: <a href='$pdfDownload'>Download</a></p>";
+		} else {
+			echo "<p>Problem PDF: <a href='#'>N/A</a></p>";
+		}
+		if($info->zip_link != null){
+			echo "<p>Link to ZIP: <a href='$zipDownload' download>Download</a></p>";
+		} else {
+			echo "<p>Link to ZIP: <a href='#'>N/A</a></p>";
+		}
         echo "<h4>Use History:</h4>";
         
         echo "<table class='table table-striped table-hover'>
