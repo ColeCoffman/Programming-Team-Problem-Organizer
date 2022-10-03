@@ -16,7 +16,8 @@ use ProgrammingTeam\Component\CatalogSystem\Site\Helper\ajaxCategories;
 use Joomla\CMS\Router\Route;
 
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-$wa->useStyle('catalog');
+$wa->useStyle('catalog')
+    ->useScript('catalogHelper');
 //JHTML::script(Juri::base() . '/media/com_catalogsystem/js/categories.js');
 $urlStr = "index.php?option=com_catalogsystem&view=catalog&set=";
 
@@ -32,12 +33,12 @@ $urlStr = "index.php?option=com_catalogsystem&view=catalog&set=";
    </div>
 </form>
 
-<table class="catalog_table">
+<table class="catalog_table" id="myTable">
     <thead>
         <tr>
-            <th>Name</th>
-            <th>Number of Problems</th>
-            <th>Zip URL</th>
+            <th onclick="sortTable(0)">Name</th>
+            <th onclick="sortTable(1)">Number of Problems</th>
+            <th onclick="sortTable(2)">Zip URL</th>
         </tr>
     </thead>
     <tbody>

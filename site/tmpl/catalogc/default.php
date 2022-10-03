@@ -84,6 +84,9 @@ $urlStr = "index.php?option=com_catalogsystem&view=problemdetails&id=";
         </tbody>
     </table>
     <?php echo $this->pagination->getListFooter(); ?>
-    <?php echo $this->form2->renderFieldset("opPanel"); ?>
-    <button type="submit">Confirm</button>
+    <div class="search-box">
+        <?php echo $this->form2->renderFieldset("opPanel"); ?>
+        <button type="submit">Confirm</button>
+    </div>
+    
 </form>
