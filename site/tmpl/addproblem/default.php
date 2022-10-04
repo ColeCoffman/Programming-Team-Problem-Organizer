@@ -17,7 +17,7 @@ use Joomla\CMS\Filesystem\File;
 require __DIR__ . '\\..\\functionLib.php';
 
 // Enable/disable Debug
-$localDebug = true;
+$localDebug = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	
@@ -221,7 +221,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		}
 	}
 	
-	
+	// Display a temporary confirmation message
+	echo '<br/><b>[Problem Added Successfully]</b><br/>';
 	
 }//End of 'if(POST)' section
 
