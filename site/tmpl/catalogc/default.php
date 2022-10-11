@@ -15,6 +15,8 @@ use Joomla\CMS\Factory;
 use ProgrammingTeam\Component\CatalogSystem\Site\Helper\ajaxCategories;
 use Joomla\CMS\Router\Route;
 
+require __DIR__ . '\\..\\functionLib.php';
+
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('catalogHelper')
     ->useStyle('catalog');
@@ -23,6 +25,101 @@ $wa->useScript('catalogHelper')
 JHTML::script(Juri::base() . '/media/com_catalogsystem/js/catalogHelper.js');*/
 $urlStr = "index.php?option=com_catalogsystem&view=problemdetails&id=";
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Retrieve POST input and file uploads
+    $app  = Factory::getApplication();
+    $postData = $app->input->post->get('jform2', array(), "array");
+    if($postData != null)
+    {
+	    $operation = $postData['op'];
+	    unset($postData['op']);
+	    $selected = array_keys($postData);
+
+	    $db    = Factory::getContainer()->get('DatabaseDriver');
+	    $query = $db->getQuery(true);
+	    switch ($operation['desiredOp'])
+	    {
+		    case 0: // Record Use
+			    foreach ($selected as $id)
+			    { // ID = Problem ID
+				    $query->clear();
+				    $columns = array('problem_id', 'date');
+				    $values  = array(sqlInt($id), sqlDate($operation['useDate']));
+				    $query->insert('com_catalogsystem_history')
+					    ->columns($db->quoteName($columns))
+					    ->values(implode(',', $values));
+				    $db->setQuery($query);
+				    $db->execute();
+			    }
+			    echo "<meta http-equiv='refresh' content='0'>";
+			    break;
+		    case 1: // Add to Set
+			    $error = false;
+			    foreach ($selected as $id) // problem id
+			    {
+				    foreach ($operation['setName'] as $setID)
+				    {
+					    $query->clear();
+					    $columns = array('set_id', 'problem_id');
+					    $values  = array(sqlInt($setID), sqlInt($id));
+					    $query->insert('com_catalogsystem_problemset')
+						    ->columns($db->quoteName($columns))
+						    ->values(implode(',', $values));
+					    $db->setQuery($query);
+					    if ($db->execute() != 1)
+					    { // If there was an error / executes
+						    $query->clear();
+						    $query->select($db->quoteName(array('id', 'name')));
+						    $query->from($db->quoteName('com_catalogsystem_problem'));
+						    $query->where($db - quoteName('id') . ' LIKE ' . $db->quoteName('$id'));
+						    $db->setQuery($query);
+						    $problemName = $db->loadResult();
+						    $query->clear();
+						    $query->select($db->quoteName(array('id', 'name')));
+						    $query->from($db->quoteName('com_catalogsystem_set'));
+						    $query->where($db - quoteName($id) . ' LIKE ' . $db->quoteName($setID));
+						    $db->setQuery($query);
+						    $setName = $db->loadResult();
+						    $app->enqueueMessage("There was an issue adding problem {$problemName} to set {$setName}", "error");
+						    $query->clear();
+					    }
+
+				    }
+
+			    }
+			    echo "<meta http-equiv='refresh' content='0'>";
+			    break;
+		    case 2: // Delete
+			    foreach ($selected as $id) // problem id
+			    {
+				    $query->clear();
+				    $query->delete($db->quoteName('com_catalogsystem_problem'));
+				    $query->where($db->quoteName('id') . ' = ' . $db->quote($id));
+				    $db->setQuery($query);
+				    if ($db->execute() != 1)
+				    {
+					    $query->clear();
+					    $query->select($db->quoteName(array('id', 'name')));
+					    $query->from($db->quoteName('com_catalogsystem_problem'));
+					    $query->where($db->quoteName('id') . ' = ' . $db->quoteName($id));
+					    $db->setQuery($query);
+					    $problemName = $db->loadResult();
+					    $app->enqueueMessage("There was an error deleting problem {$problemName}", "error");
+					    $query->clear();
+				    }
+
+			    }
+			    echo "<meta http-equiv='refresh' content='0'>";
+			    break;
+		    default:
+			    $app->enqueueMessage("There seems to have been an error, Please try again", "error");
+			    break;
+	    }
+	    //     var_dump($operation);
+        //     var_dump($selected);
+    }
+
+}
 ?>
 
 <form class= "search-box" action="index.php?option=com_catalogsystem&view=catalogc"

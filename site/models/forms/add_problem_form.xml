@@ -18,8 +18,6 @@
 			key_field="name"
 			value_field="name"
 			layout="joomla.form.field.list-fancy-select"
-			multiple="true"
-			custom="true"
 		/>
 	<field
 			name="source"
@@ -32,8 +30,6 @@
 			key_field="name"
 			value_field="name"
 			layout="joomla.form.field.list-fancy-select"
-			multiple="true"
-			custom="true"
 		/>
     <field name="dif"
 		type="text"
