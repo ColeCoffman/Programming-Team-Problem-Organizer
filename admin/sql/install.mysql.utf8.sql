@@ -200,8 +200,12 @@ ALTER TABLE `com_catalogsystem_problem`
 --
 ALTER TABLE `com_catalogsystem_problemset`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `set_id` (`set_id`),
-  ADD KEY `problem_id` (`problem_id`);
+
+    -- --------------------------------------------------------
+    -- Cascade deletes for database
+    -- --------------------------------------------------------
+  ADD foreign key (set_id) references com_catalogsystem_set(id) on delete cascade,
+  ADD foreign key (problem_id) references com_catalogsystem_problem(id) on delete cascade;
 
 --
 -- Indexes for table `com_catalogsystem_set`
@@ -266,24 +270,8 @@ ALTER TABLE `com_catalogsystem_source`
 --
 ALTER TABLE `com_catalogsystem_team`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 COMMIT;
-
--- --------------------------------------------------------
---
--- Triggers for Database
---
-
-/* Error: "This command is not supported in the prepared statement protocol yet"
-CREATE TRIGGER `cleanUpHistory`
-    AFTER DELETE ON `com_catalogsystem_problem`
-    FOR EACH ROW DELETE FROM com_catalogsystem_history
-    WHERE problem_id = OLD.id;
-
-CREATE TRIGGER `cleanUpProblemSet`
-    AFTER DELETE ON `com_catalogsystem_problem`
-    FOR EACH ROW DELETE FROM com_catalogsystem_problemset
-    WHERE problem_id = OLD.id;
-*/
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
