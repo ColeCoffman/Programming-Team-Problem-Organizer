@@ -58,11 +58,14 @@ function sortTable(n) {
 }
 
 
-function toggleAll() {
-    var items = document.getElementsByTagName('input');
-    var toggle = document.getElementById('toggle').checked;
-    for (var i = 0; i < items.length; i++) {
-        if (items[i].type == 'checkbox')
-            items[i].checked = toggle;
+function toggleAll(tableName="myTable", toggleName="toggle") {
+    var table = document.getElementById(tableName);
+    var toggle = document.getElementById(toggleName).checked;
+    rows = table.rows;
+    /* Loop through all table rows (except the
+    first, which contains table headers): */
+    for (i = 1; i < (rows.length); i++) {
+      // Start by saying there should be no switching:
+      rows[i].getElementsByTagName("TD")[0].getElementsByTagName("input")[0].checked = toggle;
     }
 }	
