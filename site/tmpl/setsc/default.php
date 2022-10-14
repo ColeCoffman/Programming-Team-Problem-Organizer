@@ -15,11 +15,93 @@ use Joomla\CMS\Factory;
 use ProgrammingTeam\Component\CatalogSystem\Site\Helper\ajaxCategories;
 use Joomla\CMS\Router\Route;
 
+require __DIR__ . '\\..\\functionLib.php';
+
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useStyle('catalog')
     ->useScript('catalogHelper');
 //JHTML::script(Juri::base() . '/media/com_catalogsystem/js/categories.js');
 $urlStr = "index.php?option=com_catalogsystem&view=catalogc&set=";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+	// Retrieve POST input and file uploads
+	$app  = Factory::getApplication();
+	$postData = $app->input->post->get('jform2', array(), "array");
+	if($postData)
+	{
+		$operation = $postData['op'];
+		unset($postData['op']);
+		$selected = array_keys($postData);
+		$db    = Factory::getContainer()->get('DatabaseDriver');
+		$query = $db->getQuery(true);
+//        var_dump($operation);
+		switch ($operation['desiredOp']){
+            case 0: // Record Use
+                if($selected){
+                    if(!$operation['useDate']){
+	                    $app->enqueueMessage("Please select a date", "error");
+                        break;
+                    }
+
+	            foreach ($selected as $SetID){ // Each set
+		            $query->clear();
+                    $query->select($db->quoteName(array('problem_id', 'set_id', 'id')));
+                    $query->from($db->quoteName('com_catalogsystem_problemset'));
+                    $query->where($db->quoteName('set_id') . ' = ' . $db->quote($SetID));
+		            $db->setQuery($query);
+		            $problems = $db->loadAssocList();
+//                    echo "SET ID: " . $SetID;
+//                    var_dump($problems);
+
+	                    foreach($problems as $problem)
+	                    { // Record Use for each problem
+		                    $query->clear();
+		                    $columns = array('problem_id', 'date');
+		                    $values  = array(sqlInt($problem['problem_id']), sqlDate($operation['useDate']));
+		                    $query->insert('com_catalogsystem_history')
+			                    ->columns($db->quoteName($columns))
+			                    ->values(implode(',', $values));
+		                    $db->setQuery($query);
+		                    $db->execute();
+	                    }
+                }
+                } else {
+	                $app->enqueueMessage("Please select at least one set", "error");
+                    break;
+                }
+	            $app->enqueueMessage("Usage record updated successfully");
+                break;
+            case 2: // Delete
+                if($selected)
+                {
+	                foreach ($selected as $SetID)
+	                {
+		                $query->clear();
+		                $query->delete($db->quoteName('com_catalogsystem_set'));
+		                $query->where($db->quoteName('id') . ' = ' . $db->quote($SetID));
+		                $db->setQuery($query);
+		                if ($db->execute() != 1)
+		                {
+			                $query->clear();
+			                $query->select($db->quoteName(array('id', 'name')));
+			                $query->from($db->quoteName('com_catalogsystem_set'));
+			                $query->where($db->quoteName('id') . ' = ' . $db->quoteName($SetID));
+			                $db->setQuery($query);
+			                $setName = $db->loadResult();
+			                $app->enqueueMessage("There was an error deleting set $setName}", "error");
+			                $query->clear();
+		                }
+	                }
+                } else {
+	                $app->enqueueMessage("Please select at least one set", "error");
+	                break;
+                }
+	            echo "<meta http-equiv='refresh' content='0'>";
+	            break;
+        }
+	}
+
+}
 
 ?>
 
