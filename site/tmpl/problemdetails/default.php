@@ -31,15 +31,15 @@ defined('_JEXEC') or die('Restricted Access');
         echo "<h3>Difficulty: $info->difficulty</h3>";
         echo "<h3>Source: $info->source</h3>";
         echo "<h4>Associated Resources:</h4>";
-		if($info->zip_link != null){
+		if($info->pdf_link != null){
 			echo "<p>Problem PDF: <a href='$pdfDownload'>Download</a></p>";
 		} else {
 			echo "<p>Problem PDF: <a href='#'>N/A</a></p>";
 		}
 		if($info->zip_link != null){
-			echo "<p>Link to ZIP: <a href='$zipDownload' download>Download</a></p>";
+			echo "<p>Problem ZIP: <a href='$zipDownload' download>Download</a></p>";
 		} else {
-			echo "<p>Link to ZIP: <a href='#'>N/A</a></p>";
+			echo "<p>Problem ZIP: <a href='#'>N/A</a></p>";
 		}
         echo "<h4>Use History:</h4>";
         

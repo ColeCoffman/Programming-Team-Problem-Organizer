@@ -19,18 +19,31 @@ function arrGet($arr, string $key)
 }
 
 // Sanitize strings for use in SQL Queries
-function sqlString($str, int $maxLength = 250)
+function sqlString($str, bool $wrapQuotes = true, int $maxLength = 250)
 {
 	if($maxLength<0 || $maxLength>250) $maxLength = 250;
 	if(!is_string($str) || $str==='') return 'NULL';
 	$str = str_replace('\\', '\\\\', $str);
 	$str = str_replace('"', '\\"', $str);
 	$str = substr($str,0,$maxLength);
-	return '"'.$str.'"';
+	if(is_bool($wrapQuotes) && $wrapQuotes) $str = '"'.$str.'"';
+	return $str;
+}
+
+// Sanitize strings for use with the SQL LIKE operator
+function sqlStringLike($str, bool $wrapPercent = true, bool $wrapQuotes = true, int $maxLength = 250)
+{
+	$str = sqlString($str,false,$maxLength);
+	if($str==='NULL') return $str;
+	$str = str_replace('%', '\\%', $str);
+	$str = str_replace('_', '\\_', $str);
+	if(is_bool($wrapPercent) && $wrapPercent) $str = '%'.$str.'%';
+	if(is_bool($wrapQuotes) && $wrapQuotes) $str = '"'.$str.'"';
+	return $str;
 }
 
 // Sanitize dates for use in SQL Queries (format is yyyy-mm-dd)
-function sqlDate($date)
+function sqlDate($date, bool $wrapQuotes = true)
 {
 	if(!is_string($date) || strlen($date) !== 10) return 'NULL';
 	for($i = 0; $i < strlen($date); $i++)
@@ -46,7 +59,8 @@ function sqlDate($date)
 			if(!is_numeric($date[$i])) return 'NULL';
 		}
 	}
-	return '"'.$date.'"';
+	if(is_bool($wrapQuotes) && $wrapQuotes) $date = '"'.$date.'"';
+	return $date;
 }
 
 // Sanitize integers for use in SQL Queries

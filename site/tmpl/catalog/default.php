@@ -28,22 +28,30 @@ $wa->useStyle('catalog')
 <form class= "search-box" action="index.php?option=com_catalogsystem&view=catalog"
     method="post" name="com_catalogsystem.catalogsearch" id="com_catalogsystem.catalogsearch" enctype="multipart/form-data">
     <div>
-      <div>
-        <?php echo $this->form->renderField('catalog_name');  ?>
-      </div>
-      <div>
-        <?php echo $this->form->renderField('catalog_set');  ?>
-      </div>
-       <div>
-  	    <?php echo $this->form->renderField('catalog_category');  ?>
-       </div>
-       <div>
-         <?php echo $this->form->renderField('catalog_source');  ?>
-       </div>
-       <div style = "display: flex; flex-wrap: wrap;">
-            <?php echo $this->form->renderField('catalog_mindif');  ?>
-           <?php echo $this->form->renderField('catalog_maxdif');  ?>
-       </div>
+		<div>
+			<?php echo $this->form->renderField('catalog_name');  ?>
+		</div>
+		<div>
+			<?php echo $this->form->renderField('catalog_set');  ?>
+		</div>
+		<div>
+			<?php echo $this->form->renderField('catalog_category');  ?>
+		</div>
+		<div>
+			<?php echo $this->form->renderField('catalog_source');  ?>
+		</div>
+		<div style = "display: flex; flex-wrap: wrap;">
+			<?php echo $this->form->renderField('catalog_mindif');  ?>
+			<?php echo $this->form->renderField('catalog_maxdif');  ?>
+		</div>
+		<div style = "display: flex; flex-wrap: wrap;">
+			<?php echo $this->form->renderField('catalog_date_after');  ?>
+			<?php echo $this->form->renderField('catalog_date_before');  ?>
+		</div>
+		<div style = "display: flex; flex-wrap: wrap;">
+			<?php echo $this->form->renderField('catalog_date_notbefore');  ?>
+			<?php echo $this->form->renderField('catalog_date_notafter');  ?>
+		</div>
     </div>
     <div class= "end-content">
   	   <button class = "submit-button" type="submit">Filter</button>
@@ -57,19 +65,28 @@ $wa->useStyle('catalog')
             <th onclick="sortTable(1)">Category ↕</th>
             <th onclick="sortTable(2)">Difficulty ↕</th>
             <th onclick="sortTable(3)">Source ↕</th>
-            <th onclick="sortTable(4)">Last Used ↕</th>
+			<th onclick="sortTable(4)">First Used ↕</th>
+            <th onclick="sortTable(5)">Last Used ↕</th>
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($this->items as $i => $row) : ?>
-            <tr>
-                <td><?php $url = Route::_("index.php?option=com_catalogsystem&view=problemdetails&id=" . $row->id); echo "<a href='$url'>$row->name</a>";?></td>
-                <td><?php echo $row->category; ?></td>
-                <td><?php echo $row->difficulty; ?></td>
-                <td><?php echo $row->source; ?></td>
-                <td><?php echo $row->lastUsed; ?></td>
-            </tr>
-        <?php endforeach; ?>
+        <?php 
+		if(is_array($this->items))
+		{
+			foreach ($this->items as $i => $row)
+			{
+				echo '<tr>';
+				$url = Route::_("index.php?option=com_catalogsystem&view=problemdetails&id=" . $row->id);
+				echo "<td><a href='$url'>$row->name</a></td>";
+				echo "<td>$row->category</td>";
+				echo "<td>$row->difficulty</td>";
+				echo "<td>$row->source</td>";
+				echo "<td>$row->firstUsed</td>";
+				echo "<td>$row->lastUsed</td>";
+				echo '</tr>';
+			}
+		}
+		?>
     </tbody>
 </table>
 <?php echo $this->pagination->getListFooter(); ?>

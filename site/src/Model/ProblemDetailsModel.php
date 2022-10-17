@@ -30,23 +30,24 @@ class ProblemDetailsModel extends ItemModel
      */
     public function getItem($pk= null)
     {
-		//return NULL;
+		//echo '<br/><b>ProblemDetailsModel:getItem()</b><br/>';
         $db = Factory::getContainer()->get('DatabaseDriver');
         $uri = Uri::getInstance();
         $idvar = $uri->getVar('id');
         $query = $db->getQuery(true);
 
 		if($idvar == NULL){
+			echo '<br/>ERROR: URL id is missing<br/>';
 			return NULL;
 		}
 
         // Select statement Name, Category, Difficulty, Source, Last Used
 	    $query->select(array('com_catalogsystem_problem.name', 'com_catalogsystem_problem.difficulty', 'com_catalogsystem_problem.id', 'com_catalogsystem_problem.zip_link', 'com_catalogsystem_problem.pdf_link'), array('name', 'difficulty', 'id', 'zipUrl', 'pdfPath'))
-		    ->select($db->quoteName(array('category.name'), array('category')))
-		    ->select($db->quoteName(array('source.name'), array('source')))
+		    ->select($db->quoteName(array('category.id','category.name'), array('cid','category')))
+		    ->select($db->quoteName(array('source.id','source.name'), array('sid','source')))
 		    ->from($db->quoteName('com_catalogsystem_problem'), 'problem')
-		    ->join('INNER', $db->quoteName('com_catalogsystem_category', 'category') . ' ON (' . $db->quoteName('com_catalogsystem_problem.category_id') . ' = ' . $db->quoteName('category.id') . ')')
-		    ->join('INNER', $db->quoteName('com_catalogsystem_source', 'source') . ' ON (' . $db->quoteName('source.id') . ' = ' . $db->quoteName('com_catalogsystem_problem.source_id') . ')')
+		    ->join('LEFT', $db->quoteName('com_catalogsystem_category', 'category') . ' ON (' . $db->quoteName('com_catalogsystem_problem.category_id') . ' = ' . $db->quoteName('category.id') . ')')
+		    ->join('LEFT', $db->quoteName('com_catalogsystem_source', 'source') . ' ON (' . $db->quoteName('com_catalogsystem_problem.source_id') . ' = ' . $db->quoteName('source.id') . ')')
 		    ->where($db->quoteName('com_catalogsystem_problem.id') . " = " . $db->quote($idvar));
 
         
@@ -56,11 +57,12 @@ class ProblemDetailsModel extends ItemModel
 	    $result = $db->loadobject();
 
 	    if($result == NULL){
+			echo '<br/>ERROR: SQL Query id not find a problem with id = '.$idvar.'<br/>';
 		    return NULL;
 	    }
 
 	    $historyQuery = $db->getQuery(true);
-		$historyQuery->select(array('history.date'))
+		$historyQuery->select('history.id AS id, history.date AS date')
 			->from($db->quoteName('com_catalogsystem_history', 'history'))
 			->where($db->quoteName('history.problem_id') . " = " . $db->quote($idvar))
 			->order('date DESC');
@@ -71,7 +73,7 @@ class ProblemDetailsModel extends ItemModel
 		$result->history = $historyResult;
 
 	    $SetsQuery = $db->getQuery(true);
-	    $SetsQuery->select(array('sets.name'))
+	    $SetsQuery->select('sets.id AS id, sets.name AS name')
 		    ->from($db->quoteName('com_catalogsystem_set', 'sets'))
 		    ->join('INNER', $db->quoteName('com_catalogsystem_problemset', 'problemset') . ' ON (' . $db->quoteName('problemset.problem_id') . ' = ' . $db->quote($idvar) . ')')
 		    ->where($db->quoteName('sets.id') . " = " . $db->quoteName('problemset.set_id'))

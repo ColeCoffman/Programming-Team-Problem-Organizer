@@ -66,5 +66,33 @@
 			filter="integer"
 			class="inputbox"
 			></field>
+		<field
+			name="catalog_date_after"
+			type="calendar"
+			label="After"
+			required="false"
+			size="8"
+			></field>
+		<field
+			name="catalog_date_before"
+			type="calendar"
+			label="Before"
+			required="false"
+			size="8"
+			></field>
+		<field
+			name="catalog_date_notbefore"
+			type="calendar"
+			label="NOT Before"
+			required="false"
+			size="8"
+			></field>
+		<field
+			name="catalog_date_notafter"
+			type="calendar"
+			label="NOT After"
+			required="false"
+			size="8"
+			></field>
 	</fieldset>
 </form>

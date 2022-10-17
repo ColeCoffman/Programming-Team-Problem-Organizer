@@ -15,7 +15,7 @@ use Joomla\CMS\Factory;
 use ProgrammingTeam\Component\CatalogSystem\Site\Helper\ajaxCategories;
 use Joomla\CMS\Router\Route;
 
-require __DIR__ . '\\..\\functionLib.php';
+require_once __DIR__ . '\\..\\functionLib.php';
 
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useStyle('catalog')
@@ -107,8 +107,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <form class= "search-box" action="index.php?option=com_catalogsystem&view=setsc"
     method="post" name="setsForm" id="setsForm" enctype="multipart/form-data">
-
-	<?php echo $this->form->renderField('sets_name');  ?>
+	<div>
+		<?php echo $this->form->renderField('sets_name');  ?>
+	</div>
+	<div style = "display: flex; flex-wrap: wrap;">
+        <?php echo $this->form->renderField('sets_date_after');  ?>
+        <?php echo $this->form->renderField('sets_date_before');  ?>
+    </div>
+	<div style = "display: flex; flex-wrap: wrap;">
+        <?php echo $this->form->renderField('sets_date_notbefore');  ?>
+        <?php echo $this->form->renderField('sets_date_notafter');  ?>
+    </div>
 
   <div class= "end-content">
      <button class = "submit-button" type="submit">Filter</button>
@@ -123,9 +132,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <th>
                     <input type="checkbox" id="toggle" name="toggle" label=" " onclick="toggleAll()">
                 </th>
-                <th onclick="sortTable(1)">Name</th>
-                <th onclick="sortTable(2)">Number of Problems</th>
-                <th onclick="sortTable(3)">Zip URL</th>
+                <th onclick="sortTable(1)">Name ↕</th>
+                <th onclick="sortTable(2)">Number of Problems ↕</th>
+                <th onclick="sortTable(3)">Zip URL ↕</th>
+				<th onclick="sortTable(4)">First Used ↕</th>
+				<th onclick="sortTable(5)">Last Used ↕</th>
             </tr>
         </thead>
         <tbody>
@@ -140,6 +151,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <td><?php $url = Route::_($urlStr . $row->set_id); echo "<a href='$url'>$row->name</a>";?></td>
                     <td><?php echo $row->numProblems; ?></td>
                     <td><?php echo $row->zip; ?></td>
+					<td><?php echo $row->firstUsed; ?></td>
+					<td><?php echo $row->lastUsed; ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

@@ -14,7 +14,7 @@ defined('_JEXEC') or die('Restricted Access');
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 
-require __DIR__ . '\\..\\functionLib.php';
+require_once __DIR__ . '\\..\\functionLib.php';
 
 // Enable/disable Debug
 $localDebug = false;

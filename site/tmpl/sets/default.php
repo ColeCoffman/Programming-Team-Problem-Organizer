@@ -25,8 +25,17 @@ $urlStr = "index.php?option=com_catalogsystem&view=catalog&set=";
 
 <form class= "search-box" action="index.php?option=com_catalogsystem&view=sets"
     method="post" name="setsForm" id="setsForm" enctype="multipart/form-data">
-
-	<?php echo $this->form->renderField('sets_name');  ?>
+	<div>
+		<?php echo $this->form->renderField('sets_name');  ?>
+	</div>
+	<div style = "display: flex; flex-wrap: wrap;">
+        <?php echo $this->form->renderField('sets_date_after');  ?>
+        <?php echo $this->form->renderField('sets_date_before');  ?>
+    </div>
+	<div style = "display: flex; flex-wrap: wrap;">
+        <?php echo $this->form->renderField('sets_date_notbefore');  ?>
+        <?php echo $this->form->renderField('sets_date_notafter');  ?>
+    </div>
 
   <div class= "end-content">
      <button class = "submit-button" type="submit">Filter</button>
@@ -36,9 +45,11 @@ $urlStr = "index.php?option=com_catalogsystem&view=catalog&set=";
 <table class="catalog_table" id="myTable">
     <thead>
         <tr>
-            <th onclick="sortTable(0)">Name</th>
-            <th onclick="sortTable(1)">Number of Problems</th>
-            <th onclick="sortTable(2)">Zip URL</th>
+            <th onclick="sortTable(0)">Name ↕</th>
+            <th onclick="sortTable(1)">Number of Problems ↕</th>
+            <th onclick="sortTable(2)">Zip URL ↕</th>
+			<th onclick="sortTable(3)">First Used ↕</th>
+			<th onclick="sortTable(4)">Last Used ↕</th>
         </tr>
     </thead>
     <tbody>
@@ -47,6 +58,8 @@ $urlStr = "index.php?option=com_catalogsystem&view=catalog&set=";
                 <td><?php $url = Route::_($urlStr . $row->set_id); echo "<a href='$url'>$row->name</a>";?></td>
                 <td><?php echo $row->numProblems; ?></td>
                 <td><?php echo $row->zip; ?></td>
+				<td><?php echo $row->firstUsed; ?></td>
+				<td><?php echo $row->lastUsed; ?></td>
             </tr>
         <?php endforeach; ?>
     </tbody>

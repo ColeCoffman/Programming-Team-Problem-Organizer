@@ -38,10 +38,11 @@ CREATE TABLE `com_catalogsystem_category` (
 --
 
 INSERT INTO `com_catalogsystem_category` (`id`, `name`) VALUES
-(1, 'Graph Theory'),
-(2, 'Arrays'),
-(3, 'Linked Lists'),
-(4, 'Recursion');
+(1, 'None'),
+(2, 'Graph Theory'),
+(3, 'Arrays'),
+(4, 'Linked Lists'),
+(5, 'Recursion');
 
 -- --------------------------------------------------------
 
@@ -155,9 +156,10 @@ CREATE TABLE `com_catalogsystem_source` (
 --
 
 INSERT INTO `com_catalogsystem_source` (`id`, `name`) VALUES
-(1, 'New York 2022'),
-(2, 'Orlando 2021'),
-(3, 'Washington DC 2022');
+(1, 'None'),
+(2, 'New York 2022'),
+(3, 'Orlando 2021'),
+(4, 'Washington DC 2022');
 
 -- --------------------------------------------------------
 

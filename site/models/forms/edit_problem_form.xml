@@ -16,10 +16,10 @@
             default=""
             class="inputbox"
             query="SELECT id, name FROM com_catalogsystem_category"
-            key_field="id"
+            key_field="name"
             value_field="name"
             layout="joomla.form.field.list-fancy-select"
-            multiple="true"
+            multiple="false"
             custom="true"/>
         <field
             name="source"
@@ -29,10 +29,10 @@
             default=""
             class="inputbox"
             query="SELECT id, name FROM com_catalogsystem_source"
-            key_field="id"
+            key_field="name"
             value_field="name"
             layout="joomla.form.field.list-fancy-select"
-            multiple="true"
+            multiple="false"
             custom="true"/>
         <field name="dif"
             type="text"
@@ -41,20 +41,19 @@
             size="3"
             filter = "integer"
             class="inputbox" />
-        <field name="pdfupload"
-            type="file"
-            label="Upload PDF"
-            description="Upload a PDF file for the problem"
-            size="40"
-            class="inputbox" />
-        <field name="zipupload"
-            type="file"
-            label="Upload ZIP"
-            description="Upload a ZIP file for the problem"
-            size="40"
-            class="inputbox" />
-    </fieldset>
-	
+	</fieldset>
+    <field name="pdfupload"
+        type="file"
+        label="Upload New PDF"
+        description="Upload a PDF file for the problem"
+        size="40"
+        class="inputbox" />
+    <field name="zipupload"
+        type="file"
+        label="Upload New ZIP"
+        description="Upload a ZIP file for the problem"
+        size="40"
+        class="inputbox"/>
     <field
         name="add_sets"
         label="Add to Sets"
@@ -63,7 +62,7 @@
         default=""
         class="inputbox"
         query="SELECT id, name FROM com_catalogsystem_set"
-        key_field="id"
+        key_field="name"
         value_field="name"
         layout="joomla.form.field.list-fancy-select"
         multiple="true"/>

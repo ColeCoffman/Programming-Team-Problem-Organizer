@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-    <layout title="Sets (Both)">
-        <message><![CDATA[Students and Coaches can view this page]]></message>
+    <layout title="Sets (Student)">
+        <message><![CDATA[This is the student view for the sets page]]></message>
     </layout>
 </metadata>
