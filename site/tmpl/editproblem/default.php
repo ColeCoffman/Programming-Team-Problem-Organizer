@@ -35,7 +35,7 @@ $uri = Uri::root();
 		
 		$info = $this->item;
 		
-		$localDebug = true;
+		$localDebug = false;
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			
 			// Retrieve POST input and file uploads
