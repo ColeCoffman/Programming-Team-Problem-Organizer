@@ -31,7 +31,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `com_catalogsystem_category` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `com_catalogsystem_category`
@@ -55,7 +55,7 @@ CREATE TABLE `com_catalogsystem_history` (
   `problem_id` int(11) DEFAULT NULL,
   `team_id` int(11) DEFAULT NULL,
   `date` date DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `com_catalogsystem_history`
@@ -82,7 +82,7 @@ CREATE TABLE `com_catalogsystem_problem` (
   `difficulty` int(11) DEFAULT NULL,
   `pdf_link` varchar(255) DEFAULT NULL,
   `zip_link` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `com_catalogsystem_problem`
@@ -105,7 +105,7 @@ CREATE TABLE `com_catalogsystem_problemset` (
   `id` int(11) NOT NULL,
   `set_id` int(11) DEFAULT NULL,
   `problem_id` int(11) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `com_catalogsystem_problemset`
@@ -129,7 +129,7 @@ CREATE TABLE `com_catalogsystem_set` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `zip_link` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `com_catalogsystem_set`
@@ -149,7 +149,7 @@ INSERT INTO `com_catalogsystem_set` (`id`, `name`, `zip_link`) VALUES
 CREATE TABLE `com_catalogsystem_source` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `com_catalogsystem_source`
@@ -170,7 +170,7 @@ INSERT INTO `com_catalogsystem_source` (`id`, `name`) VALUES
 CREATE TABLE `com_catalogsystem_team` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 --
@@ -195,7 +195,7 @@ ALTER TABLE `com_catalogsystem_history`
 --
 ALTER TABLE `com_catalogsystem_problem`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `source_id` (`source_id`) USING BTREE;
+  ADD foreign key (sourse_id) references com_catalogsystem_source(id);
 
 --
 -- Indexes for table `com_catalogsystem_problemset`
