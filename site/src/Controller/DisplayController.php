@@ -20,7 +20,7 @@ use Joomla\CMS\MVC\Controller\FormController;
  * Catalog System Component Controller
  * @since  0.0.2
  */
-class DisplayController extends FormController
+class DisplayController extends BaseController
 {
     public function display($cachable = false, $urlparams = array())
     {
