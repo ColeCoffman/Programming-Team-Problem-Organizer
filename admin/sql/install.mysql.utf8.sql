@@ -28,10 +28,12 @@ SET time_zone = "+00:00";
 -- Table structure for table `com_catalogsystem_category`
 --
 
+SET FOREIGN_KEY_CHECKS=0;
+
 CREATE TABLE `com_catalogsystem_category` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `com_catalogsystem_category`
@@ -52,10 +54,10 @@ INSERT INTO `com_catalogsystem_category` (`id`, `name`) VALUES
 
 CREATE TABLE `com_catalogsystem_history` (
   `id` int(11) NOT NULL,
-  `problem_id` int(11) DEFAULT NULL,
+  `problem_id` int(11) NOT NULL,
   `team_id` int(11) DEFAULT NULL,
-  `date` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `com_catalogsystem_history`
@@ -78,11 +80,11 @@ CREATE TABLE `com_catalogsystem_problem` (
   `id` int(11) NOT NULL,
   `source_id` int(11) DEFAULT NULL,
   `category_id` int(11) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
   `difficulty` int(11) DEFAULT NULL,
   `pdf_link` varchar(255) DEFAULT NULL,
   `zip_link` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `com_catalogsystem_problem`
@@ -103,9 +105,9 @@ INSERT INTO `com_catalogsystem_problem` (`id`, `source_id`, `category_id`, `name
 
 CREATE TABLE `com_catalogsystem_problemset` (
   `id` int(11) NOT NULL,
-  `set_id` int(11) DEFAULT NULL,
-  `problem_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `set_id` int(11) NOT NULL,
+  `problem_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `com_catalogsystem_problemset`
@@ -127,9 +129,9 @@ INSERT INTO `com_catalogsystem_problemset` (`id`, `set_id`, `problem_id`) VALUES
 
 CREATE TABLE `com_catalogsystem_set` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
   `zip_link` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `com_catalogsystem_set`
@@ -148,8 +150,8 @@ INSERT INTO `com_catalogsystem_set` (`id`, `name`, `zip_link`) VALUES
 
 CREATE TABLE `com_catalogsystem_source` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `com_catalogsystem_source`
@@ -169,8 +171,8 @@ INSERT INTO `com_catalogsystem_source` (`id`, `name`) VALUES
 
 CREATE TABLE `com_catalogsystem_team` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 --
@@ -194,20 +196,20 @@ ALTER TABLE `com_catalogsystem_history`
 -- Indexes for table `com_catalogsystem_problem`
 --
 ALTER TABLE `com_catalogsystem_problem`
-  ADD PRIMARY KEY (`id`),
-  ADD foreign key (sourse_id) references com_catalogsystem_source(id);
+  ADD PRIMARY KEY (`id`);
+  -- ADD foreign key (source_id) references com_catalogsystem_source(id);
 
 --
 -- Indexes for table `com_catalogsystem_problemset`
 --
 ALTER TABLE `com_catalogsystem_problemset`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`id`);
 
     -- --------------------------------------------------------
     -- Cascade deletes for database
     -- --------------------------------------------------------
-  ADD foreign key (set_id) references com_catalogsystem_set(id) on delete cascade,
-  ADD foreign key (problem_id) references com_catalogsystem_problem(id) on delete cascade;
+  -- ADD foreign key (set_id) references com_catalogsystem_set(id) on delete cascade,
+  -- ADD foreign key (problem_id) references com_catalogsystem_problem(id) on delete cascade;
 
 --
 -- Indexes for table `com_catalogsystem_set`
@@ -230,6 +232,12 @@ ALTER TABLE `com_catalogsystem_team`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+-- --------------------------------------------------------
+    -- Cascade deletes for database
+    -- --------------------------------------------------------
+
+
 
 --
 -- AUTO_INCREMENT for table `com_catalogsystem_category`
@@ -273,7 +281,17 @@ ALTER TABLE `com_catalogsystem_source`
 ALTER TABLE `com_catalogsystem_team`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
+ALTER TABLE `com_catalogsystem_problemset` ADD CONSTRAINT `ProblemSetProblemID` FOREIGN KEY (`problem_id`) REFERENCES `com_catalogsystem_problem`(`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- Delete Problems from set if problem is deleted
+ALTER TABLE `com_catalogsystem_history` ADD CONSTRAINT `HistoryProblemID` FOREIGN KEY (`problem_id`) REFERENCES `com_catalogsystem_problem`(`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- Delete History if problem is deleted
+ALTER TABLE `com_catalogsystem_problem` ADD CONSTRAINT `SourceCascade` FOREIGN KEY (`source_id`) REFERENCES `com_catalogsystem_source`(`id`) ON DELETE SET NULL ON UPDATE SET NULL; -- Set source to null if source is deleted in problem
+ALTER TABLE `com_catalogsystem_problemset` ADD CONSTRAINT `ProblemSetSetID` FOREIGN KEY (`set_id`) REFERENCES `com_catalogsystem_set`(`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- Delete Problems from set if set is deleted
+ALTER TABLE `com_catalogsystem_problem` ADD CONSTRAINT `CategoryCascade` FOREIGN KEY (`category_id`) REFERENCES `com_catalogsystem_category`(`id`) ON DELETE SET NULL ON UPDATE SET NULL; -- Set category to null if category is deleted in problem
+ALTER TABLE `com_catalogsystem_history` ADD  CONSTRAINT `HistoryTeamID` FOREIGN KEY (`team_id`) REFERENCES `com_catalogsystem_team`(`id`) ON DELETE SET NULL ON UPDATE SET NULL; -- Set team to null if team is deleted
+ALTER TABLE `com_catalogsystem_history` ADD CONSTRAINT `TeamSetNull` FOREIGN KEY (`team_id`) REFERENCES `com_catalogsystem_team`(`id`) ON DELETE SET NULL ON UPDATE SET NULL;
+
 COMMIT;
+
+SET FOREIGN_KEY_CHECKS=1;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
