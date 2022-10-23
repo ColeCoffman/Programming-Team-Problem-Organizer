@@ -29,15 +29,36 @@ class DisplayController extends BaseController
         $viewFormat = $document->getType();
 
         $view = $this->getView($viewName, $viewFormat);
-        $view->setModel($this->getModel('Catalog'), true);
-        $view->setModel($this->getModel('CatalogSearch'));
-        $view->setModel($this->getModel('CatalogOp'));
-        $view->setModel($this->getModel('AddProblem'));
-        $view->setModel($this->getModel('ProblemDetails'));
-        $view->setModel($this->getModel('Sets'));
-        $view->setModel($this->getModel('SetSearch'));
-        $view->setModel($this->getModel('SetOp'));
-        $view->setModel($this->getModel('Edit'));
+        if ($viewName === 'catalog'){
+            $view->setModel($this->getModel('Catalog'), true);
+            $view->setModel($this->getModel('CatalogSearch'));
+        }
+        else if ($viewName === 'catalogc'){
+            $view->setModel($this->getModel('Catalog'), true);
+            $view->setModel($this->getModel('CatalogSearch'));
+            $view->setModel($this->getModel('CatalogOp'));
+        }
+        else if ($viewName === 'sets'){
+            $view->setModel($this->getModel('Sets'));
+            $view->setModel($this->getModel('SetSearch'));
+        }
+        else if ($viewName === 'setsc'){
+            $view->setModel($this->getModel('Sets'));
+            $view->setModel($this->getModel('SetSearch'));
+            $view->setModel($this->getModel('SetOp'));
+        }
+        else if ($viewName === 'addproblem'){
+            $view->setModel($this->getModel('AddProblem'));
+        }
+        else if ($viewName === 'problemdetails'){
+            $view->setModel($this->getModel('Catalog'), true);
+            $view->setModel($this->getModel('ProblemDetails'));
+        }
+        else if ($viewName === 'editproblem'){
+            $view->setModel($this->getModel('Catalog'), true);
+            $view->setModel($this->getModel('ProblemDetails'));
+            $view->setModel($this->getModel('Edit'));
+        }
 
         $view->document = $document;
         $view->display();

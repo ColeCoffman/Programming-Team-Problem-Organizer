@@ -232,10 +232,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     method="post" name="addForm" id="addForm" enctype="multipart/form-data">
 
 	<?php echo $this->form->renderField('name');  ?>
-	
+    
+	<?php echo $this->form->renderField('cattoggle');  ?>
 	<?php echo $this->form->renderField('category');  ?>
+    <?php echo $this->form->renderField('newcategory');  ?>
 	
+    <?php echo $this->form->renderField('sourcetoggle');  ?>
 	<?php echo $this->form->renderField('source');  ?>
+    <?php echo $this->form->renderField('newsource');  ?>
     
     <?php echo $this->form->renderField('dif');  ?>
     
