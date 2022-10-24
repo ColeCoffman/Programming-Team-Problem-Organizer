@@ -54,7 +54,8 @@ $wa->useStyle('catalog')
 		</div>
     </div>
     <div class= "end-content">
-  	   <button class = "submit-button" type="submit">Filter</button>
+	<button  id="filter_clear" class="submit-button" style="background-color: red"  type="reset"> Reset </button>
+		<button class = "submit-button" type="submit">Clear</button>
      </div>
 </form>
 

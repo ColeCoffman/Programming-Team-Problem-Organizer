@@ -120,6 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
   <div class= "end-content">
+  <button  id="filter_clear" class="submit-button" style="background-color: red"  type="reset"> Reset </button>
      <button class = "submit-button" type="submit">Filter</button>
    </div>
 </form>
