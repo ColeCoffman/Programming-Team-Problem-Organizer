@@ -34,12 +34,12 @@ defined('_JEXEC') or die('Restricted Access');
 		if($info->pdf_link != null){
 			echo "<p>Problem PDF: <a href='$pdfDownload'>Download</a></p>";
 		} else {
-			echo "<p>Problem PDF: <a href='#'>N/A</a></p>";
+			echo "<p>Problem PDF: N/A</p>";
 		}
 		if($info->zip_link != null){
 			echo "<p>Problem ZIP: <a href='$zipDownload' download>Download</a></p>";
 		} else {
-			echo "<p>Problem ZIP: <a href='#'>N/A</a></p>";
+			echo "<p>Problem ZIP: N/A</p>";
 		}
         echo "<h4>Use History:</h4>";
         

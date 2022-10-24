@@ -316,7 +316,7 @@ $uri = Uri::root();
 				$pdfDownload = $uri . "media/com_catalogsystem/uploads/pdf/" . $info->pdf_link;
 				echo "<p>Problem PDF: <a href='$pdfDownload'>Download</a></p>";
 			} else {
-				echo "<p>Problem PDF: <a href='#'>N/A</a></p>";
+				echo "<p>Problem PDF: N/A</p>";
 			}
 			echo $this->form->renderField("pdfupload");
 			
@@ -324,7 +324,7 @@ $uri = Uri::root();
 				$zipDownload = $uri . "media/com_catalogsystem/uploads/zip/" . $info->zip_link;
 				echo "<p>Problem ZIP: <a href='$zipDownload' download>Download</a></p>";
 			} else {
-				echo "<p>Problem ZIP: <a href='#'>N/A</a></p>";
+				echo "<p>Problem ZIP: N/A</p>";
 			}
 			echo $this->form->renderField("zipupload");
 
