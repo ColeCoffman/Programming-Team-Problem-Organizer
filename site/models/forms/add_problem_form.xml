@@ -89,11 +89,13 @@
 		label="Upload PDF"
 		description="Upload a PDF file of the problem"
 		size="40"
+        accept="application/pdf"
 		class="inputbox" />
 	<field name="zipupload"
 		type="file"
 		label="Upload ZIP"
 		description="Upload a ZIP file for the problem"
 		size="40"
+        accept="application/zip"
 		class="inputbox" />
 </form>
