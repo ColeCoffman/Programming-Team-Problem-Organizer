@@ -59,6 +59,7 @@
     <media folder="media" destination="com_catalogsystem">
 		<folder>css</folder>
 		<folder>js</folder>
+    <folder>images</folder>
     <filename>joomla.asset.json</filename>
 	</media>
 
@@ -84,7 +85,4 @@
             <language tag="en-GB">admin/language/en-GB/en-GB.com_catalogsystem.sys.ini</language>
         </languages>
     </administration>
-
-
-
 </extension>

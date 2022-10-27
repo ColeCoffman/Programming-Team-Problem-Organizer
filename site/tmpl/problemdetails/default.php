@@ -10,6 +10,11 @@
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
+use Joomla\CMS\Factory;
+
+$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa->useScript('catalogHelper')
+    ->useStyle('info');
 ?>
 
 <?php
@@ -26,55 +31,70 @@ defined('_JEXEC') or die('Restricted Access');
 		if($info->pdf_link != null){
 			$pdfDownload = $uri . "media/com_catalogsystem/uploads/pdf/" . $info->pdf_link;
 		}
-        echo "<h2>$info->name</h2>";
-        echo "<h3>Category: $info->category</h3>";
-        echo "<h3>Difficulty: $info->difficulty</h3>";
-        echo "<h3>Source: $info->source</h3>";
-        echo "<h4>Associated Resources:</h4>";
+		echo "<div class= 'info-box'>";
+        echo "<div class='problem-title'>$info->name</div>
+				<div class='details'>";
+        echo "<div class= 'problem-header'>
+				<label id= 'category'>Category:</label>
+    		<div class='title'>$info->category</div></div>";
+        echo "<div class= 'problem-header'>
+				<label id= 'difficulty'>Difficulty:</label>
+						<div class='title'> $info->difficulty</div></div>";
+        echo "<div class= 'problem-header'>
+						<label id= 'source'>Source:</label>
+							<div class= 'title'> $info->source</div></div>";
 		if($info->pdf_link != null){
-			echo "<p>Problem PDF: <a href='$pdfDownload'>Download</a></p>";
+			echo "<div class= 'problem-header'><label id= 'pdf'>Problem PDF:</label> <a class= 'title' href='$pdfDownload'>Download</a></div>";
 		} else {
-			echo "<p>Problem PDF: N/A</p>";
+			echo "<div class= 'problem-header'><label id= 'pdf'>Problem PDF:</label> <div class= 'title'>Not Available</div></div>";
 		}
 		if($info->zip_link != null){
-			echo "<p>Problem ZIP: <a href='$zipDownload' download>Download</a></p>";
+			echo "<div class= 'problem-header'><label id= 'zip'>Problem ZIP:</label> <a class= 'title' href='$zipDownload' download>Download</a></div>";
 		} else {
-			echo "<p>Problem ZIP: N/A</p>";
+			echo "<div class= 'problem-header'><label id= 'pdf'>Problem ZIP:</label> <div class= 'title'>Not Available</div></div>";
 		}
-        echo "<h4>Use History:</h4>";
-        
-        echo "<table class='table table-striped table-hover'>
+echo "</div></div>";
+		echo "<div class= 'tables'>";
+		echo "<div class= 'history_table'>";
+        echo "<table class='catalog_table'>
                 <thead>
                     <tr>
-                        <th>Date Used</th>
+                        <th class= 'unsorted'>Use History</th>
                     </tr>
                 </thead>
                 <tbody>";
-        
+				echo "</div>";
         foreach ($info->history as $i => $row):
             echo "<tr>
                     <td>$row->date</td>
                 </tr>";
         endforeach;
-        
+
     echo "</tbody>
-        </table>";
+        </table>
+		 </div>";
     echo $this->pagination->getListFooter();
-        
-    echo "<h4>Included in Sets:</h4>";
-        
-        echo "<table class='table table-striped table-hover'>
+
+		echo "<div class= 'sets_table'>";
+        echo "<table class='catalog_table'>
+					<thead>
+							<tr>
+									<th class= 'unsorted'>Sets Included</th>
+							</tr>
+					</thead>
                 <tbody>";
-        
+
         foreach ($info->sets as $i => $row):
             echo "<tr>
                     <td>$row->name</td>
                 </tr>";
         endforeach;
-        
+
     echo "</tbody>
-        </table>";
+        </table>
+				</div>
+					</div>";
     echo $this->pagination->getListFooter();
-    
+
     }
 ?>
