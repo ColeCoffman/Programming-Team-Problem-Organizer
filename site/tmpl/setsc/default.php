@@ -15,7 +15,7 @@ use Joomla\CMS\Factory;
 use ProgrammingTeam\Component\CatalogSystem\Site\Helper\ajaxCategories;
 use Joomla\CMS\Router\Route;
 
-require_once $_SERVER['DOCUMENT_ROOT'].'/components/com_catalogsystem/tmpl/functionLib.php';
+require_once __DIR__ . '\\..\\functionLib.php';
 
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useStyle('catalog')
@@ -151,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <td><?php echo $this->form2->renderField("$row->set_id");  ?></td>
                     <td><?php $url = Route::_($urlStr . $row->set_id); echo "<a href='$url'>$row->name</a>";?></td>
                     <td><?php echo $row->numProblems; ?></td>
-                    <td><?php echo $row->zip; ?></td>
+                    <td><?php echo "<a href='$row->zip'>Download</a>"; ?></td>
 					<td><?php echo $row->firstUsed; ?></td>
 					<td><?php echo $row->lastUsed; ?></td>
                 </tr>

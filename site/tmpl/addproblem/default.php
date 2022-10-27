@@ -14,7 +14,7 @@ defined('_JEXEC') or die('Restricted Access');
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 
-require_once $_SERVER['DOCUMENT_ROOT'].'/components/com_catalogsystem/tmpl/functionLib.php';
+require_once __DIR__ . '\\..\\functionLib.php';
 
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useStyle('catalog')
@@ -264,6 +264,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
       <div class= "schedulers">
         <?php echo $this->form->renderField('firstUse');  ?>
+        <?php echo $this->form->renderField('firstUseTeam');  ?>
       </div>
       <div class="fileupload">
         <?php echo $this->form->renderField('pdfupload');  ?>

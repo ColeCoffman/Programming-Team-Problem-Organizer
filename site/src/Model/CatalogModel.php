@@ -8,7 +8,7 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 
-require_once $_SERVER['DOCUMENT_ROOT'].'/components/com_catalogsystem/tmpl/functionLib.php';
+require_once __DIR__ . '\\..\\..\\tmpl\\functionLib.php';
 /**
  * @package     Joomla.Site
  * @subpackage  com_catalogsystem

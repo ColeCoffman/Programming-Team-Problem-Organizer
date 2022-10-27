@@ -15,7 +15,7 @@ use Joomla\CMS\Factory;
 use ProgrammingTeam\Component\CatalogSystem\Site\Helper\ajaxCategories;
 use Joomla\CMS\Router\Route;
 
-require_once $_SERVER['DOCUMENT_ROOT'].'/components/com_catalogsystem/tmpl/functionLib.php';
+require_once __DIR__ . '\\..\\functionLib.php';
 
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('catalogHelper')
@@ -203,7 +203,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </table>
     <?php echo $this->pagination->getListFooter(); ?>
     <div class="panel-box">
-        <?php echo $this->form->renderFieldset("opPanel"); ?>
+        <?php echo $this->form2->renderFieldset("opPanel"); ?>
         <div class= "end-content">
         <button class = "op-button" type="submit">Confirm</button>
       </div>

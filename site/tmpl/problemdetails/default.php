@@ -73,7 +73,6 @@ echo "</div></div>";
     echo "</tbody>
         </table>
 		 </div>";
-    echo $this->pagination->getListFooter();
 
 		echo "<div class= 'sets_table'>";
         echo "<table class='catalog_table'>
@@ -94,7 +93,6 @@ echo "</div></div>";
         </table>
 				</div>
 					</div>";
-    echo $this->pagination->getListFooter();
 
     }
 ?>

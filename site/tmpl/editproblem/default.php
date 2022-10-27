@@ -14,7 +14,7 @@ defined('_JEXEC') or die('Restricted Access');
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 
-require_once $_SERVER['DOCUMENT_ROOT'].'/components/com_catalogsystem/tmpl/functionLib.php';
+require_once __DIR__ . '\\..\\functionLib.php';
 
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('catalogHelper');
@@ -330,6 +330,7 @@ $uri = Uri::root();
 
             echo $this->form->renderField("add_sets");
             echo $this->form->renderField("add_use");
+            echo $this->form->renderField("useTeam");
 
             echo "<h4>Remove Uses?</h4>";
             echo "<table class='table table-striped table-hover' id='myTable2'>
@@ -357,7 +358,6 @@ $uri = Uri::root();
 
             echo "</tbody>
                 </table>";
-            echo $this->pagination->getListFooter();
 
 
 
@@ -386,7 +386,6 @@ $uri = Uri::root();
             endforeach;
             echo "</tbody>
                 </table>";
-            echo $this->pagination->getListFooter();
 
             echo "<button type='submit'>Confirm Changes</button>";
         echo "</form>";
