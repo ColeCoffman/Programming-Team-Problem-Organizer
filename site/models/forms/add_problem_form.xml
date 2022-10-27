@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
+	<fieldset>
 	<field
 		name="name"
 		type="text"
@@ -58,17 +59,18 @@
         class="inputbox"
         showon="sourcetoggle:1"/>
     <field name="dif"
-		type="text"
+		type="number"
 		label="Difficulty"
+		min="0"
 		required="false"
 		size="3"
         filter = "integer"
-		class="inputbox" 
+		class="inputbox"
     />
     <field name="firstUse"
        type = "calendar"
        label="Initially Used"
-       required = "false" 
+       required = "false"
     />
 	<field
 			name="set"
@@ -84,18 +86,19 @@
 			multiple="true"
 			custom="true"
     />
-	<field name="pdfupload"
-		type="file"
-		label="Upload PDF"
-		description="Upload a PDF file of the problem"
-		size="40"
-        accept="application/pdf"
-		class="inputbox" />
+		<field name="pdfupload"
+			type="file"
+			label="Upload PDF"
+			labelclass ="labelFile"
+			size="40"
+					accept="application/pdf"
+			class="custom-file-input" />
 	<field name="zipupload"
 		type="file"
 		label="Upload ZIP"
-		description="Upload a ZIP file for the problem"
+		labelclass ="labelFile"
 		size="40"
         accept="application/zip"
-		class="inputbox" />
+		class="custom-file-input" />
+	</fieldset>
 </form>

@@ -8,12 +8,20 @@
     {
       "name": "catalog",
       "type": "style",
-      "uri": "com_catalogsystem/catalog.css"
+      "uri": "com_catalogsystem/catalog.css",
+      "dependencies": [
+        "fontawesome"
+      ]
     },
     {
       "name": "style.css",
       "type": "style",
       "uri": "com_catalogsystem/style.css"
+    },
+    {
+      "name": "info",
+      "type": "style",
+      "uri": "com_catalogsystem/info.css"
     },
     {
       "name": "script",

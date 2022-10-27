@@ -130,14 +130,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <table class="catalog_table" id="myTable">
         <thead>
             <tr>
-                <th>
-                    <input type="checkbox" id="toggle" name="toggle" label=" " onclick="toggleAll()">
-                </th>
-                <th onclick="sortTable(1)">Name ↕</th>
-                <th onclick="sortTable(2)">Number of Problems ↕</th>
-                <th onclick="sortTable(3)">Zip URL ↕</th>
-				<th onclick="sortTable(4)">First Used ↕</th>
-				<th onclick="sortTable(5)">Last Used ↕</th>
+              <th id="checkcolumn">
+                  <input id="toggle" class="checkcolumn" type="checkbox"  name="toggle" label=" " onclick="toggleAll()">
+              </th>
+                <th id="Col0" class="unsorted" onclick="sortTable(0)">Name</th>
+                <th id="Col1" class="unsorted"onclick="sortTable(1)">Number of Problems</th>
+                <th id="Col2" class="unsorted" onclick="sortTable(2)">Zip URL</th>
+          			<th id="Col3" class="unsorted" onclick="sortTable(3)">First Used</th>
+          			<th id= "Col4" class="unsorted" onclick="sortTable(4)">Last Used</th>
             </tr>
         </thead>
         <tbody>
@@ -163,5 +163,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php echo $this->form2->renderFieldset("opPanel"); ?>
         <button type="submit">Confirm</button>
     </div>
-    
+
 </form>
