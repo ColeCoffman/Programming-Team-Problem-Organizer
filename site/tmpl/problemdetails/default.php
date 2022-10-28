@@ -15,6 +15,9 @@ use Joomla\CMS\Factory;
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('catalogHelper')
     ->useStyle('info');
+
+$pdfExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem/uploads/pdf/'.$this->item->pdf_link. '.pdf');
+$zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem/uploads/zip/'.$this->item->zip_link. '.zip');
 ?>
 
 <?php
@@ -25,11 +28,11 @@ $wa->useScript('catalogHelper')
         echo "<h3>Include a valid id in the URL to view problem details.</h3>";
     }else{
         $info = $this->item;
-		if($info->zip_link != null){
-			$zipDownload = $uri . "media/com_catalogsystem/uploads/zip/" . $info->zip_link;
+		if($info->zip_link != null && $zipExists){
+			$zipDownload = $uri . "media/com_catalogsystem/uploads/zip/" . $info->zip_link.".zip";
 		}
-		if($info->pdf_link != null){
-			$pdfDownload = $uri . "media/com_catalogsystem/uploads/pdf/" . $info->pdf_link;
+		if($info->pdf_link != null && $pdfExists){
+			$pdfDownload = $uri . "media/com_catalogsystem/uploads/pdf/" . $info->pdf_link.".pdf";
 		}
 		echo "<div class= 'info-box'>";
         echo "<div class='problem-title'>$info->name</div>
@@ -43,12 +46,12 @@ $wa->useScript('catalogHelper')
         echo "<div class= 'problem-header'>
 						<label id= 'source'>Source:</label>
 							<div class= 'title'> $info->source</div></div>";
-		if($info->pdf_link != null){
+		if($info->pdf_link != null && $pdfExists){
 			echo "<div class= 'problem-header'><label id= 'pdf'>Problem PDF:</label> <a class= 'title' href='$pdfDownload'>Download</a></div>";
 		} else {
 			echo "<div class= 'problem-header'><label id= 'pdf'>Problem PDF:</label> <div class= 'title'>Not Available</div></div>";
 		}
-		if($info->zip_link != null){
+		if($info->zip_link != null && $zipExists){
 			echo "<div class= 'problem-header'><label id= 'zip'>Problem ZIP:</label> <a class= 'title' href='$zipDownload' download>Download</a></div>";
 		} else {
 			echo "<div class= 'problem-header'><label id= 'pdf'>Problem ZIP:</label> <div class= 'title'>Not Available</div></div>";

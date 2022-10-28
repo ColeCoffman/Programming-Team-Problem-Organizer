@@ -14,13 +14,15 @@ defined('_JEXEC') or die('Restricted Access');
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 
-require_once __DIR__ . '\\..\\functionLib.php';
+require_once dirname(__FILE__).'/../functionLib.php';
 
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('catalogHelper');
 
 use Joomla\CMS\Uri\Uri;
 $uri = Uri::root();
+$pdfExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem/uploads/pdf/'.$this->item->pdf_link. '.pdf');
+$zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem/uploads/zip/'.$this->item->zip_link. '.zip');
 ?>
 
 <?php 
@@ -312,16 +314,16 @@ $uri = Uri::root();
             $this->form->setValue("dif", "", $info->difficulty);
             echo $this->form->renderFieldset("details");
             
-			if($info->pdf_link != null){
-				$pdfDownload = $uri . "media/com_catalogsystem/uploads/pdf/" . $info->pdf_link;
+			if($info->pdf_link != null && $pdfExists){
+				$pdfDownload = $uri . "media/com_catalogsystem/uploads/pdf/" . $info->pdf_link.".pdf";
 				echo "<p>Problem PDF: <a href='$pdfDownload'>Download</a></p>";
 			} else {
 				echo "<p>Problem PDF: N/A</p>";
 			}
 			echo $this->form->renderField("pdfupload");
 			
-			if($info->zip_link != null){
-				$zipDownload = $uri . "media/com_catalogsystem/uploads/zip/" . $info->zip_link;
+			if($info->zip_link != null && $zipExists){
+				$zipDownload = $uri . "media/com_catalogsystem/uploads/zip/" . $info->zip_link.".zip";
 				echo "<p>Problem ZIP: <a href='$zipDownload' download>Download</a></p>";
 			} else {
 				echo "<p>Problem ZIP: N/A</p>";
