@@ -45,7 +45,7 @@ class SetsModel extends ListModel
 		$setsHaving = '1=1';
 		if(array_key_exists('sets_name',$data) && sqlStringLike($data['sets_name']) !== 'NULL')
 		{
-			// $setsWhere .= ' AND e.name LIKE ' . sqlStringLike($data['sets_name']);
+			$setsWhere .= ' AND e.name LIKE ' . sqlStringLike($data['sets_name']);
 		}
 		
 		if(array_key_exists('sets_date_notbefore',$data) && sqlDate($data['sets_date_notbefore']) !== 'NULL')
