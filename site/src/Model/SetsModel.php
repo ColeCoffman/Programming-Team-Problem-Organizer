@@ -45,7 +45,7 @@ class SetsModel extends ListModel
 		$setsHaving = '1=1';
 		if(array_key_exists('sets_name',$data) && sqlStringLike($data['sets_name']) !== 'NULL')
 		{
-			$setsWhere .= ' AND e.name LIKE ' . sqlStringLike($data['sets_name']);
+			// $setsWhere .= ' AND e.name LIKE ' . sqlStringLike($data['sets_name']);
 		}
 		
 		if(array_key_exists('sets_date_notbefore',$data) && sqlDate($data['sets_date_notbefore']) !== 'NULL')
@@ -85,7 +85,7 @@ class SetsModel extends ListModel
 		GROUP BY e.id
 		HAVING {Procedurally generated}
 		*/
-        $setsQuery->select('e.id AS set_id, e.name AS name, e.zip_link AS zip, COUNT(ps.problem_id) AS numProblems, MIN(h.date) AS firstUsed, MAX(h.date) AS lastUsed')
+        $setsQuery->select('e.id AS set_id, e.name AS name, e.zip_link AS zip, COUNT(DISTINCT ps.problem_id) AS numProblems, MIN(h.date) AS firstUsed, MAX(h.date) AS lastUsed')
 		->from('com_catalogsystem_set AS e')
 		->join('LEFT','com_catalogsystem_problemset AS ps ON e.id = ps.set_id')
 		->join('LEFT','com_catalogsystem_problem AS p ON ps.problem_id = p.id')
