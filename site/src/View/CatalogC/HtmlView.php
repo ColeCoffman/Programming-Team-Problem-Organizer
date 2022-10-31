@@ -38,6 +38,11 @@ class HtmlView extends BaseHtmlView
         $this->form = $this->get('form', 'CatalogSearch');
         $this->form2 = $this->get('form', 'CatalogOp');
         $this->categories = $this->get('CategoryTags');
+        
+        $state = $this->get('State');
+        $this->sortDirection = $state->get('list.direction');
+        $this->sortColumn = $state->get('list.ordering');
+        
         parent::display($template);
     }
 }

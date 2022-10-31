@@ -38,6 +38,11 @@ class SetsModel extends ListModel
 		// Retrieve the POST data
 		$app  = Factory::getApplication();
 		$data = $app->input->post->get('jform', array(), "array");
+        
+        if (isset($data['filter_clear']))
+            $data = array();
+        else if (empty($data))
+            $data = $app->getUserState('com_catalogsystem.setsearch', array());
 		
 		// Build the WHERE and HAVING clauses for the SQL Query:
 		// (This defaults to a true statement because the '->where()' function always requires a parameter)
@@ -95,7 +100,27 @@ class SetsModel extends ListModel
 		->having($setsHaving);
 		
 		if($localDebug) echo '<br/> Sets SQL Query: <br/>' . $setsQuery->__toString();
+        
+         $setsQuery->order($db->escape($this->getState('list.ordering', 'name')).' '.
+		  $db->escape($this->getState('list.direction', 'ASC')));
+        
+        $app->setUserState('com_catalogsystem.setsearch', $data);
 		
 		return $setsQuery;
     }
+    
+    protected function populateState($ordering = null, $direction = null) {
+	   parent::populateState('name', 'ASC');
+    }
+    
+    public function __construct($config = array())
+	{   
+		$config['filter_fields'] = array(
+			'name',
+            'numProblems',
+            'firstUsed',
+            'lastUsed'
+		);
+		parent::__construct($config);
+	}
 }

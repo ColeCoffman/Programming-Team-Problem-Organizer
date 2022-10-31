@@ -13,6 +13,7 @@ defined('_JEXEC') or die('Restricted Access');
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Router\Route;
 
 require_once dirname(__FILE__).'/../functionLib.php';
 
@@ -101,6 +102,7 @@ $zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem
 			$inputSource = arrGet($postData,'source');
 			if(is_array($inputSource)) $inputSource = arrGet($inputSource,0);
 			$inputAddUse = arrGet($postData,'add_use');
+            $inputUseTeam = arrGet($postData,'useTeam');
 			$inputAddSets = arrGet($postData,'add_sets');
 			
 			
@@ -228,13 +230,22 @@ $zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem
 				$db->setQuery($q_HistoryMaxId);
 				$r_HistoryMaxId = $db->loadObject();
 				$newHistId = sqlInt(objGet($r_HistoryMaxId,'maxId'),0) + 1;
+                
+                $teamID = 'NULL';
+                $q_teamID = $db->getQuery(true);
+                $q_teamID->select('t.id AS tId')
+                    ->from('com_catalogsystem_team AS t')
+                    ->where('t.name = ' . sqlString($inputUseTeam));
+                $db->setQuery($q_teamID);
+                $r_teamID = $db->loadObject();
+                $teamID = sqlInt(objGet($r_teamID, 'tId'), 1);
 				
 				// QUERY: insert the new history entry into the history table
 				$q_InsertHistory = $db->getQuery(true);
 				$q_InsertHistory->insert('com_catalogsystem_history')
 					->values(sqlInt($newHistId)
 					. ', ' . sqlInt($info->id)
-					. ', ' . 'NULL'
+					. ', ' . sqlInt($teamID)
 					. ', ' . sqlDate($inputAddUse)
 					);
 				$db->setQuery($q_InsertHistory);
@@ -302,7 +313,8 @@ $zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem
 		// ------------
 		// DISPLAY HTML
 		// ------------
-		
+		$urlStr = Route::_("index.php?option=com_catalogsystem&view=catalogc");
+        echo "<a href='$urlStr'>Back</a>";
         echo "<h2>Edit Problem: $info->name</h2>";
         
         echo "<form action='index.php?option=com_catalogsystem&view=editproblem&id=$info->id'
@@ -315,7 +327,7 @@ $zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem
             echo $this->form->renderFieldset("details");
             
 			if($info->pdf_link != null && $pdfExists){
-				$pdfDownload = $uri . "media/com_catalogsystem/uploads/pdf/" . $info->pdf_link.".pdf";
+				$pdfDownload = $uri . "media/com_catalogsystem/uploads/pdf/" . $info->pdf_link . ".pdf";
 				echo "<p>Problem PDF: <a href='$pdfDownload'>Download</a></p>";
 			} else {
 				echo "<p>Problem PDF: N/A</p>";
@@ -323,7 +335,7 @@ $zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem
 			echo $this->form->renderField("pdfupload");
 			
 			if($info->zip_link != null && $zipExists){
-				$zipDownload = $uri . "media/com_catalogsystem/uploads/zip/" . $info->zip_link.".zip";
+				$zipDownload = $uri . "media/com_catalogsystem/uploads/zip/" . $info->zip_link . ".zip";
 				echo "<p>Problem ZIP: <a href='$zipDownload' download>Download</a></p>";
 			} else {
 				echo "<p>Problem ZIP: N/A</p>";
@@ -341,7 +353,8 @@ $zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem
                             <th>
                                 <input type='checkbox' id='toggle2' name='toggle2' label=' ' onclick='toggleAll(\"myTable2\", \"toggle2\")'>";
                         echo "</th>
-                            <th>Use Date</th>
+                            <th>Date Used</th>
+                            <th>Used By</th>
                         </tr>
                     </thead>
                     <tbody>";
@@ -355,6 +368,7 @@ $zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem
                     echo $this->form->renderField("delUse_$row->id");
                 echo "</td>
                         <td>$row->date</td>
+                        <td>$row->teamName</td>
                     </tr>";
             endforeach;
 

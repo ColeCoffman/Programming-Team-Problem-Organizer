@@ -11,6 +11,7 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
 use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;
 
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('catalogHelper')
@@ -23,16 +24,19 @@ $zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem
 <?php
 	use Joomla\CMS\Uri\Uri;
 	$uri = Uri::root();
+    $urlStr = Route::_("index.php?option=com_catalogsystem&view=catalog");
+    echo "<a href='$urlStr'>Back</a>";
+
     if (is_null($this->item)){
         echo "<h2>Error: Problem does not exist</h2>";
         echo "<h3>Include a valid id in the URL to view problem details.</h3>";
     }else{
         $info = $this->item;
 		if($info->zip_link != null && $zipExists){
-			$zipDownload = $uri . "media/com_catalogsystem/uploads/zip/" . $info->zip_link.".zip";
+			$zipDownload = $uri . "media/com_catalogsystem/uploads/zip/" . $info->zip_link . ".zip";
 		}
 		if($info->pdf_link != null && $pdfExists){
-			$pdfDownload = $uri . "media/com_catalogsystem/uploads/pdf/" . $info->pdf_link.".pdf";
+			$pdfDownload = $uri . "media/com_catalogsystem/uploads/pdf/" . $info->pdf_link . ".pdf";
 		}
 		echo "<div class= 'info-box'>";
         echo "<div class='problem-title'>$info->name</div>
@@ -62,7 +66,8 @@ echo "</div></div>";
         echo "<table class='catalog_table'>
                 <thead>
                     <tr>
-                        <th class= 'unsorted'>Use History</th>
+                        <th class= 'unsorted'>Date Used</th>
+                        <th class='unsorted'>Used By</th>
                     </tr>
                 </thead>
                 <tbody>";
@@ -70,6 +75,7 @@ echo "</div></div>";
         foreach ($info->history as $i => $row):
             echo "<tr>
                     <td>$row->date</td>
+                    <td>$row->teamName</td>
                 </tr>";
         endforeach;
 

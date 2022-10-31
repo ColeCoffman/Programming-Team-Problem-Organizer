@@ -22,6 +22,17 @@ $wa->useStyle('catalog')
     ->useScript('catalogHelper');
 ?>
 
+<script language="javascript" type="text/javascript">
+    function tableOrdering( order, dir, task )
+    {
+        var form = document.adminForm;
+
+        form.filter_order.value = order;
+        form.filter_order_Dir.value = dir;
+        document.adminForm.submit( task );
+    }
+</script>
+
 <form class= "search-box" action="index.php?option=com_catalogsystem&view=catalog"
     method="post" name="com_catalogsystem.catalogsearch" id="com_catalogsystem.catalogsearch" enctype="multipart/form-data">
     <div>
@@ -56,40 +67,49 @@ $wa->useStyle('catalog')
 		</div>
     </div>
     <div class= "end-content">
-	<button  id="filter_clear" class="submit-button" type="button" onclick="window.location.reload();"> Reset </button>
+	<button  id="filter_clear" name="filter_clear" class="submit-button" type="submit"> Reset </button>
 	<button class = "submit-button" type="submit">Filter</button>
 </div>
    </div>
 </form>
-<table class="catalog_table" id="myTable">
-    <thead>
-      <tr>
-        <th id= "Col0" class= "unsorted" onclick="sortTable(0)">Name</th>
-        <th id= "Col1" class= "unsorted" onclick="sortTable(1)">Category</th>
-        <th id= "Col2" class= "unsorted" onclick="sortTable(2)">Difficulty</th>
-        <th id= "Col3" class= "unsorted" onclick="sortTable(3)">Source</th>
-        <th id= "Col4" class= "unsorted" onclick="sortTable(4)">First Used</th>
-        <th id= "Col5" class= "unsorted" onclick="sortTable(5)">Last Used</th>
-      </tr>
-    </thead>
-    <tbody>
-        <?php
-		if(is_array($this->items))
-		{
-			foreach ($this->items as $i => $row)
-			{
-				echo '<tr>';
-				$url = Route::_("index.php?option=com_catalogsystem&view=problemdetails&id=" . $row->id);
-				echo "<td><a href='$url'>$row->name</a></td>";
-				echo "<td>$row->category</td>";
-				echo "<td>$row->difficulty</td>";
-				echo "<td>$row->source</td>";
-				echo "<td>$row->firstUsed</td>";
-				echo "<td>$row->lastUsed</td>";
-				echo '</tr>';
-			}
-		}
-		?>
-    </tbody>
-</table>
-<?php echo $this->pagination->getListFooter(); ?>
+
+<form id="adminForm" method="post" name="adminForm">
+    <table class="catalog_table" id="myTable">
+        <thead>
+          <tr>
+            <th><?php echo JHTML::_( 'grid.sort', 'Name', 'name', $this->sortDirection, $this->sortColumn); ?></th>
+            <th><?php echo JHTML::_( 'grid.sort', 'Category', 'category', $this->sortDirection, $this->sortColumn); ?></th>
+            <th><?php echo JHTML::_( 'grid.sort', 'Difficulty', 'difficulty', $this->sortDirection, $this->sortColumn); ?></th>
+            <th><?php echo JHTML::_( 'grid.sort', 'Source', 'source', $this->sortDirection, $this->sortColumn); ?></th>
+            <th><?php echo JHTML::_( 'grid.sort', 'First Used', 'firstUsed', $this->sortDirection, $this->sortColumn); ?></th>
+            <th><?php echo JHTML::_( 'grid.sort', 'Last Used', 'lastUsed', $this->sortDirection, $this->sortColumn); ?></th>
+          </tr>
+        </thead>
+        <tbody>
+            <?php
+            if(is_array($this->items))
+            {
+                foreach ($this->items as $i => $row)
+                {
+                    echo '<tr>';
+                    $url = Route::_("index.php?option=com_catalogsystem&view=problemdetails&id=" . $row->id);
+                    echo "<td><a href='$url'>$row->name</a></td>";
+                    echo "<td>$row->category</td>";
+                    echo "<td>$row->difficulty</td>";
+                    echo "<td>$row->source</td>";
+                    echo "<td>$row->firstUsed</td>";
+                    echo "<td>$row->lastUsed</td>";
+                    echo '</tr>';
+                }
+            }
+            ?>
+        </tbody>
+    </table>
+    <?php echo $this->pagination->getListFooter(); ?>
+    <div>
+        <span>Rows Per Page: </span>
+        <?php echo $this->pagination->getLimitBox(); ?>
+    </div>
+    <input type="hidden" name="filter_order" value="<?php echo $this->sortColumn; ?>" />
+	<input type="hidden" name="filter_order_Dir" value="<?php echo $this->sortDirection; ?>" />
+</form>

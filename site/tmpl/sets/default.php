@@ -21,6 +21,17 @@ $wa->useStyle('catalog')
 $urlStr = "index.php?option=com_catalogsystem&view=catalog&set=";
 ?>
 
+<script language="javascript" type="text/javascript">
+    function tableOrdering( order, dir, task )
+    {
+        var form = document.adminForm;
+
+        form.filter_order.value = order;
+        form.filter_order_Dir.value = dir;
+        document.adminForm.submit( task );
+    }
+</script>
+
 <form class= "search-box" action="index.php?option=com_catalogsystem&view=sets"
     method="post" name="setsForm" id="setsForm" enctype="multipart/form-data">
     <div>
@@ -46,26 +57,34 @@ $urlStr = "index.php?option=com_catalogsystem&view=catalog&set=";
 </div>
 </form>
 
-<table class="catalog_table" id="myTable">
-    <thead>
-        <tr>
-            <th id="Col0" class="unsorted" onclick="sortTable(0)">Name</th>
-            <th id="Col1" class="unsorted"onclick="sortTable(1)">Number of Problems</th>
-            <th id="Col2" class="unsorted" onclick="sortTable(2)">Zip URL</th>
-      			<th id="Col3" class="unsorted" onclick="sortTable(3)">First Used</th>
-      			<th id= "Col4" class="unsorted" onclick="sortTable(4)">Last Used</th>
-        </tr>
-    </thead>
-    <tbody>
-     <?php foreach ($this->items as $i => $row) : ?>
+<form id="adminForm" method="post" name="adminForm">
+    <table class="catalog_table" id="myTable">
+        <thead>
             <tr>
-                <td><?php $url = Route::_($urlStr . $row->set_id); echo "<a href='$url'>$row->name</a>";?></td>
-                <td><?php echo $row->numProblems; ?></td>
-                <td><?php echo "<a href='$row->zip'>Download</a>"; ?></td>
-      				<td><?php echo $row->firstUsed; ?></td>
-      				<td><?php echo $row->lastUsed; ?></td>
-          </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
-<?php echo $this->pagination->getListFooter(); ?>
+                <th><?php echo JHTML::_( 'grid.sort', 'Name', 'name', $this->sortDirection, $this->sortColumn); ?></th>
+                <th><?php echo JHTML::_( 'grid.sort', 'Number of Problems', 'numProblems', $this->sortDirection, $this->sortColumn); ?></th>
+                <th id="Col2" class="unsorted">Zip Download</th>
+                <th><?php echo JHTML::_( 'grid.sort', 'First Used', 'firstUsed', $this->sortDirection, $this->sortColumn); ?></th>
+                <th><?php echo JHTML::_( 'grid.sort', 'Last Used', 'lastUsed', $this->sortDirection, $this->sortColumn); ?></th>
+            </tr>
+        </thead>
+        <tbody>
+         <?php foreach ($this->items as $i => $row) : ?>
+                <tr>
+                    <td><?php $url = Route::_($urlStr . $row->set_id); echo "<a href='$url'>$row->name</a>";?></td>
+                    <td><?php echo $row->numProblems; ?></td>
+                    <td><?php echo "<a href='$row->zip'>Download</a>"; ?></td>
+                        <td><?php echo $row->firstUsed; ?></td>
+                        <td><?php echo $row->lastUsed; ?></td>
+              </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <?php echo $this->pagination->getListFooter(); ?>
+    <div>
+        <span>Rows Per Page: </span>
+        <?php echo $this->pagination->getLimitBox(); ?>
+    </div>
+    <input type="hidden" name="filter_order" value="<?php echo $this->sortColumn; ?>" />
+	<input type="hidden" name="filter_order_Dir" value="<?php echo $this->sortDirection; ?>" />
+</form>

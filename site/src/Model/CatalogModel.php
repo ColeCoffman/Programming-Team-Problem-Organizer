@@ -37,6 +37,13 @@ class CatalogModel extends ListModel
 		// Retrieve the POST data
 		$app  = Factory::getApplication();
 		$data = $app->input->post->get('jform', array(), "array");
+        
+        if (isset($data['filter_clear']))
+            $data = array();
+        else if (empty($data))
+            $data = $app->getUserState('com_catalogsystem.catalogsearch', array());
+        
+        
 		
 		// Retrive URL data and format the data into an array of keys and values
 		$queryStrings = explode('&',$_SERVER['QUERY_STRING']);
@@ -145,7 +152,29 @@ class CatalogModel extends ListModel
 		->having($catalogHaving);
 		
 		if($localDebug) echo '<br/> Catalog SQL Query: <br/>' . $catalogQuery->__toString();
+        
+        $catalogQuery->order($db->escape($this->getState('list.ordering', 'name')).' '.
+		  $db->escape($this->getState('list.direction', 'ASC')));
+        
+        $app->setUserState('com_catalogsystem.catalogsearch', $data);
 		
 		return $catalogQuery;
     }
+    
+    protected function populateState($ordering = null, $direction = null) {
+	   parent::populateState('name', 'ASC');
+    }
+    
+    public function __construct($config = array())
+	{   
+		$config['filter_fields'] = array(
+			'name',
+			'difficulty',
+            'category',
+            'source',
+            'firstUsed',
+            'lastUsed'
+		);
+		parent::__construct($config);
+	}
 }
