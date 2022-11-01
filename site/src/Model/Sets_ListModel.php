@@ -38,7 +38,7 @@ class Sets_ListModel extends ListModel
 		$app  = Factory::getApplication();
 		$data = $app->input->post->get('jform', array(), "array");
         
-        if (isset($data['filter_clear']))
+        if (isset($_POST['filter_clear']))
             $data = array();
         else if (empty($data))
             $data = $app->getUserState('com_catalogsystem.setsearch', array());
