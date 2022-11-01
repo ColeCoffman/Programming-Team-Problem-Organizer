@@ -10,7 +10,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 
-require_once __DIR__ . '\\..\\..\\tmpl\\functionLib.php';
+require_once dirname(__FILE__).'/../../tmpl/functionLib.php';
 
 /**
  * @package     Joomla.Site
