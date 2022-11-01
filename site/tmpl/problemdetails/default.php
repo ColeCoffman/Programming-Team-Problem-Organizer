@@ -10,71 +10,98 @@
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
+use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;
+
+$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa->useScript('catalogHelper')
+    ->useStyle('info');
+
+$pdfExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem/uploads/pdf/'.$this->item->pdf_link. '.pdf');
+$zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem/uploads/zip/'.$this->item->zip_link. '.zip');
 ?>
 
 <?php
 	use Joomla\CMS\Uri\Uri;
 	$uri = Uri::root();
+    $urlStr = Route::_("index.php?option=com_catalogsystem&view=catalog");
+    echo "<a href='$urlStr'>Back</a>";
+
     if (is_null($this->item)){
         echo "<h2>Error: Problem does not exist</h2>";
         echo "<h3>Include a valid id in the URL to view problem details.</h3>";
     }else{
         $info = $this->item;
-		if($info->zip_link != null){
-			$zipDownload = $uri . "media/com_catalogsystem/uploads/zip/" . $info->zip_link;
+		if($info->zip_link != null && $zipExists){
+			$zipDownload = $uri . "media/com_catalogsystem/uploads/zip/" . $info->zip_link . ".zip";
 		}
-		if($info->pdf_link != null){
-			$pdfDownload = $uri . "media/com_catalogsystem/uploads/pdf/" . $info->pdf_link;
+		if($info->pdf_link != null && $pdfExists){
+			$pdfDownload = $uri . "media/com_catalogsystem/uploads/pdf/" . $info->pdf_link . ".pdf";
 		}
-        echo "<h2>$info->name</h2>";
-        echo "<h3>Category: $info->category</h3>";
-        echo "<h3>Difficulty: $info->difficulty</h3>";
-        echo "<h3>Source: $info->source</h3>";
-        echo "<h4>Associated Resources:</h4>";
-		if($info->pdf_link != null){
-			echo "<p>Problem PDF: <a href='$pdfDownload'>Download</a></p>";
+		echo "<div class= 'info-box'>";
+        echo "<div class='problem-title'>$info->name</div>
+				<div class='details'>";
+        echo "<div class= 'problem-header'>
+				<label id= 'category'>Category:</label>
+    		<div class='title'>$info->category</div></div>";
+        echo "<div class= 'problem-header'>
+				<label id= 'difficulty'>Difficulty:</label>
+						<div class='title'> $info->difficulty</div></div>";
+        echo "<div class= 'problem-header'>
+						<label id= 'source'>Source:</label>
+							<div class= 'title'> $info->source</div></div>";
+		if($info->pdf_link != null && $pdfExists){
+			echo "<div class= 'problem-header'><label id= 'pdf'>Problem PDF:</label> <a class= 'title' href='$pdfDownload'>Download</a></div>";
 		} else {
-			echo "<p>Problem PDF: <a href='#'>N/A</a></p>";
+			echo "<div class= 'problem-header'><label id= 'pdf'>Problem PDF:</label> <div class= 'title'>Not Available</div></div>";
 		}
-		if($info->zip_link != null){
-			echo "<p>Problem ZIP: <a href='$zipDownload' download>Download</a></p>";
+		if($info->zip_link != null && $zipExists){
+			echo "<div class= 'problem-header'><label id= 'zip'>Problem ZIP:</label> <a class= 'title' href='$zipDownload' download>Download</a></div>";
 		} else {
-			echo "<p>Problem ZIP: <a href='#'>N/A</a></p>";
+			echo "<div class= 'problem-header'><label id= 'pdf'>Problem ZIP:</label> <div class= 'title'>Not Available</div></div>";
 		}
-        echo "<h4>Use History:</h4>";
-        
-        echo "<table class='table table-striped table-hover'>
+echo "</div></div>";
+		echo "<div class= 'tables'>";
+		echo "<div class= 'history_table'>";
+        echo "<table class='catalog_table'>
                 <thead>
                     <tr>
-                        <th>Date Used</th>
+                        <th class= 'unsorted'>Date Used</th>
+                        <th class='unsorted'>Used By</th>
                     </tr>
                 </thead>
                 <tbody>";
-        
+				echo "</div>";
         foreach ($info->history as $i => $row):
             echo "<tr>
                     <td>$row->date</td>
+                    <td>$row->teamName</td>
                 </tr>";
         endforeach;
-        
+
     echo "</tbody>
-        </table>";
-    //echo $this->pagination->getListFooter();
-        
-    echo "<h4>Included in Sets:</h4>";
-        
-        echo "<table class='table table-striped table-hover'>
+        </table>
+		 </div>";
+
+		echo "<div class= 'sets_table'>";
+        echo "<table class='catalog_table'>
+					<thead>
+							<tr>
+									<th class= 'unsorted'>Sets Included</th>
+							</tr>
+					</thead>
                 <tbody>";
-        
+
         foreach ($info->sets as $i => $row):
             echo "<tr>
                     <td>$row->name</td>
                 </tr>";
         endforeach;
-        
+
     echo "</tbody>
-        </table>";
-    //echo $this->pagination->getListFooter();
-    
+
+        </table>
+				</div>
+					</div>";
     }
 ?>

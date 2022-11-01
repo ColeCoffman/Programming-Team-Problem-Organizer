@@ -14,25 +14,29 @@ defined('_JEXEC') or die('Restricted Access');
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 
-require_once __DIR__ . '\\..\\functionLib.php';
+require_once dirname(__FILE__).'/../functionLib.php';
+
+$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa->useStyle('catalog')
+    ->useScript('catalogHelper');
 
 // Enable/disable Debug
 $localDebug = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-	
+
 	// Retrieve POST input and file uploads
     $app  = Factory::getApplication();
     $postData = $app->input->post->get('jform', array(), "array");
     $file = $app->input->files->get('jform', array(), "array");
-	
+
 	// Debug POST input
 	if($localDebug) {
 		echo '<br/> Post input:<br/>';
 		var_dump($postData);
 		echo '<br/>';
 	}
-	
+
 	// Process PDF upload
 	$pdfFilename = NULL;
     if ($file['pdfupload']['size'] > 0) {
@@ -50,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $app->enqueueMessage("File upload failed", "error");
         }
     }
-	
+
     // Process ZIP Upload
 	$zipFilename = NULL;
     if ($file['zipupload']['size'] > 0) {
@@ -68,10 +72,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $app->enqueueMessage("File upload failed", "error");
         }
     }
-    
+
     // Get a DatabaseDriver object.
     $db = Factory::getContainer()->get('DatabaseDriver');
-	
+
 	// Organize user input
 	$inputName = arrGet($postData,'name');
 	$inputCategory = arrGet($postData,'category');
@@ -83,9 +87,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$inputSets = arrGet($postData,'set');
 	$inputPdf = $pdfFilename;
 	$inputZip = $zipFilename;
-	
-	
-	
+
+
+
 	// QUERY: Get the next id in the problem table
 	$q_ProblemMaxId = $db->getQuery(true);
 	$q_ProblemMaxId->select('MAX(p.id) AS "maxId"')
@@ -93,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$db->setQuery($q_ProblemMaxId);
 	$r_ProblemMaxId = $db->loadObject();
 	$newProbId = sqlInt(objGet($r_ProblemMaxId,'maxId'),0) + 1;
-	
+
 	// If a category string was provided, attach the new problem to that category
 	$newProbCid = 'NULL';
 	if(sqlString($inputCategory)!=='NULL')
@@ -106,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$db->setQuery($q_CategoryName);
 		$r_CategoryName = $db->loadObject();
 		$newProbCid = sqlInt(objGet($r_CategoryName,'cid'),0);
-		
+
 		// If there is no cateogry with a matching name, create one
 		if($newProbCid === 'NULL')
 		{
@@ -114,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			echo '<br/><br/> CREATE NEW CATEGORY <br/> name = ' . sqlString($inputCategory) . '<br/>';
 		}
 	}
-	
+
 	// If a source string was provided, attach the new problem to that source
 	$newProbSid = 'NULL';
 	if(sqlString($inputSource)!=='NULL')
@@ -127,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$db->setQuery($q_SourceName);
 		$r_SourceName = $db->loadObject();
 		$newProbSid = sqlInt(objGet($r_SourceName,'sid'),0);
-		
+
 		// If there is no source with a matching name, create one
 		if($newProbSid === 'NULL')
 		{
@@ -135,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			echo '<br/><br/> CREATE NEW SOURCE <br/> name = ' . sqlString($inputSource) . '<br/>';
 		}
 	}
-	
+
     // QUERY: insert the new problem into the problem table
     $q_InsertProblem = $db->getQuery(true);
 	$q_InsertProblem->insert('com_catalogsystem_problem')
@@ -150,11 +154,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$db->setQuery($q_InsertProblem);
 	$db->execute();
 	if($localDebug) echo '<br/><br/>Exeucted SQL Query:<br/>' . $q_InsertProblem->__toString();
-	
+
 	// If a valid date was provided, create the history entry
 	if(sqlDate($inputFirstUse)!=='NULL')
 	{
-		
+
 		// QUERY: Get the next id in the history table
 		$q_HistoryMaxId = $db->getQuery(true);
 		$q_HistoryMaxId->select('MAX(h.id) AS "maxId"')
@@ -162,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$db->setQuery($q_HistoryMaxId);
 		$r_HistoryMaxId = $db->loadObject();
 		$newHistId = sqlInt(objGet($r_HistoryMaxId,'maxId'),0) + 1;
-		
+
 		// QUERY: insert the new history entry into the history table
 		$q_InsertHistory = $db->getQuery(true);
 		$q_InsertHistory->insert('com_catalogsystem_history')
@@ -174,9 +178,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$db->setQuery($q_InsertHistory);
 		$db->execute();
 		if($localDebug) echo '<br/><br/>Exeucted SQL Query:<br/>' . $q_InsertHistory->__toString();
-		
+
 	}
-	
+
 	// If a valid list of sets was provided, create a problemset relationship for each set
 	if(is_array($inputSets))
 	{
@@ -191,7 +195,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 				$db->setQuery($q_ProblemSetMaxId);
 				$r_ProblemSetMaxId = $db->loadObject();
 				$newProbSetId = sqlInt(objGet($r_ProblemSetMaxId,'maxId'),0) + 1;
-				
+
 				// QUERY: Get the set id that matches the given set name
 				$q_SetName = $db->getQuery(true);
 				$q_SetName->select('e.id AS "eid"')
@@ -200,13 +204,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 				$db->setQuery($q_SetName);
 				$r_SetName = $db->loadObject();
 				$newProbSetEid = sqlInt(objGet($r_SetName,'eid'),0);
-				
+
 				if($newProbSetEid === 'NULL')
 				{
 					// TODO: Create a new set
 					echo '<br/><br/> CREATE NEW SET <br/> name = ' . sqlString($inputSet) . '<br/>';
 				}
-				
+
 				// QUERY: insert the new relationship into the problemset table
 				$q_InsertProblemSet = $db->getQuery(true);
 				$q_InsertProblemSet->insert('com_catalogsystem_problemset')
@@ -220,32 +224,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			}
 		}
 	}
-	
+
 	// Display a temporary confirmation message
 	echo '<br/><b>[Problem Added Successfully]</b><br/>';
-	
+
 }//End of 'if(POST)' section
 
 ?>
 
-<form action="index.php?option=com_catalogsystem&view=addproblem"
-    method="post" name="addForm" id="addForm" enctype="multipart/form-data">
+<form action="index.php?option=com_catalogsystem&view=AddProblem" class="add-box"
+    method="post" name="com_catalogsystem.AddProblem" id="com_catalogsystem.AddProblem" enctype="multipart/form-data">
+    <div>
+      <div>
+        <?php echo $this->form->renderField('name');  ?>
+      </div>
+    <div>
+        <?php echo $this->form->renderField('cattoggle');  ?>
+    </div>
+      <div>
+        <?php echo $this->form->renderField('category');  ?>
+      </div>
+      <div>
+        <?php echo $this->form->renderField('newcategory');  ?>
+      </div>
+      <div>
+        <?php echo $this->form->renderField('sourcetoggle');  ?>
+      </div>
+      <div>
+        <?php echo $this->form->renderField('source');  ?>
+      </div>
+      <div>
+        <?php echo $this->form->renderField('newsource');  ?>
+      </div>
+      <div>
+        <?php echo $this->form->renderField('dif');  ?>
+      </div>
+      <div>
+        <?php echo $this->form->renderField('set');  ?>
+      </div>
+      <div class= "schedulers">
+        <?php echo $this->form->renderField('firstUse');  ?>
+        <?php echo $this->form->renderField('firstUseTeam');  ?>
+      </div>
+      <div class="fileupload">
+        <?php echo $this->form->renderField('pdfupload');  ?>
+      </div>
+      <div class="fileupload">
+        <?php echo $this->form->renderField('zipupload');  ?>
+      </div>
+    </div>
 
-	<?php echo $this->form->renderField('name');  ?>
-	
-	<?php echo $this->form->renderField('category');  ?>
-	
-	<?php echo $this->form->renderField('source');  ?>
-    
-    <?php echo $this->form->renderField('dif');  ?>
-    
-    <?php echo $this->form->renderField('firstUse');  ?>
-    
-    <?php echo $this->form->renderField('set');  ?>
-
-    <?php echo $this->form->renderField('pdfupload');  ?>
-
-    <?php echo $this->form->renderField('zipupload');  ?>
-	
-	<button type="submit">Add Problem</button>
+    <div class= "end-content">
+  <button class = "submit-button" type="submit">AddProblem</button>
+  </div>
 </form>

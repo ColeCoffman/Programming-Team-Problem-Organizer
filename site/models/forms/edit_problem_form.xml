@@ -8,6 +8,10 @@
             size="40"
             class="inputbox"
             required="true" />
+        <field name="cattoggle" type="radio" default="0" label="" description="">
+                <option value="0">Use existing Category</option>
+                <option value="1">Create new Category</option>
+        </field>
         <field
             name="category"
             label="Category"
@@ -22,6 +26,18 @@
             multiple="false"
             custom="true"/>
         <field
+            name="newcategory"
+            label="Input new Category"
+            required="false"
+            type="text"
+            default=""
+            class="inputbox"
+            showon="cattoggle:1"/>
+        <field name="sourcetoggle" type="radio" default="0" label="" description="">
+                <option value="0">Use existing Source</option>
+                <option value="1">Create new Source</option>
+        </field>
+        <field
             name="source"
             label="Source"
             required="false"
@@ -34,6 +50,14 @@
             layout="joomla.form.field.list-fancy-select"
             multiple="false"
             custom="true"/>
+        <field
+            name="newsource"
+            label="Input new Source"
+            required="false"
+            type="text"
+            default=""
+            class="inputbox"
+            showon="sourcetoggle:1"/>
         <field name="dif"
             type="text"
             label="Difficulty"
@@ -70,4 +94,17 @@
        type = "calendar"
        label="Record Use"
        required = "false" />
+    <field name="useTeam"
+       type = "sql"
+       label="Used By"
+       required = "false" 
+        default=""
+        class="inputbox"
+        query="SELECT id, name FROM com_catalogsystem_team"
+        key_field="name"
+        value_field="name"
+        layout="joomla.form.field.list-fancy-select"
+        multiple="false"
+        custom="true"
+    />
 </form>

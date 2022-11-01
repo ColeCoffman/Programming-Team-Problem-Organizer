@@ -15,14 +15,11 @@ use Joomla\CMS\Factory;
 use ProgrammingTeam\Component\CatalogSystem\Site\Helper\ajaxCategories;
 use Joomla\CMS\Router\Route;
 
-require_once __DIR__ . '\\..\\functionLib.php';
+require_once dirname(__FILE__).'/../functionLib.php';
 
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('catalogHelper')
     ->useStyle('catalog');
-
-/*JHTML::script(Juri::base() . '/media/com_catalogsystem/js/categories.js');
-JHTML::script(Juri::base() . '/media/com_catalogsystem/js/catalogHelper.js');*/
 
 // Take coaches from the catalogc to editproblem (instead of problemdetails)
 $urlStr = "index.php?option=com_catalogsystem&view=editproblem&id=";
@@ -45,8 +42,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			    foreach ($selected as $id)
 			    { // ID = Problem ID
 				    $query->clear();
-				    $columns = array('problem_id', 'date');
-				    $values  = array(sqlInt($id), sqlDate($operation['useDate']));
+				    $columns = array('problem_id', 'team_id', 'date');
+                    
+                    $teamID = 'NULL';
+                    $q_teamID = $db->getQuery(true);
+                    $q_teamID->select('t.id AS tId')
+                        ->from('com_catalogsystem_team AS t')
+                        ->where('t.name = ' . sqlString($operation['useTeam']));
+                    $db->setQuery($q_teamID);
+                    $r_teamID = $db->loadObject();
+                    $teamID = sqlInt(objGet($r_teamID, 'tId'), 1);
+                    
+				    $values  = array(sqlInt($id), $teamID, sqlDate($operation['useDate']));
 				    $query->insert('com_catalogsystem_history')
 					    ->columns($db->quoteName($columns))
 					    ->values(implode(',', $values));
@@ -124,57 +131,80 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
+<script language="javascript" type="text/javascript">
+    function tableOrdering( order, dir, task )
+    {
+        var form = document.adminForm;
+
+        form.filter_order.value = order;
+        form.filter_order_Dir.value = dir;
+        document.adminForm.submit( task );
+    }
+</script>
+
+<?php
+    $linkStr = Route::_("index.php?option=com_catalogsystem&view=addproblem");
+    echo "<a href='$linkStr'>Add New Problem</a>";
+?>
+
 <form class= "search-box" action="index.php?option=com_catalogsystem&view=catalogc"
     method="post" name="searchForm" id="searchForm" enctype="multipart/form-data">
     <div>
-		<div>
-			<?php echo $this->form->renderField('catalog_name');  ?>
-		</div>
-		<div>
-			<?php echo $this->form->renderField('catalog_set');  ?>
-		</div>
-		<div>
-			<?php echo $this->form->renderField('catalog_category');  ?>
-		</div>
-		<div>
-			<?php echo $this->form->renderField('catalog_source');  ?>
-		</div>
-		<div style = "display: flex; flex-wrap: wrap;">
-			<?php echo $this->form->renderField('catalog_mindif');  ?>
-            <?php echo $this->form->renderField('catalog_maxdif');  ?>
-		</div>
-		<div style = "display: flex; flex-wrap: wrap;">
-			<?php echo $this->form->renderField('catalog_date_after');  ?>
-			<?php echo $this->form->renderField('catalog_date_before');  ?>
-		</div>
-		<div style = "display: flex; flex-wrap: wrap;">
+      <div>
+  			<?php echo $this->form->renderField('catalog_name');  ?>
+  		</div>
+  		<div>
+  			<?php echo $this->form->renderField('catalog_set');  ?>
+  		</div>
+  		<div>
+  			<?php echo $this->form->renderField('catalog_category');  ?>
+  		</div>
+  		<div>
+  			<?php echo $this->form->renderField('catalog_source');  ?>
+  		</div>
+      <div class= "rowoptions">
+        <div class= "dif" style= "display: flex; flex: 2;">
+           <?php echo $this->form->renderField('catalog_mindif');  ?>
+          <?php echo $this->form->renderField('catalog_maxdif');  ?>
+        </div>
+      </div>
+      <div class= "rowoptions schedulers">
+  		<div class= "date" style= "display: flex; flex: 2;">
+        <?php echo $this->form->renderField('catalog_date_before');  ?>
+  			<?php echo $this->form->renderField('catalog_date_after');  ?>
+  		</div>
+    </div>
+  <div class= "rowoptions schedulers">
+		<div class=  "not_date" style= "display: flex; flex: 2;">
 			<?php echo $this->form->renderField('catalog_date_notbefore');  ?>
 			<?php echo $this->form->renderField('catalog_date_notafter');  ?>
 		</div>
     </div>
     <div class= "end-content">
-       <button class = "submit-button" type="submit">Filter</button>
-	</div>
+	<button  id="filter_clear" class="submit-button" type="button" onclick="window.location.reload();"> Reset </button>
+	<button class = "submit-button" type="submit">Filter</button>
+</div>
+   </div>
 </form>
 
 <form action="index.php?option=com_catalogsystem&view=catalogc"
-    method="post" name="opForm" id="opForm" enctype="multipart/form-data">
+    method="post" name="adminForm" id="adminForm" enctype="multipart/form-data">
     <table class="catalog_table" id="myTable">
         <thead>
             <tr>
-                <th>
-                    <input type="checkbox" id="toggle" name="toggle" label=" " onclick="toggleAll()">
-                </th>
-                <th onclick="sortTable(1)">Name ↕</th>
-                <th onclick="sortTable(2)">Category ↕</th>
-                <th onclick="sortTable(3)">Difficulty ↕</th>
-                <th onclick="sortTable(4)">Source ↕</th>
-				<th onclick="sortTable(5)">First Used ↕</th>
-                <th onclick="sortTable(6)">Last Used ↕</th>
+              <th id="checkcolumn">
+                  <input id="toggle" class="checkcolumn" type="checkbox"  name="toggle" label=" " onclick="toggleAll()">
+              </th>
+                <th><?php echo JHTML::_( 'grid.sort', 'Name', 'name', $this->sortDirection, $this->sortColumn); ?></th>
+            <th><?php echo JHTML::_( 'grid.sort', 'Category', 'category', $this->sortDirection, $this->sortColumn); ?></th>
+            <th><?php echo JHTML::_( 'grid.sort', 'Difficulty', 'difficulty', $this->sortDirection, $this->sortColumn); ?></th>
+            <th><?php echo JHTML::_( 'grid.sort', 'Source', 'source', $this->sortDirection, $this->sortColumn); ?></th>
+            <th><?php echo JHTML::_( 'grid.sort', 'First Used', 'firstUsed', $this->sortDirection, $this->sortColumn); ?></th>
+            <th><?php echo JHTML::_( 'grid.sort', 'Last Used', 'lastUsed', $this->sortDirection, $this->sortColumn); ?></th>
             </tr>
         </thead>
         <tbody>
-            <?php 
+            <?php
 			if(is_array($this->items))
 			{
 				foreach ($this->items as $i => $row)
@@ -198,9 +228,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </tbody>
     </table>
     <?php echo $this->pagination->getListFooter(); ?>
-    <div class="search-box">
-        <?php echo $this->form2->renderFieldset("opPanel"); ?>
-        <button type="submit">Confirm</button>
+    <div>
+        <span>Rows Per Page: </span>
+        <?php echo $this->pagination->getLimitBox(); ?>
     </div>
+    <input type="hidden" name="filter_order" value="<?php echo $this->sortColumn; ?>" />
+	<input type="hidden" name="filter_order_Dir" value="<?php echo $this->sortDirection; ?>" />
     
+    <div class="panel-box">
+        <?php echo $this->form2->renderFieldset("opPanel"); ?>
+        <div class= "end-content">
+        <button class = "op-button" type="submit">Confirm</button>
+      </div>
+    </div>
+
 </form>

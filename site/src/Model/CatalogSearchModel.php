@@ -58,6 +58,11 @@ class CatalogSearchModel extends FormModel
 		{
 			$data['catalog_set'] = array($urlData['set']);
 		}
+        
+        $data = $app->getUserState(
+			'com_catalogsystem.catalogsearch',	// a unique name to identify the data in the session
+			array()	// prefill data if no data found in session
+		);
 		
 		// If any of the POST keys are valid, they will be used to initialize this form
 		// (Invalid or missing keys will be ignored without issue)

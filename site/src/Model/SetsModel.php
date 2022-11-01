@@ -8,7 +8,7 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 
-require_once __DIR__ . '\\..\\..\\tmpl\\functionLib.php';
+require_once dirname(__FILE__).'/../../tmpl/functionLib.php';
 
 /**
  * @package     Joomla.Site
@@ -38,6 +38,11 @@ class SetsModel extends ListModel
 		// Retrieve the POST data
 		$app  = Factory::getApplication();
 		$data = $app->input->post->get('jform', array(), "array");
+        
+        if (isset($data['filter_clear']))
+            $data = array();
+        else if (empty($data))
+            $data = $app->getUserState('com_catalogsystem.setsearch', array());
 		
 		// Build the WHERE and HAVING clauses for the SQL Query:
 		// (This defaults to a true statement because the '->where()' function always requires a parameter)
@@ -85,7 +90,7 @@ class SetsModel extends ListModel
 		GROUP BY e.id
 		HAVING {Procedurally generated}
 		*/
-        $setsQuery->select('e.id AS set_id, e.name AS name, e.zip_link AS zip, COUNT(ps.problem_id) AS numProblems, MIN(h.date) AS firstUsed, MAX(h.date) AS lastUsed')
+        $setsQuery->select('e.id AS set_id, e.name AS name, e.zip_link AS zip, COUNT(DISTINCT ps.problem_id) AS numProblems, MIN(h.date) AS firstUsed, MAX(h.date) AS lastUsed')
 		->from('com_catalogsystem_set AS e')
 		->join('LEFT','com_catalogsystem_problemset AS ps ON e.id = ps.set_id')
 		->join('LEFT','com_catalogsystem_problem AS p ON ps.problem_id = p.id')
@@ -95,7 +100,27 @@ class SetsModel extends ListModel
 		->having($setsHaving);
 		
 		if($localDebug) echo '<br/> Sets SQL Query: <br/>' . $setsQuery->__toString();
+        
+         $setsQuery->order($db->escape($this->getState('list.ordering', 'name')).' '.
+		  $db->escape($this->getState('list.direction', 'ASC')));
+        
+        $app->setUserState('com_catalogsystem.setsearch', $data);
 		
 		return $setsQuery;
     }
+    
+    protected function populateState($ordering = null, $direction = null) {
+	   parent::populateState('name', 'ASC');
+    }
+    
+    public function __construct($config = array())
+	{   
+		$config['filter_fields'] = array(
+			'name',
+            'numProblems',
+            'firstUsed',
+            'lastUsed'
+		);
+		parent::__construct($config);
+	}
 }

@@ -6,7 +6,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Factory;
-use Joomla\CMS\MVC\Controller\FormController;
+use Joomla\CMS\Router\Route;
 
 /**
  * @package     Joomla.Site
@@ -23,18 +23,47 @@ use Joomla\CMS\MVC\Controller\FormController;
 class DisplayController extends BaseController
 {
     public function display($cachable = false, $urlparams = array())
-    {
-		$localDebug = true;
-		
+    {		
+        $app = Factory::getApplication();
+        $user = $app->getIdentity();
+        $guest = $user->guest;
+        $groups = $user->getAuthorisedGroups();
+        $coachid = 10;
+        $isCoach = in_array($coachid, $groups);
+        
         $document = Factory::getDocument();
         $viewName = $this->input->getCmd('view', 'login');
+        
+        if ($guest === 1){
+            $returnRoute = base64_encode('index.php?option=com_catalogsystem&view=' . $viewName);
+            $url = Route::_('index.php?option=com_users&view=login&return=' . $returnRoute);
+            $app->redirect($url);
+        }else if($isCoach){
+            if ($viewName === 'catalog'){
+                $url = Route::_('index.php?option=com_catalogsystem&view=catalogc');
+                $app->redirect($url);
+            }else if ($viewName === 'sets'){
+                $url = Route::_('index.php?option=com_catalogsystem&view=setsc');
+                $app->redirect($url);
+            }else if ($viewName === 'problemdetails'){
+                $viewName = 'editproblem';
+            }
+        }else{
+            if ($viewName === 'catalogc'){
+                $url = Route::_('index.php?option=com_catalogsystem&view=catalog');
+                $app->redirect($url);
+            }else if ($viewName === 'setsc'){
+                $url = Route::_('index.php?option=com_catalogsystem&view=sets');
+                $app->redirect($url);
+            }else if ($viewName === 'editproblem'){
+                $viewName = 'problemdetails';
+            }else if ($viewName === 'addproblem'){
+                $url = Route::_('index.php?option=com_catalogsystem&view=catalog');
+                $app->redirect($url);
+            }
+        }
+        
         $viewFormat = $document->getType();
-		
-		if($localDebug)
-		{
-			echo "<br/>Display Controller: viewName=$viewName, viewFormat=$viewFormat<br/>";
-		}
-		
 		$view = $this->getView($viewName, $viewFormat);
 		
 		// Determine which models need to be loaded based on the view
@@ -77,7 +106,7 @@ class DisplayController extends BaseController
 		else
 		{
 			echo "<br/><b>WARNING: Unknown viewName '$viewName'</b><br/>";
-			echo "Please update site/src/Controller/DisplayController.php with a new 'else if(\$viewName===$viewName)' block<br/>";
+			echo "Please update site/src/Controller/DisplayController.php with a new \"else if(\$viewName==='$viewName')\" block<br/>";
 		}
 
         $view->document = $document;

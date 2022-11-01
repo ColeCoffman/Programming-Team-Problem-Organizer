@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
+	<fieldset>
 	<field
 		name="name"
 		type="text"
@@ -7,41 +8,83 @@
 		size="40"
 		class="inputbox"
 		required="true" />
+    <field name="cattoggle" type="radio" default="0" label="" description="">
+        <option value="0">Use existing Category</option>
+        <option value="1">Create new Category</option>
+    </field>
 	<field
-			name="category"
-			label="Category"
-			required="false"
-			type="sql"
-			default=""
-			class="inputbox"
-			query="SELECT id, name FROM com_catalogsystem_category"
-			key_field="name"
-			value_field="name"
-			layout="joomla.form.field.list-fancy-select"
-		/>
+        name="category"
+        label="Category"
+        required="false"
+        type="sql"
+        default=""
+        class="inputbox"
+        showon="cattoggle:0"
+        query="SELECT id, name FROM com_catalogsystem_category"
+        key_field="name"
+        value_field="name"
+        layout="joomla.form.field.list-fancy-select"
+    />
+    <field
+        name="newcategory"
+        label="Input new Category"
+        required="false"
+        type="text"
+        default=""
+        class="inputbox"
+        showon="cattoggle:1"/>
+    <field name="sourcetoggle" type="radio" default="0" label="" description="">
+            <option value="0">Use existing Source</option>
+            <option value="1">Create new Source</option>
+    </field>
 	<field
-			name="source"
-			label="Source"
-			required="false"
-			type="sql"
-			default=""
-			class="inputbox"
-			query="SELECT id, name FROM com_catalogsystem_source"
-			key_field="name"
-			value_field="name"
-			layout="joomla.form.field.list-fancy-select"
-		/>
+        name="source"
+        label="Source"
+        required="false"
+        type="sql"
+        default=""
+        class="inputbox"
+        showon="sourcetoggle:0"
+        query="SELECT id, name FROM com_catalogsystem_source"
+        key_field="name"
+        value_field="name"
+        layout="joomla.form.field.list-fancy-select"
+    />
+    <field
+        name="newsource"
+        label="Input new Source"
+        required="false"
+        type="text"
+        default=""
+        class="inputbox"
+        showon="sourcetoggle:1"/>
     <field name="dif"
-		type="text"
+		type="number"
 		label="Difficulty"
+		min="0"
 		required="false"
 		size="3"
         filter = "integer"
-		class="inputbox" />
+		class="inputbox"
+    />
     <field name="firstUse"
-           type = "calendar"
-           label="Initially Used"
-           required = "false" />
+       type = "calendar"
+       label="Initially Used"
+       required = "false"
+    />
+    <field name="firstUseTeam"
+       type = "sql"
+       label="Used By"
+       required = "false" 
+        default=""
+        class="inputbox"
+        query="SELECT id, name FROM com_catalogsystem_team"
+        key_field="name"
+        value_field="name"
+        layout="joomla.form.field.list-fancy-select"
+        multiple="false"
+        custom="true"
+    />
 	<field
 			name="set"
 			label="Include in Problem Sets:"
@@ -55,17 +98,20 @@
 			layout="joomla.form.field.list-fancy-select"
 			multiple="true"
 			custom="true"
-		/>
-	<field name="pdfupload"
-		type="file"
-		label="Upload PDF"
-		description="Upload a PDF file of the problem"
-		size="40"
-		class="inputbox" />
+    />
+		<field name="pdfupload"
+			type="file"
+			label="Upload PDF"
+			labelclass ="labelFile"
+			size="40"
+					accept="application/pdf"
+			class="custom-file-input" />
 	<field name="zipupload"
 		type="file"
 		label="Upload ZIP"
-		description="Upload a ZIP file for the problem"
+		labelclass ="labelFile"
 		size="40"
-		class="inputbox" />
+        accept="application/zip"
+		class="custom-file-input" />
+	</fieldset>
 </form>

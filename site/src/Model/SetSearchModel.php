@@ -44,6 +44,11 @@ class SetSearchModel extends FormModel
 		// Retrieve the current POST data
 		$app  = Factory::getApplication();
 		$data = $app->input->post->get('jform', array(), "array");
+        
+        $data = $app->getUserState(
+			'com_catalogsystem.setsearch',	// a unique name to identify the data in the session
+			array()	// prefill data if no data found in session
+		);
 		
 		// If any of the POST keys are valid, they will be used to initialize this form
 		// (Invalid or missing keys will be ignored without issue)

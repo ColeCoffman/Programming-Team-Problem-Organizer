@@ -6,6 +6,7 @@
 			type="text"
 			label="Problem Name"
 			size="40"
+			hint= "Type the problem name"
 			class="inputbox"
 			required="false"
 		></field>
@@ -15,6 +16,7 @@
 			required="false"
 			type="sql"
 			default=""
+			hint="Type or select tags"
 			class="inputbox"
 			query="SELECT id, name FROM com_catalogsystem_set"
 			key_field="id"
@@ -27,6 +29,7 @@
 			label="Category"
 			required="false"
 			type="sql"
+			hint="Type or select tags"
 			default=""
 			class="inputbox"
 			query="SELECT id, name FROM com_catalogsystem_category"
@@ -41,6 +44,7 @@
 			required="false"
 			type="sql"
 			default=""
+			hint="Type or select tags"
 			class="inputbox"
 			query="SELECT id, name FROM com_catalogsystem_source"
 			key_field="id"
@@ -50,25 +54,28 @@
 		/>
 		<field
 			name="catalog_mindif"
-			type="text"
+			type="number"
 			label="Min Difficulty"
 			required="false"
-			size="8"
+			size="3"
+			min="0"
 			filter="integer"
 			class="inputbox"
 			></field>
 		<field
 			name="catalog_maxdif"
-			type="text"
+			type="number"
 			label="Max Difficulty"
 			required="false"
-			size="8"
+			size="3"
+			min="0"
 			filter="integer"
 			class="inputbox"
 			></field>
 		<field
 			name="catalog_date_after"
 			type="calendar"
+			class="catalog_date"
 			label="After"
 			required="false"
 			size="8"
@@ -76,6 +83,7 @@
 		<field
 			name="catalog_date_before"
 			type="calendar"
+			class="catalog_date"
 			label="Before"
 			required="false"
 			size="8"
@@ -84,12 +92,14 @@
 			name="catalog_date_notbefore"
 			type="calendar"
 			label="NOT Before"
+			class="catalog_date"
 			required="false"
 			size="8"
 			></field>
 		<field
 			name="catalog_date_notafter"
 			type="calendar"
+			class="catalog_date"
 			label="NOT After"
 			required="false"
 			size="8"

@@ -62,8 +62,9 @@ class ProblemDetailsModel extends ItemModel
 	    }
 
 	    $historyQuery = $db->getQuery(true);
-		$historyQuery->select('history.id AS id, history.date AS date')
+		$historyQuery->select('history.id AS id, history.date AS date, team.name AS teamName')
 			->from($db->quoteName('com_catalogsystem_history', 'history'))
+            ->join('LEFT', $db->quoteName('com_catalogsystem_team', 'team') . ' ON (' . $db->quoteName('history.team_id') . ' = ' . $db->quoteName('team.id') . ')')
 			->where($db->quoteName('history.problem_id') . " = " . $db->quote($idvar))
 			->order('date DESC');
 

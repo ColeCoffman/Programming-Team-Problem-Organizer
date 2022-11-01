@@ -15,7 +15,7 @@ use Joomla\CMS\Factory;
 use ProgrammingTeam\Component\CatalogSystem\Site\Helper\ajaxCategories;
 use Joomla\CMS\Router\Route;
 
-require_once __DIR__ . '\\..\\functionLib.php';
+require_once dirname(__FILE__).'/../functionLib.php';
 
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useStyle('catalog')
@@ -56,8 +56,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	                    foreach($problems as $problem)
 	                    { // Record Use for each problem
 		                    $query->clear();
-		                    $columns = array('problem_id', 'date');
-		                    $values  = array(sqlInt($problem['problem_id']), sqlDate($operation['useDate']));
+		                    $columns = array('problem_id', 'team_id', 'date');
+                            
+                            $teamID = 'NULL';
+                            $q_teamID = $db->getQuery(true);
+                            $q_teamID->select('t.id AS tId')
+                                ->from('com_catalogsystem_team AS t')
+                                ->where('t.name = ' . sqlString($operation['useTeam']));
+                            $db->setQuery($q_teamID);
+                            $r_teamID = $db->loadObject();
+                            $teamID = sqlInt(objGet($r_teamID, 'tId'), 1);
+                            
+		                    $values  = array(sqlInt($problem['problem_id']), $teamID, sqlDate($operation['useDate']));
 		                    $query->insert('com_catalogsystem_history')
 			                    ->columns($db->quoteName($columns))
 			                    ->values(implode(',', $values));
@@ -105,6 +115,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 ?>
 
+<script language="javascript" type="text/javascript">
+    function tableOrdering( order, dir, task )
+    {
+        var form = document.adminForm;
+
+        form.filter_order.value = order;
+        form.filter_order_Dir.value = dir;
+        document.adminForm.submit( task );
+    }
+</script>
+
 <form class= "search-box" action="index.php?option=com_catalogsystem&view=setsc"
     method="post" name="setsForm" id="setsForm" enctype="multipart/form-data">
 	<div>
@@ -120,23 +141,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
   <div class= "end-content">
+  <button  id="filter_clear" class="submit-button" style="background-color: red"  type="button" onclick="window.location.reload();"> Reset </button>
      <button class = "submit-button" type="submit">Filter</button>
    </div>
 </form>
 
 <form action="index.php?option=com_catalogsystem&view=setsc"
-    method="post" name="opForm" id="opForm" enctype="multipart/form-data">
+    method="post" name="adminForm" id="adminForm" enctype="multipart/form-data">
     <table class="catalog_table" id="myTable">
         <thead>
             <tr>
-                <th>
-                    <input type="checkbox" id="toggle" name="toggle" label=" " onclick="toggleAll()">
-                </th>
-                <th onclick="sortTable(1)">Name ↕</th>
-                <th onclick="sortTable(2)">Number of Problems ↕</th>
-                <th onclick="sortTable(3)">Zip URL ↕</th>
-				<th onclick="sortTable(4)">First Used ↕</th>
-				<th onclick="sortTable(5)">Last Used ↕</th>
+              <th id="checkcolumn">
+                  <input id="toggle" class="checkcolumn" type="checkbox"  name="toggle" label=" " onclick="toggleAll()">
+              </th>
+                <th><?php echo JHTML::_( 'grid.sort', 'Name', 'name', $this->sortDirection, $this->sortColumn); ?></th>
+                <th><?php echo JHTML::_( 'grid.sort', 'Number of Problems', 'numProblems', $this->sortDirection, $this->sortColumn); ?></th>
+                <th id="Col2" class="unsorted">Zip Download</th>
+                <th><?php echo JHTML::_( 'grid.sort', 'First Used', 'firstUsed', $this->sortDirection, $this->sortColumn); ?></th>
+                <th><?php echo JHTML::_( 'grid.sort', 'Last Used', 'lastUsed', $this->sortDirection, $this->sortColumn); ?></th>
             </tr>
         </thead>
         <tbody>
@@ -150,7 +172,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <td><?php echo $this->form2->renderField("$row->set_id");  ?></td>
                     <td><?php $url = Route::_($urlStr . $row->set_id); echo "<a href='$url'>$row->name</a>";?></td>
                     <td><?php echo $row->numProblems; ?></td>
-                    <td><?php echo $row->zip; ?></td>
+                    <td><?php echo "<a href='$row->zip'>Download</a>"; ?></td>
 					<td><?php echo $row->firstUsed; ?></td>
 					<td><?php echo $row->lastUsed; ?></td>
                 </tr>
@@ -158,9 +180,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </tbody>
     </table>
     <?php echo $this->pagination->getListFooter(); ?>
+    <div>
+        <span>Rows Per Page: </span>
+        <?php echo $this->pagination->getLimitBox(); ?>
+    </div>
+    <input type="hidden" name="filter_order" value="<?php echo $this->sortColumn; ?>" />
+	<input type="hidden" name="filter_order_Dir" value="<?php echo $this->sortDirection; ?>" />
+    
     <div class="search-box">
         <?php echo $this->form2->renderFieldset("opPanel"); ?>
         <button type="submit">Confirm</button>
     </div>
-    
+
 </form>
