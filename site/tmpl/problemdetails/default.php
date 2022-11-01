@@ -59,7 +59,7 @@ defined('_JEXEC') or die('Restricted Access');
         
     echo "</tbody>
         </table>";
-    echo $this->pagination->getListFooter();
+    //echo $this->pagination->getListFooter();
         
     echo "<h4>Included in Sets:</h4>";
         
@@ -74,7 +74,7 @@ defined('_JEXEC') or die('Restricted Access');
         
     echo "</tbody>
         </table>";
-    echo $this->pagination->getListFooter();
+    //echo $this->pagination->getListFooter();
     
     }
 ?>

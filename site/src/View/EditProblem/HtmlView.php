@@ -19,22 +19,31 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
  */
 class HtmlView extends BaseHtmlView
 {
-    /**
+    
+    protected $details;
+    protected $pagination;
+    protected $form;
+	protected $result;
+
+	/**
      * Display the view
      *
      * @param   string  $template  The name of the layout file to parse.
      * @return  void
      */
-    protected $item;
-    protected $pagination;
-    protected $form;
-
     public function display($template = null)
     {
-        // Call the parent display to display the layout file
-        $this->item = $this->get('Item', 'ProblemDetails');
-        $this->pagination = $this->get('Pagination');
-        $this->form = $this->get('form', 'Edit');
+        // Get the current details of this problem
+		$this->details = $this->get('Item', 'ProblemDetails');
+		
+		// Edit this problem according to the POST request (if there is one)
+		$this->getModel('EditProblem_Write')->setState("details",$this->details);
+		$this->result = $this->get('Item', 'EditProblem_Write');
+		
+		// Get the new details of this problem, after it was edited
+		$this->details = $this->get('Item', 'ProblemDetails');
+        $this->form = $this->get('form', 'EditProblem_Form');
+		
         parent::display($template);
     }
 }

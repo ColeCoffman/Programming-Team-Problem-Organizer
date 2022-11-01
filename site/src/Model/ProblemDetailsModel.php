@@ -42,7 +42,7 @@ class ProblemDetailsModel extends ItemModel
 		}
 
         // Select statement Name, Category, Difficulty, Source, Last Used
-	    $query->select(array('com_catalogsystem_problem.name', 'com_catalogsystem_problem.difficulty', 'com_catalogsystem_problem.id', 'com_catalogsystem_problem.zip_link', 'com_catalogsystem_problem.pdf_link'), array('name', 'difficulty', 'id', 'zipUrl', 'pdfPath'))
+	    $query->select($db->quoteName(array('com_catalogsystem_problem.name', 'com_catalogsystem_problem.difficulty', 'com_catalogsystem_problem.id', 'com_catalogsystem_problem.zip_link', 'com_catalogsystem_problem.pdf_link'), array('name', 'difficulty', 'id', 'zipUrl', 'pdfPath')))
 		    ->select($db->quoteName(array('category.id','category.name'), array('cid','category')))
 		    ->select($db->quoteName(array('source.id','source.name'), array('sid','source')))
 		    ->from($db->quoteName('com_catalogsystem_problem'), 'problem')

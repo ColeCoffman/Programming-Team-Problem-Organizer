@@ -33,7 +33,7 @@ class HtmlView extends BaseHtmlView
     {
         // Call the parent display to display the layout file
         $this->items = $this->get('Items', 'Sets');
-        $this->pagination = $this->get('Pagination');
+        $this->pagination = $this->get('Pagination', 'Sets');
         $this->form = $this->get('form', 'SetSearch');
         //$this->categories = $this->get('CategoryTags');
         parent::display($template);
