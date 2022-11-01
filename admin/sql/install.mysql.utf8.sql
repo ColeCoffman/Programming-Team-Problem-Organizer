@@ -2199,7 +2199,7 @@ INSERT INTO `com_catalogsystem_problem` (`id`, `source_id`, `category_id`, `name
 (500, 1, NULL, 'Jumping Game', NULL, 'Jumping_Game-500', 'Jumping_Game-500'),
 (501, 1, NULL, 'Pantun Grader', NULL, 'Pantun_Grader-501', 'Pantun_Grader-501'),
 (502, 1, NULL, 'Hari Merdeka', NULL, 'Hari_Merdeka-502', 'Hari_Merdeka-502'),
-(503, 1, NULL, 'T�nel de Rata', NULL, 'Tnel_de_Rata-503', 'Tnel_de_Rata-503'),
+(503, 1, NULL, 'Tunel de Rata', NULL, 'Tunel_de_Rata-503', 'Tunel_de_Rata-503'),
 (504, 1, NULL, 'Interstellar Love', NULL, 'Interstellar_Love-504', 'Interstellar_Love-504'),
 (505, 1, NULL, 'Spokes Wheel', NULL, 'Spokes_Wheel-505', 'Spokes_Wheel-505'),
 (506, 1, NULL, 'Balanced Photo', NULL, 'Balanced_Photo-506', 'Balanced_Photo-506'),
@@ -2700,7 +2700,7 @@ INSERT INTO `com_catalogsystem_problem` (`id`, `source_id`, `category_id`, `name
 (1000, 57, NULL, 'The Great Drone Show', NULL, 'The_Great_Drone_Show-1000', 'The_Great_Drone_Show-1000'),
 (1001, 57, NULL, 'Fantastic compression', NULL, 'Fantastic_compression-1001', 'Fantastic_compression-1001'),
 (1002, 57, NULL, 'Bookstore', NULL, 'Bookstore-1002', 'Bookstore-1002'),
-(1003, 57, NULL, ' Cheese Game', NULL, '_Cheese_Game-1003', '_Cheese_Game-1003'),
+(1003, 57, NULL, 'Cheese Game', NULL, 'Cheese_Game-1003', 'Cheese_Game-1003'),
 (1004, 57, NULL, 'Henry Porter and the Palindromic Radius', NULL, 'Henry_Porter_and_the_Palindromic_Radius-1004', 'Henry_Porter_and_the_Palindromic_Radius-1004'),
 (1005, 57, NULL, 'Antennas', NULL, 'Antennas-1005', 'Antennas-1005'),
 (1006, 57, NULL, 'Ghost', NULL, 'Ghost-1006', 'Ghost-1006'),
@@ -3045,7 +3045,7 @@ INSERT INTO `com_catalogsystem_problem` (`id`, `source_id`, `category_id`, `name
 (1344, 79, NULL, 'Watch Where You Step', NULL, 'Watch_Where_You_Step-1344', 'Watch_Where_You_Step-1344'),
 (1345, 80, NULL, 'Moving Buildings', NULL, 'Moving_Buildings-1345', 'Moving_Buildings-1345'),
 (1346, 80, NULL, 'Tanks and Pipes', NULL, 'Tanks_and_Pipes-1346', 'Tanks_and_Pipes-1346'),
-(1347, 80, NULL, 'The Erd▒s-Straus Conjecture', NULL, 'The_Erds-Straus_Conjecture-1347', 'The_Erds-Straus_Conjecture-1347'),
+(1347, 80, NULL, 'The Erdos-Straus Conjecture', NULL, 'The_Erdos-Straus_Conjecture-1347', 'The_Erdos-Straus_Conjecture-1347'),
 (1348, 80, NULL, 'Airspace Regulations', NULL, 'Airspace_Regulations-1348', 'Airspace_Regulations-1348');
 
 INSERT INTO `com_catalogsystem_problemset` (`id`, `set_id`, `problem_id`) VALUES

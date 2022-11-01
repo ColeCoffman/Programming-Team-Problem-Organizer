@@ -291,3 +291,7 @@ input[type="file"]::file-selector-button {
   padding-bottom: 1.5%;
   word-wrap: break-word;
 }
+
+.hidden {
+  display: none !important;
+}
