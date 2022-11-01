@@ -21,7 +21,7 @@ use Joomla\CMS\Factory;
  * Catalog System Message Model
  * @since 0.0.5
  */
-class ProblemDetailsModel extends ItemModel
+class ProblemDetails_ItemModel extends ItemModel
 {
     /**
      * Returns a message for display
@@ -60,30 +60,6 @@ class ProblemDetailsModel extends ItemModel
 			echo '<br/>ERROR: SQL Query id not find a problem with id = '.$idvar.'<br/>';
 		    return NULL;
 	    }
-
-	    $historyQuery = $db->getQuery(true);
-		$historyQuery->select('history.id AS id, history.date AS date, team.name AS teamName')
-			->from($db->quoteName('com_catalogsystem_history', 'history'))
-            ->join('LEFT', $db->quoteName('com_catalogsystem_team', 'team') . ' ON (' . $db->quoteName('history.team_id') . ' = ' . $db->quoteName('team.id') . ')')
-			->where($db->quoteName('history.problem_id') . " = " . $db->quote($idvar))
-			->order('date DESC');
-
-	    $db->setQuery($historyQuery);
-		$historyResult = $db->loadObjectList();
-
-		$result->history = $historyResult;
-
-	    $SetsQuery = $db->getQuery(true);
-	    $SetsQuery->select('sets.id AS id, sets.name AS name')
-		    ->from($db->quoteName('com_catalogsystem_set', 'sets'))
-		    ->join('INNER', $db->quoteName('com_catalogsystem_problemset', 'problemset') . ' ON (' . $db->quoteName('problemset.problem_id') . ' = ' . $db->quote($idvar) . ')')
-		    ->where($db->quoteName('sets.id') . " = " . $db->quoteName('problemset.set_id'))
-		    ->order('name ASC');
-
-	    $db->setQuery($SetsQuery);
-	    $setResults = $db->loadObjectList();
-
-		$result->sets = $setResults;
 		return $result;
     }
 }

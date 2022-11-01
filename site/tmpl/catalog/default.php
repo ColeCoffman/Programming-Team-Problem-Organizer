@@ -72,7 +72,6 @@ $wa->useStyle('catalog')
 </div>
    </div>
 </form>
-
 <form id="adminForm" method="post" name="adminForm">
     <table class="catalog_table" id="myTable">
         <thead>

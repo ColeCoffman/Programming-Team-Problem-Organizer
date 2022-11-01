@@ -5,6 +5,7 @@ namespace ProgrammingTeam\Component\CatalogSystem\Site\View\EditProblem;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Factory;
 
 /**
  * @package     Joomla.Site
@@ -24,6 +25,8 @@ class HtmlView extends BaseHtmlView
     protected $pagination;
     protected $form;
 	protected $result;
+	protected $historyPagination;
+	protected $setsPagination;
 
 	/**
      * Display the view
@@ -33,15 +36,21 @@ class HtmlView extends BaseHtmlView
      */
     public function display($template = null)
     {
-        // Get the current details of this problem
-		$this->details = $this->get('Item', 'ProblemDetails');
-		
-		// Edit this problem according to the POST request (if there is one)
+		// Edit this problem according to the POST data (if there is any)
+		$this->details = $this->get('Item', 'ProblemDetails_Item');
+		$this->details->history = $this->get('Items', 'ProblemHistory_List');
+		$this->details->sets = $this->get('Items', 'ProblemSets_List');
 		$this->getModel('EditProblem_Write')->setState("details",$this->details);
 		$this->result = $this->get('Item', 'EditProblem_Write');
 		
 		// Get the new details of this problem, after it was edited
-		$this->details = $this->get('Item', 'ProblemDetails');
+		$this->details = $this->get('Item', 'ProblemDetails_Item');
+		$this->details->history = $this->get('Items', 'ProblemHistory_List');
+		$this->details->sets = $this->get('Items', 'ProblemSets_List');
+		
+		$this->historyPagination = $this->get('Pagination', 'ProblemHistory_List');
+        $this->setsPagination = $this->get('Pagination', 'ProblemSets_List');
+		
         $this->form = $this->get('form', 'EditProblem_Form');
 		
         parent::display($template);

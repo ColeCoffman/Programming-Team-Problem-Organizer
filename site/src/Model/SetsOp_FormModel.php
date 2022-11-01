@@ -20,7 +20,7 @@ use Joomla\CMS\MVC\Model\FormModel;
  * Catalog System Message Model
  * @since 0.0.5
  */
-class SetSearchModel extends FormModel
+class SetsOp_FormModel extends FormModel
 {
     /**
      * Returns a message for display
@@ -30,9 +30,9 @@ class SetSearchModel extends FormModel
     
     public function getForm($data = array(), $loadData = true)
     {
-        $form = $this->loadForm('com_catalogsystem.setsearch', 'set_search_form',
+        $form = $this->loadForm('com_catalogsystem.setop', 'set_op_form',
                        array(
-                            'control' => 'jform',	// the name of the array for the POST parameters
+                            'control' => 'jform2',	// the name of the array for the POST parameters
                             'load_data' => $loadData	// will be TRUE
 			             )
                     );
@@ -41,17 +41,12 @@ class SetSearchModel extends FormModel
     
     protected function loadFormData()
 	{
-		// Retrieve the current POST data
-		$app  = Factory::getApplication();
-		$data = $app->input->post->get('jform', array(), "array");
-        
-        $data = $app->getUserState(
-			'com_catalogsystem.setsearch',	// a unique name to identify the data in the session
+		// Check the session for previously entered form data.
+		$data = Factory::getApplication()->getUserState(
+			'com_catalogsystem.setop',	// a unique name to identify the data in the session
 			array()	// prefill data if no data found in session
 		);
-		
-		// If any of the POST keys are valid, they will be used to initialize this form
-		// (Invalid or missing keys will be ignored without issue)
+
 		return $data;
 	}
 }

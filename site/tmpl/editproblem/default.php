@@ -12,6 +12,7 @@
 defined('_JEXEC') or die('Restricted Access');
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;
 
 require_once dirname(__FILE__).'/../functionLib.php';
 
@@ -20,8 +21,6 @@ $wa->useScript('catalogHelper');
 
 use Joomla\CMS\Uri\Uri;
 $uri = Uri::root();
-$pdfExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem/uploads/pdf/'.$this->item->pdf_link. '.pdf');
-$zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem/uploads/zip/'.$this->item->zip_link. '.zip');
 ?>
 
 <?php 
@@ -33,11 +32,20 @@ $zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem
 	{
 		$info = $this->details;
 		
-		// If a problem was edited, display a temporary confirmation message
-		if($this->result->state === 3)
+		$pdfExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem/uploads/pdf/'.$info->pdfPath. '.pdf');
+		$zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem/uploads/zip/'.$info->zipUrl. '.zip');
+		
+		// If a problem was edited successfully, display a temporary confirmation message
+		if($this->result->state === 0)
 		{
 			echo '<br/><b>[Problem Updated Successfully]</b><br/>';
 		}
+		// If a problem failed to edit, display the error message
+		else if($this->result->state < 0)
+		{
+			echo "<br/><b>Problem Failed to Update:</b><br/>$this->result->msg<br/>";
+		}
+		
 		
 		$urlStr = Route::_("index.php?option=com_catalogsystem&view=catalogc");
         echo "<a href='$urlStr'>Back</a>";
@@ -83,7 +91,8 @@ $zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem
             echo $this->form->renderField("useTeam");
 
             echo "<h4>Remove Uses?</h4>";
-            echo "<table class='table table-striped table-hover' id='myTable2'>
+            echo "{$this->historyPagination->getLimitBox()}
+				<table class='table table-striped table-hover' id='myTable2'>
                     <thead>
                         <tr>
                             <th>
@@ -109,11 +118,12 @@ $zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem
             endforeach;
 
             echo "</tbody>
-                </table>";
-            //echo $this->pagination->getListFooter();
+                </table>
+				{$this->historyPagination->getListFooter()}";
 
             echo "<h4>Remove from Sets?</h4>";
-            echo "<table class='table table-striped table-hover' id='myTable'>
+            echo "{$this->setsPagination->getLimitBox()}
+				<table class='table table-striped table-hover' id='myTable'>
                     <thead>
                         <tr>
                             <th>
@@ -136,8 +146,8 @@ $zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem
                 </tr>";
             endforeach;
             echo "</tbody>
-                </table>";
-            //echo $this->pagination->getListFooter();
+                </table>
+				{$this->setsPagination->getListFooter()}";
 
             echo "<button type='submit'>Confirm Changes</button>";
         echo "</form>";

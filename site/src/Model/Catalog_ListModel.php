@@ -21,7 +21,7 @@ require_once dirname(__FILE__).'/../../tmpl/functionLib.php';
  * Catalog System Message Model
  * @since 0.0.5
  */
-class CatalogModel extends ListModel
+class Catalog_ListModel extends ListModel
 {
     /**
      * Returns a message for display
@@ -30,7 +30,7 @@ class CatalogModel extends ListModel
      */
     protected function getListQuery()
     {
-		//echo '<br/><b>CatalogModel:getListQuery()</b><br/>';
+		
 		// enable/disable debug displays for this method
 		$localDebug = false;
 		

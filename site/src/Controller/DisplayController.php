@@ -69,39 +69,44 @@ class DisplayController extends BaseController
 		// Determine which models need to be loaded based on the view
 		if($viewName==='addproblem')
 		{
-			$view->setModel($this->getModel('AddProblem'));
+			$view->setModel($this->getModel('AddProblem_Form'));
+			$view->setModel($this->getModel('AddProblem_Write'));
 		}
 		else if($viewName==='catalog')
 		{
-			$view->setModel($this->getModel('Catalog'), true);
-			$view->setModel($this->getModel('CatalogSearch'));
+			$view->setModel($this->getModel('Catalog_List'), true);
+			$view->setModel($this->getModel('Catalog_Form'));
 		}
 		else if($viewName==='catalogc')
 		{
-			$view->setModel($this->getModel('Catalog'), true);
-			$view->setModel($this->getModel('CatalogSearch'));
-			$view->setModel($this->getModel('CatalogOp'));
+			$view->setModel($this->getModel('Catalog_List'), true);
+			$view->setModel($this->getModel('Catalog_Form'));
+			$view->setModel($this->getModel('CatalogOp_Form'));
 		}
 		else if($viewName==='editproblem')
 		{
-			$view->setModel($this->getModel('ProblemDetails'));
+			$view->setModel($this->getModel('ProblemDetails_Item'));
+			$view->setModel($this->getModel('ProblemHistory_List'));
+			$view->setModel($this->getModel('ProblemSets_List'));
 			$view->setModel($this->getModel('EditProblem_Form'));
 			$view->setModel($this->getModel('EditProblem_Write'));
 		}
 		else if($viewName==='problemdetails')
 		{
-			$view->setModel($this->getModel('ProblemDetails'));
+			$view->setModel($this->getModel('ProblemDetails_Item'));
+			$view->setModel($this->getModel('ProblemHistory_List'));
+			$view->setModel($this->getModel('ProblemSets_List'));
 		}
 		else if($viewName==='sets')
 		{
-			$view->setModel($this->getModel('Sets'));
-			$view->setModel($this->getModel('SetSearch'));
+			$view->setModel($this->getModel('Sets_List'));
+			$view->setModel($this->getModel('Sets_Form'));
 		}
 		else if($viewName==='setsc')
 		{
-			$view->setModel($this->getModel('Sets'));
-			$view->setModel($this->getModel('SetSearch'));
-			$view->setModel($this->getModel('SetOp'));
+			$view->setModel($this->getModel('Sets_List'));
+			$view->setModel($this->getModel('Sets_Form'));
+			$view->setModel($this->getModel('SetsOp_Form'));
 		}
 		else
 		{

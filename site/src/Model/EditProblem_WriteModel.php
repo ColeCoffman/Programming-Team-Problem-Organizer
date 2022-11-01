@@ -42,7 +42,7 @@ class EditProblem_WriteModel extends ItemModel
 		
 		$result = new \stdClass();
 		$result->msg = 'Unknown';
-		$result->state = 0;
+		$result->state = 1;
 		
 		$info = $this->getState("details");
 		if($localDebug)
@@ -55,17 +55,17 @@ class EditProblem_WriteModel extends ItemModel
 		if($_SERVER['REQUEST_METHOD'] !== 'POST')
 		{
 			$result->msg = 'No POST request';
-			$result->state = 1;
+			$result->state = 2;
 		}
 		else if(is_null($info))
 		{
 			$result->msg = 'FAILED: getState("details") was NULL';
-			$result->state = 2;
+			$result->state = -1;
 		}
 		else
 		{
-			$result->msg = 'Database edited successfully';
-			$result->state = 3;
+			$result->msg = 'Problem updated successfully';
+			$result->state = 0;
 			
 			// Retrieve POST input and file uploads
 			$app  = Factory::getApplication();
@@ -116,29 +116,34 @@ class EditProblem_WriteModel extends ItemModel
 			$inputDifficulty = arrGet($postData,'dif');
 			$inputPdf = $pdfFilename;
 			$inputZip = $zipFilename;
-			$inputCategory = arrGet($postData,'category');
-			if(is_array($inputCategory)) $inputCategory = arrGet($inputCategory,0);
-			$inputSource = arrGet($postData,'source');
-			if(is_array($inputSource)) $inputSource = arrGet($inputSource,0);
 			$inputAddUse = arrGet($postData,'add_use');
+			$inputTeam = arrGet($postData,'useTeam');
 			$inputAddSets = arrGet($postData,'add_sets');
+			
+			$inputCatToggle = arrGet($postData,'cattoggle');
+			$inputCategory = arrGet($postData,'category');
+			if($inputCatToggle == '1') $inputCategory = arrGet($postData,'newcategory');
+			if(is_array($inputCategory)) $inputCategory = arrGet($inputCategory,0);
+			
+			
+			$inputSourceToggle = arrGet($postData,'sourcetoggle');
+			$inputSource = arrGet($postData,'source');
+			if($inputSourceToggle == '1') $inputSource = arrGet($postData,'newsource');
+			if(is_array($inputSource)) $inputSource = arrGet($inputSource,0);
+			
 			// Retrieve user input for history and set deletions (auto-generated fields)
 			$inputDelUses = array();
 			foreach ($info->history as $i => $row)
 			{
 				$inputDelUse = arrGet($postData,"delUse_$row->id");
-				echo "<br/>Reading delUse_$row->id as '$inputDelUse'";
 				if($inputDelUse === '1') array_push($inputDelUses,$row->id);
 			}
-			echo "<br/>Del uses array:".print_r($inputDelUses, true);
 			$inputDelSets = array();
 			foreach ($info->sets as $i => $row)
 			{
 				$inputDelSet = arrGet($postData,"delSet_$row->id");
-				echo "<br/>Reading delSet_$row->id as '$inputDelSet'";
 				if($inputDelSet === '1') array_push($inputDelSets,$row->id);
 			}
-			echo "<br/>Del sets array:".print_r($inputDelSets, true);
 			
 			
 			// If a different name was provided, change the name of this problem
@@ -151,7 +156,7 @@ class EditProblem_WriteModel extends ItemModel
 					->where('p.id = ' . sqlInt($info->id));
 				$db->setQuery($q_UpdateProblemName);
 				$db->execute();
-				if($localDebug) echo '<br/> - Changing name to ' . sqlString($inputName);
+				if($localDebug) echo '<br/><br/>Exeucted SQL Query:<br/>' . $q_UpdateProblemName->__toString();
 			}
 			
 			// If a different difficulty was provided, change the difficulty of this problem
@@ -165,7 +170,7 @@ class EditProblem_WriteModel extends ItemModel
 					->where('p.id = ' . sqlInt($info->id));
 				$db->setQuery($q_UpdateProblemDifficulty);
 				$db->execute();
-				if($localDebug) echo '<br/> - Changing difficulty to ' . sqlInt($inputDifficulty);
+				if($localDebug) echo '<br/><br/>Exeucted SQL Query:<br/>' . $q_UpdateProblemDifficulty->__toString();
 			}
 			
 			// If a different pdf_link was provided, change the pdf_link of this problem
@@ -178,7 +183,7 @@ class EditProblem_WriteModel extends ItemModel
 					->where('p.id = ' . sqlInt($info->id));
 				$db->setQuery($q_UpdateProblemPdf);
 				$db->execute();
-				if($localDebug) echo '<br/> - Changing pdf_link to ' . sqlString($inputPdf);
+				if($localDebug) echo '<br/><br/>Exeucted SQL Query:<br/>' . $q_UpdateProblemPdf->__toString();
 			}
 			
 			// If a different zip_link was provided, change the zip_link of this problem
@@ -191,27 +196,43 @@ class EditProblem_WriteModel extends ItemModel
 					->where('p.id = ' . sqlInt($info->id));
 				$db->setQuery($q_UpdateProblemZip);
 				$db->execute();
-				if($localDebug) echo '<br/> - Changing zip_link to ' . sqlString($inputZip);
+				if($localDebug) echo '<br/><br/>Exeucted SQL Query:<br/>' . $q_UpdateProblemZip->__toString();
 			}
 			
 			// If a different category was provided, attach this problem to that category
 			$newProbCid = 'NULL';
 			if(sqlString($inputCategory)!=='NULL' ? $inputCategory !== $info->category : ($info->category !== NULL && $acceptNullInputs))
 			{
-				// QUERY: Get the category id that matches the given category name
-				$q_CategoryName = $db->getQuery(true);
-				$q_CategoryName->select('c.id AS "cid"')
-					->from('com_catalogsystem_category AS c')
-					->where('c.name = ' . sqlString($inputCategory));
-				$db->setQuery($q_CategoryName);
-				$r_CategoryName = $db->loadObject();
-				$newProbCid = sqlInt(objGet($r_CategoryName,'cid'),0);
-				
-				// If there is no cateogry with a matching name, create one
-				if($newProbCid === 'NULL')
+				if($inputCatToggle == '0')
 				{
-					// TODO: Create a new category
-					echo '<br/><br/> CREATE NEW CATEGORY <br/> name = ' . sqlString($inputCategory) . '<br/>';
+					// QUERY: Get the category id that matches the given category name
+					$q_CategoryName = $db->getQuery(true);
+					$q_CategoryName->select('c.id AS "cid"')
+						->from('com_catalogsystem_category AS c')
+						->where('c.name = ' . sqlString($inputCategory));
+					$db->setQuery($q_CategoryName);
+					$r_CategoryName = $db->loadObject();
+					$newProbCid = sqlInt(objGet($r_CategoryName,'cid'),0);
+				}
+				if($inputCatToggle == '1')
+				{
+					// QUERY: Get the next id in the category table
+					$q_CategoryMaxId = $db->getQuery(true);
+					$q_CategoryMaxId->select('MAX(c.id) AS "maxId"')
+						->from('com_catalogsystem_category AS c');
+					$db->setQuery($q_CategoryMaxId);
+					$r_CategoryMaxId = $db->loadObject();
+					$newProbCid = sqlInt(objGet($r_CategoryMaxId,'maxId'),0) + 1;
+					
+					// QUERY: insert the new category entry into the category table
+					$q_InsertCategory = $db->getQuery(true);
+					$q_InsertCategory->insert('com_catalogsystem_category')
+						->values(sqlInt($newProbCid)
+						. ', ' . sqlString($inputCategory)
+						);
+					$db->setQuery($q_InsertCategory);
+					$db->execute();
+					if($localDebug) echo '<br/><br/>Exeucted SQL Query:<br/>' . $q_InsertCategory->__toString();
 				}
 				
 				// QUERY: Update p.category_id
@@ -221,27 +242,43 @@ class EditProblem_WriteModel extends ItemModel
 					->where('p.id = ' . sqlInt($info->id));
 				$db->setQuery($q_UpdateProblemCategory);
 				$db->execute();
-				if($localDebug) echo '<br/> - Changing category_id to' . sqlInt($newProbCid);
+				if($localDebug) echo '<br/><br/>Exeucted SQL Query:<br/>' . $q_UpdateProblemCategory->__toString();
 			}
 			
 			// If a different source was provided, attach this problem to that source
 			$newProbSid = 'NULL';
 			if(sqlString($inputSource)!=='NULL' ? $inputSource !== $info->source : ($info->source !== NULL && $acceptNullInputs))
 			{
-				// QUERY: Get the source id that matches the given source name
-				$q_SourceName = $db->getQuery(true);
-				$q_SourceName->select('s.id AS "sid"')
-					->from('com_catalogsystem_source AS s')
-					->where('s.name = ' . sqlString($inputSource));
-				$db->setQuery($q_SourceName);
-				$r_SourceName = $db->loadObject();
-				$newProbSid = sqlInt(objGet($r_SourceName,'sid'),0);
-				
-				// If there is no source with a matching name, create one
-				if($newProbSid === 'NULL')
+				if($inputSourceToggle == '0')
 				{
-					// TODO: Create a new source
-					echo '<br/><br/> CREATE NEW SOURCE <br/> name = ' . sqlString($inputSource) . '<br/>';
+					// QUERY: Get the source id that matches the given source name
+					$q_SourceName = $db->getQuery(true);
+					$q_SourceName->select('s.id AS "sid"')
+						->from('com_catalogsystem_source AS s')
+						->where('s.name = ' . sqlString($inputSource));
+					$db->setQuery($q_SourceName);
+					$r_SourceName = $db->loadObject();
+					$newProbSid = sqlInt(objGet($r_SourceName,'sid'),0);
+				}
+				if($inputSourceToggle == '1')
+				{
+					// QUERY: Get the next id in the source table
+					$q_SourceMaxId = $db->getQuery(true);
+					$q_SourceMaxId->select('MAX(s.id) AS "maxId"')
+						->from('com_catalogsystem_source AS s');
+					$db->setQuery($q_SourceMaxId);
+					$r_SourceMaxId = $db->loadObject();
+					$newProbSid = sqlInt(objGet($r_SourceMaxId,'maxId'),0) + 1;
+					
+					// QUERY: insert the new source entry into the source table
+					$q_InsertSource = $db->getQuery(true);
+					$q_InsertSource->insert('com_catalogsystem_source')
+						->values(sqlInt($newProbSid)
+						. ', ' . sqlString($inputSource)
+						);
+					$db->setQuery($q_InsertSource);
+					$db->execute();
+					if($localDebug) echo '<br/><br/>Exeucted SQL Query:<br/>' . $q_InsertSource->__toString();
 				}
 				
 				// QUERY: Update p.source_id
@@ -251,7 +288,7 @@ class EditProblem_WriteModel extends ItemModel
 					->where('p.id = ' . sqlInt($info->id));
 				$db->setQuery($q_UpdateProblemSource);
 				$db->execute();
-				if($localDebug) echo '<br/> - Changing source_id to' . sqlInt($newProbSid);
+				if($localDebug) echo '<br/><br/>Exeucted SQL Query:<br/>' . $q_UpdateProblemSource->__toString();
 			}
 			
 			// If a valid date was provided, create the history entry
@@ -266,17 +303,30 @@ class EditProblem_WriteModel extends ItemModel
 				$r_HistoryMaxId = $db->loadObject();
 				$newHistId = sqlInt(objGet($r_HistoryMaxId,'maxId'),0) + 1;
 				
+				$newHistTid = 'NULL';
+				if(sqlString($inputTeam)!=='NULL')
+				{
+					// QUERY: Get the team id that matches the given team name
+					$q_TeamName = $db->getQuery(true);
+					$q_TeamName->select('t.id AS "tid"')
+						->from('com_catalogsystem_team AS t')
+						->where('t.name = ' . sqlString($inputTeam));
+					$db->setQuery($q_TeamName);
+					$r_TeamName = $db->loadObject();
+					$newHistTid = sqlInt(objGet($r_TeamName,'tid'),0);
+				}
+				
 				// QUERY: insert the new history entry into the history table
 				$q_InsertHistory = $db->getQuery(true);
 				$q_InsertHistory->insert('com_catalogsystem_history')
 					->values(sqlInt($newHistId)
 					. ', ' . sqlInt($info->id)
-					. ', ' . 'NULL'
+					. ', ' . sqlInt($newHistTid)
 					. ', ' . sqlDate($inputAddUse)
 					);
 				$db->setQuery($q_InsertHistory);
 				$db->execute();
-				if($localDebug) echo '<br/> - Adding history entry with id='.sqlInt($newHistId).' and date=' . sqlDate($inputAddUse);
+				if($localDebug) echo '<br/><br/>Exeucted SQL Query:<br/>' . $q_InsertHistory->__toString();
 			}
 			
 			// If a valid list of sets was provided, create a problemset relationship for each set
@@ -318,7 +368,7 @@ class EditProblem_WriteModel extends ItemModel
 							);
 						$db->setQuery($q_InsertProblemSet);
 						$db->execute();
-						if($localDebug) echo '<br/> - Added problem '.sqlString($inputName).' to set '.sqlString($inputSet);
+						if($localDebug) echo '<br/><br/>Exeucted SQL Query:<br/>' . $q_InsertProblemSet->__toString();
 					}
 				}
 			}
@@ -337,7 +387,7 @@ class EditProblem_WriteModel extends ItemModel
 					->where($delUsageWhere);
 				$db->setQuery($q_DeleteUsage);
 				$db->execute();
-				if($localDebug) echo "<br/> - Deleting history uses: ".print_r($inputDelUses, true);
+				if($localDebug) echo '<br/><br/>Exeucted SQL Query:<br/>' . $q_DeleteUsage->__toString();
 			}
 			
 			// Delete any set relationships that were marked for deletion
@@ -354,7 +404,7 @@ class EditProblem_WriteModel extends ItemModel
 					->where($delSetWhere);
 				$db->setQuery($q_DeleteSet);
 				$db->execute();
-				if($localDebug) echo "<br/> - Deleting problemset rels with problem_id $info->id and set_id: ".print_r($inputDelSets, true);
+				if($localDebug) echo '<br/><br/>Exeucted SQL Query:<br/>' . $q_DeleteSet->__toString();
 			}
 			
 			

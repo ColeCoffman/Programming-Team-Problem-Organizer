@@ -20,7 +20,7 @@ use Joomla\CMS\MVC\Model\FormModel;
  * Catalog System Message Model
  * @since 0.0.5
  */
-class AddProblemModel extends FormModel
+class AddProblem_FormModel extends FormModel
 {
     /**
      * Returns a message for display

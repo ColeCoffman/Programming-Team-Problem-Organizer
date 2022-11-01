@@ -20,7 +20,7 @@ use Joomla\CMS\MVC\Model\FormModel;
  * Catalog System Message Model
  * @since 0.0.5
  */
-class SetOpModel extends FormModel
+class CatalogOp_FormModel extends FormModel
 {
     /**
      * Returns a message for display
@@ -30,7 +30,7 @@ class SetOpModel extends FormModel
     
     public function getForm($data = array(), $loadData = true)
     {
-        $form = $this->loadForm('com_catalogsystem.setop', 'set_op_form',
+        $form = $this->loadForm('com_catalogsystem.catalogop', 'catalog_op_form',
                        array(
                             'control' => 'jform2',	// the name of the array for the POST parameters
                             'load_data' => $loadData	// will be TRUE
@@ -43,7 +43,7 @@ class SetOpModel extends FormModel
 	{
 		// Check the session for previously entered form data.
 		$data = Factory::getApplication()->getUserState(
-			'com_catalogsystem.setop',	// a unique name to identify the data in the session
+			'com_catalogsystem.catalogop',	// a unique name to identify the data in the session
 			array()	// prefill data if no data found in session
 		);
 

@@ -26,14 +26,14 @@ class HtmlView extends BaseHtmlView
      * @return  void
      */
     protected $form;
+	protected $result;
     
     public function display($template = null)
     {
-        // Call the parent display to display the layout file
-        $this->form = $this->get('form', 'AddProblem');
-        if(!$this->form = $this->get('form', 'AddProblem')){
-            echo "Can't load form<br>";
-        }
+		// Add a new problem according to the POST data (if there is any)
+		$this->result = $this->get('Item', 'AddProblem_Write');
+		
+        $this->form = $this->get('form', 'AddProblem_Form');
         parent::display($template);
     }
 }

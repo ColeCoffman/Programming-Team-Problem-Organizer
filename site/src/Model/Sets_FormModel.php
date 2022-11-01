@@ -20,7 +20,7 @@ use Joomla\CMS\MVC\Model\FormModel;
  * Catalog System Message Model
  * @since 0.0.5
  */
-class CatalogOpModel extends FormModel
+class Sets_FormModel extends FormModel
 {
     /**
      * Returns a message for display
@@ -30,9 +30,9 @@ class CatalogOpModel extends FormModel
     
     public function getForm($data = array(), $loadData = true)
     {
-        $form = $this->loadForm('com_catalogsystem.catalogop', 'catalog_op_form',
+        $form = $this->loadForm('com_catalogsystem.setsearch', 'set_search_form',
                        array(
-                            'control' => 'jform2',	// the name of the array for the POST parameters
+                            'control' => 'jform',	// the name of the array for the POST parameters
                             'load_data' => $loadData	// will be TRUE
 			             )
                     );
@@ -41,12 +41,17 @@ class CatalogOpModel extends FormModel
     
     protected function loadFormData()
 	{
-		// Check the session for previously entered form data.
-		$data = Factory::getApplication()->getUserState(
-			'com_catalogsystem.catalogop',	// a unique name to identify the data in the session
+		// Retrieve the current POST data
+		$app  = Factory::getApplication();
+		$data = $app->input->post->get('jform', array(), "array");
+        
+        $data = $app->getUserState(
+			'com_catalogsystem.setsearch',	// a unique name to identify the data in the session
 			array()	// prefill data if no data found in session
 		);
-
+		
+		// If any of the POST keys are valid, they will be used to initialize this form
+		// (Invalid or missing keys will be ignored without issue)
 		return $data;
 	}
 }

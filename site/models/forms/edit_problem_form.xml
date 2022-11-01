@@ -24,7 +24,8 @@
             value_field="name"
             layout="joomla.form.field.list-fancy-select"
             multiple="false"
-            custom="true"/>
+            custom="true"
+			showon="cattoggle:0"/>
         <field
             name="newcategory"
             label="Input new Category"
@@ -49,7 +50,8 @@
             value_field="name"
             layout="joomla.form.field.list-fancy-select"
             multiple="false"
-            custom="true"/>
+            custom="true"
+			showon="sourcetoggle:0"/>
         <field
             name="newsource"
             label="Input new Source"

@@ -26,12 +26,17 @@ class HtmlView extends BaseHtmlView
      * @return  void
      */
     protected $item;
+	protected $historyPagination;
+	protected $setsPagination;
 
     public function display($template = null)
     {
-        // Call the parent display to display the layout file
-        $this->item = $this->get('Item', 'ProblemDetails');
-        $this->pagination = $this->get('Pagination');
+        $this->item = $this->get('Item', 'ProblemDetails_Item');
+		$this->item->history = $this->get('Items', 'ProblemHistory_List');
+		$this->item->sets = $this->get('Items', 'ProblemSets_List');
+		$this->historyPagination = $this->get('Pagination', 'ProblemHistory_List');
+        $this->setsPagination = $this->get('Pagination', 'ProblemSets_List');
+		
         parent::display($template);
     }
 }

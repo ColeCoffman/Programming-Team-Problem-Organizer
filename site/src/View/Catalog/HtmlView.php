@@ -32,12 +32,12 @@ class HtmlView extends BaseHtmlView
     public function display($template = null)
     {
         // Call the parent display to display the layout file
-        $this->items = $this->get('Items', 'Catalog');
-        $this->pagination = $this->get('Pagination', 'Catalog');
-        $this->form = $this->get('form', 'CatalogSearch');
+        $this->items = $this->get('Items', 'Catalog_List');
+        $this->pagination = $this->get('Pagination', 'Catalog_List');
+        $this->form = $this->get('form', 'Catalog_Form');
         $this->categories = $this->get('CategoryTags');
         
-        $state = $this->get('State');
+        $state = $this->get('State', 'Catalog_List');
         $this->sortDirection = $state->get('list.direction');
         $this->sortColumn = $state->get('list.ordering');
         

@@ -17,8 +17,8 @@ $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('catalogHelper')
     ->useStyle('info');
 
-$pdfExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem/uploads/pdf/'.$this->item->pdf_link. '.pdf');
-$zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem/uploads/zip/'.$this->item->zip_link. '.zip');
+$pdfExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem/uploads/pdf/'.$this->item->pdfPath. '.pdf');
+$zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem/uploads/zip/'.$this->item->zipUrl. '.zip');
 ?>
 
 <?php
@@ -32,11 +32,11 @@ $zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem
         echo "<h3>Include a valid id in the URL to view problem details.</h3>";
     }else{
         $info = $this->item;
-		if($info->zip_link != null && $zipExists){
-			$zipDownload = $uri . "media/com_catalogsystem/uploads/zip/" . $info->zip_link . ".zip";
+		if($info->zipUrl != null && $zipExists){
+			$zipDownload = $uri . "media/com_catalogsystem/uploads/zip/" . $info->zipUrl . ".zip";
 		}
-		if($info->pdf_link != null && $pdfExists){
-			$pdfDownload = $uri . "media/com_catalogsystem/uploads/pdf/" . $info->pdf_link . ".pdf";
+		if($info->pdfPath != null && $pdfExists){
+			$pdfDownload = $uri . "media/com_catalogsystem/uploads/pdf/" . $info->pdfPath . ".pdf";
 		}
 		echo "<div class= 'info-box'>";
         echo "<div class='problem-title'>$info->name</div>
@@ -50,12 +50,12 @@ $zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem
         echo "<div class= 'problem-header'>
 						<label id= 'source'>Source:</label>
 							<div class= 'title'> $info->source</div></div>";
-		if($info->pdf_link != null && $pdfExists){
+		if($info->pdfPath != null && $pdfExists){
 			echo "<div class= 'problem-header'><label id= 'pdf'>Problem PDF:</label> <a class= 'title' href='$pdfDownload'>Download</a></div>";
 		} else {
 			echo "<div class= 'problem-header'><label id= 'pdf'>Problem PDF:</label> <div class= 'title'>Not Available</div></div>";
 		}
-		if($info->zip_link != null && $zipExists){
+		if($info->zipUrl != null && $zipExists){
 			echo "<div class= 'problem-header'><label id= 'zip'>Problem ZIP:</label> <a class= 'title' href='$zipDownload' download>Download</a></div>";
 		} else {
 			echo "<div class= 'problem-header'><label id= 'pdf'>Problem ZIP:</label> <div class= 'title'>Not Available</div></div>";
@@ -63,7 +63,8 @@ $zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem
 echo "</div></div>";
 		echo "<div class= 'tables'>";
 		echo "<div class= 'history_table'>";
-        echo "<table class='catalog_table'>
+        echo "{$this->historyPagination->getLimitBox()}
+			<table class='catalog_table'>
                 <thead>
                     <tr>
                         <th class= 'unsorted'>Date Used</th>
@@ -81,10 +82,12 @@ echo "</div></div>";
 
     echo "</tbody>
         </table>
+		{$this->historyPagination->getListFooter()}
 		 </div>";
 
 		echo "<div class= 'sets_table'>";
-        echo "<table class='catalog_table'>
+        echo "{$this->setsPagination->getLimitBox()}
+				<table class='catalog_table'>
 					<thead>
 							<tr>
 									<th class= 'unsorted'>Sets Included</th>
@@ -93,14 +96,16 @@ echo "</div></div>";
                 <tbody>";
 
         foreach ($info->sets as $i => $row):
-            echo "<tr>
-                    <td>$row->name</td>
+            $url = Route::_("index.php?option=com_catalogsystem&view=catalog&set=" . $row->id);
+			echo "<tr>
+                    <td> <a href='$url'>$row->name</a></td>
                 </tr>";
         endforeach;
 
     echo "</tbody>
 
         </table>
+		{$this->setsPagination->getListFooter()}
 				</div>
 					</div>";
     }
