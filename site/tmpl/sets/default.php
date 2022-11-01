@@ -51,7 +51,7 @@ $urlStr = "index.php?option=com_catalogsystem&view=catalog&set=";
   </div>
   </div>
   <div class= "end-content">
-    <button  id="filter_clear" class="submit-button" type="button" onclick="window.location.reload();"> Reset </button>
+  <button  id="filter_clear" name="filter_clear" class="submit-button" type="submit"> Reset </button>
     <button class = "submit-button" type="submit">Filter</button>
   </div>
 </div>
