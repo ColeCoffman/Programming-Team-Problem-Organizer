@@ -34,7 +34,7 @@ class AddProblem_WriteModel extends ItemModel
     public function getItem($pk= null)
     {
 		// If true, debug will be echoed to the webpage
-		$localDebug = true;
+		$localDebug = false;
 		
 		$result = new \stdClass();
 		$result->msg = 'Unknown';

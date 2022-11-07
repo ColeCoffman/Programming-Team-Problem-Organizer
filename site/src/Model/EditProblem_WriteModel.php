@@ -34,7 +34,7 @@ class EditProblem_WriteModel extends ItemModel
     public function getItem($pk= null)
     {
 		// If true, debug will be echoed to the webpage
-		$localDebug = true;
+		$localDebug = false;
 		// If true, the edit page will allow NULL inputs
 		// (ex1: leaving 'Category' blank will delete the existing category and replace it with NULL)
 		// (ex2: leaving 'Name' blank will delete the existing name and replace it with an empty string)
