@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             case 0: // Record Use
                 if($selected){
                     if(!$operation['useDate']){
-	                    $app->enqueueMessage("Please select a date", "error");
+	                    //$app->enqueueMessage("Please select a date", "error");
                         break;
                     }
 
@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	                    }
                 }
                 } else {
-	                $app->enqueueMessage("Please select at least one set", "error");
+	                //$app->enqueueMessage("Please select at least one set", "error");
                     break;
                 }
 	            $app->enqueueMessage("Usage record updated successfully");
@@ -103,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		                }
 	                }
                 } else {
-	                $app->enqueueMessage("Please select at least one set", "error");
+	                //$app->enqueueMessage("Please select at least one set", "error");
 	                break;
                 }
 	            echo "<meta http-equiv='refresh' content='0'>";
