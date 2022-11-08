@@ -23,6 +23,11 @@
       "type": "style",
       "uri": "com_catalogsystem/info.css"
     },
+	{
+      "name": "info-add",
+      "type": "style",
+      "uri": "com_catalogsystem/info-add.css"
+    },
     {
       "name": "script",
       "type": "script",

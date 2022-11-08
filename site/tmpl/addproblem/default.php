@@ -68,8 +68,10 @@ if(is_object($this->result))
       <div>
         <?php echo $this->form->renderField('set');  ?>
       </div>
-      <div class= "schedulers">
+      <div class= "schedulers addproblem">
         <?php echo $this->form->renderField('firstUse');  ?>
+	  </div>
+	  <div>
         <?php echo $this->form->renderField('firstUseTeam');  ?>
       </div>
       <div class="fileupload">
@@ -81,6 +83,6 @@ if(is_object($this->result))
     </div>
 
     <div class= "end-content">
-  <button class = "submit-button" type="submit">AddProblem</button>
+  <button class = "submit-button" type="submit">Add Problem</button>
   </div>
 </form>

@@ -17,7 +17,9 @@ use Joomla\CMS\Router\Route;
 require_once dirname(__FILE__).'/../functionLib.php';
 
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-$wa->useScript('catalogHelper');
+$wa->useScript('catalogHelper')
+	->useStyle('catalog')
+	->useStyle('info-add');
 
 use Joomla\CMS\Uri\Uri;
 $uri = Uri::root();
@@ -49,13 +51,17 @@ $uri = Uri::root();
 		
 		$urlStr = Route::_("index.php?option=com_catalogsystem&view=catalogc");
         echo "<a href='$urlStr'>Back</a>";
-
-        echo "<h2>Edit Problem: $info->name</h2>";
+		echo "<div class= 'info-box'>";
+		echo "<div class='problem-title'>Edit Problem: $info->name</div>";
         
         echo "<form action='index.php?option=com_catalogsystem&view=editproblem&id=$info->id'
                 method='post' name='editForm' id='editForm' enctype='multipart/form-data'>";
-        
+			
+			echo "<div class='details'>
+				<div class= 'problem-header'>";
             $this->form->setValue("name", "", $info->name);
+			echo "</div>";
+			
 			if($info->source !== NULL)
 			{
 				$this->form->setFieldAttribute("source", "default", $info->source);
@@ -69,33 +75,47 @@ $uri = Uri::root();
 				$this->form->setValue("dif", "", $info->difficulty);
 			}
             echo $this->form->renderFieldset("details");
-            
+			
 			if($info->pdfPath != null){
 				$pdfDownload = $uri . "media/com_catalogsystem/uploads/pdf/" . $info->pdfPath;
-				echo "<p>Problem PDF: <a href='$pdfDownload'>Download</a></p>";
+				echo "<div class= 'problem-header' style='display: flex;'><label id= 'pdf' class= 'upload-label'>Problem PDF:</label> <a class= 'title' href='$pdfDownload'>Download</a></div>";
 			} else {
-				echo "<p>Problem PDF: N/A</p>";
+				echo "<div class= 'problem-header'><label id= 'pdf'>Problem PDF:</label> <div class= 'title'>Not Available</div></div>";
 			}
+			
+			echo "<div class= 'problem-header'>";
 			echo $this->form->renderField("pdfupload");
+			echo "</div>";
 			
 			if($info->zipUrl != null){
 				$zipDownload = $uri . "media/com_catalogsystem/uploads/zip/" . $info->zipUrl;
-				echo "<p>Problem ZIP: <a href='$zipDownload' download>Download</a></p>";
+				echo "<div class= 'problem-header' style='display: flex;'><label class= 'upload-label' id= 'zip'>Problem ZIP:</label> <a class= 'title' href='$zipDownload' download>Download</a></div>";
 			} else {
-				echo "<p>Problem ZIP: N/A</p>";
+				echo "<div class= 'problem-header'><label id= 'pdf'>Problem ZIP:</label> <div class= 'title'>Not Available</div>";
 			}
+			
+			echo "<div class= 'problem-header'>";
 			echo $this->form->renderField("zipupload");
-
+			echo "</div>";
+			echo "<div class= 'problem-header'>";
             echo $this->form->renderField("add_sets");
+			echo "</div>";
+			echo "<div class= 'schedulers inputuse'>";
             echo $this->form->renderField("add_use");
+			echo "</div>";
+			echo "<div class= 'problem-header'>";
             echo $this->form->renderField("useTeam");
-
-            echo "<h4>Remove Uses?</h4>";
-            echo "{$this->historyPagination->getLimitBox()}
-				<table class='table table-striped table-hover' id='myTable2'>
+			echo "</div>";
+			echo "</div>
+				</div>";
+			echo "<div class= 'tables'>";
+			echo "<div class= 'history_table'>";
+            echo "<div class= 'problem-header' style='text-align: center'><label id= 'remove_uses' class= 'upload-label'>Remove Uses?</label></div>";
+            echo "
+				<table class='catalog_table'>
                     <thead>
                         <tr>
-                            <th>
+                            <th class='checkcolumn'>
                                 <input type='checkbox' id='toggle2' name='toggle2' label=' ' onclick='toggleAll(\"myTable2\", \"toggle2\")'>";
                         echo "</th>
                             <th>Date Used</th>
@@ -119,14 +139,16 @@ $uri = Uri::root();
 
             echo "</tbody>
                 </table>
-				{$this->historyPagination->getListFooter()}";
-
-            echo "<h4>Remove from Sets?</h4>";
-            echo "{$this->setsPagination->getLimitBox()}
-				<table class='table table-striped table-hover' id='myTable'>
+				{$this->historyPagination->getListFooter()}
+				{$this->historyPagination->getLimitBox()}
+				</div>";
+			echo "<div class= 'sets_table'>";
+            echo "<div class= 'problem-header' style='text-align: center'><label id= 'remove_sets' class= 'upload-label'>Remove from Sets?</label></div>";
+            echo "
+				<table class='catalog_table'>
                     <thead>
                         <tr>
-                            <th>
+                            <th class='checkcolumn'>
                                 <input type='checkbox' id='toggle' name='toggle' label=' ' onclick='toggleAll(\"myTable\", \"toggle\")'>";
                         echo "</th>
                             <th>Set Name</th>
@@ -136,7 +158,7 @@ $uri = Uri::root();
 
             foreach ($info->sets as $i => $row):
                 echo "<tr>";
-                $xmlStr = '<field name="' . 'delSet_' . $row->id . '" type="checkbox" label=" "/>';
+                $xmlStr = '<field name="' . 'delSet_' . $row->id . '" type="checkbox" label=""/>';
                 $xml = new SimpleXMLElement($xmlStr);
                 $this->form->setField($xml);
                 echo "<td>";
@@ -147,9 +169,12 @@ $uri = Uri::root();
             endforeach;
             echo "</tbody>
                 </table>
-				{$this->setsPagination->getListFooter()}";
-
-            echo "<button type='submit'>Confirm Changes</button>";
-        echo "</form>";
+				{$this->setsPagination->getListFooter()}
+				{$this->setsPagination->getLimitBox()}
+				</div>
+					</div>";
+					echo "<div class= 'end-content'>";
+            echo "<button type='submit' class='submit-button'>Confirm Changes</button>";
+        echo "</div></form>";
     }
 ?>
