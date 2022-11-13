@@ -65,10 +65,10 @@ function sqlDate($date, bool $wrapQuotes = true)
 
 // Sanitize integers for use in SQL Queries
 // This accepts integers (45) or string integers ("45"), and returns a regular integer
-function sqlInt($num, $min=NULL, $max=NULL)
+function sqlInt($num, $min=NULL, $max=NULL, $default='NULL')
 {
 	if(is_string($num) && is_numeric($num)) $num = (int)$num;
-	if(!is_int($num)) return 'NULL';
+	if(!is_int($num)) return $default;
 	if(is_int($min) && $num < $min) $num = $min;
 	if(is_int($max) && $num > $max) $num = $max;
 	return $num;

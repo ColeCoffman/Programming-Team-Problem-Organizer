@@ -129,7 +129,7 @@ class AddProblem_WriteModel extends ItemModel
 				->from('com_catalogsystem_problem AS p');
 			$db->setQuery($q_ProblemMaxId);
 			$r_ProblemMaxId = $db->loadObject();
-			$newProbId = sqlInt(objGet($r_ProblemMaxId,'maxId'),0) + 1;
+			$newProbId = sqlInt(objGet($r_ProblemMaxId,'maxId'),0,NULL,0) + 1;
 		
 			// If an existing category name was provided, attach the new problem to that category
 			$newProbCid = 'NULL';
@@ -153,7 +153,7 @@ class AddProblem_WriteModel extends ItemModel
 					->from('com_catalogsystem_category AS c');
 				$db->setQuery($q_CategoryMaxId);
 				$r_CategoryMaxId = $db->loadObject();
-				$newProbCid = sqlInt(objGet($r_CategoryMaxId,'maxId'),0) + 1;
+				$newProbCid = sqlInt(objGet($r_CategoryMaxId,'maxId'),0,NULL,0) + 1;
 				
 				// QUERY: insert the new category entry into the category table
 				$q_InsertCategory = $db->getQuery(true);
@@ -195,7 +195,7 @@ class AddProblem_WriteModel extends ItemModel
 					->from('com_catalogsystem_source AS s');
 				$db->setQuery($q_SourceMaxId);
 				$r_SourceMaxId = $db->loadObject();
-				$newProbSid = sqlInt(objGet($r_SourceMaxId,'maxId'),0) + 1;
+				$newProbSid = sqlInt(objGet($r_SourceMaxId,'maxId'),0,NULL,0) + 1;
 				
 				// QUERY: insert the new source entry into the source table
 				$q_InsertSource = $db->getQuery(true);
@@ -233,7 +233,7 @@ class AddProblem_WriteModel extends ItemModel
 					->from('com_catalogsystem_history AS h');
 				$db->setQuery($q_HistoryMaxId);
 				$r_HistoryMaxId = $db->loadObject();
-				$newHistId = sqlInt(objGet($r_HistoryMaxId,'maxId'),0) + 1;
+				$newHistId = sqlInt(objGet($r_HistoryMaxId,'maxId'),0,NULL,0) + 1;
 				
 				$newHistTid = 'NULL';
 				if(sqlString($inputTeam)!=='NULL')
@@ -275,7 +275,7 @@ class AddProblem_WriteModel extends ItemModel
 							->from('com_catalogsystem_problemset AS ps');
 						$db->setQuery($q_ProblemSetMaxId);
 						$r_ProblemSetMaxId = $db->loadObject();
-						$newProbSetId = sqlInt(objGet($r_ProblemSetMaxId,'maxId'),0) + 1;
+						$newProbSetId = sqlInt(objGet($r_ProblemSetMaxId,'maxId'),0,NULL,0) + 1;
 		
 						// QUERY: Get the set id that matches the given set name
 						$q_SetName = $db->getQuery(true);

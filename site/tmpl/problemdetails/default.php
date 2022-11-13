@@ -32,11 +32,11 @@ $zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem
         echo "<h3>Include a valid id in the URL to view problem details.</h3>";
     }else{
         $info = $this->item;
-		if($info->zipUrl != null && $zipExists){
-			$zipDownload = $uri . "media/com_catalogsystem/uploads/zip/" . $info->zipUrl . ".zip";
-		}
 		if($info->pdfPath != null && $pdfExists){
 			$pdfDownload = $uri . "media/com_catalogsystem/uploads/pdf/" . $info->pdfPath . ".pdf";
+		}
+		if($info->zipUrl != null && $zipExists){
+			$zipDownload = $uri . "media/com_catalogsystem/uploads/zip/" . $info->zipUrl . ".zip";
 		}
 		echo "<div class= 'info-box'>";
         echo "<div class='problem-title'>$info->name</div>

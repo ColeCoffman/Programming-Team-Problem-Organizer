@@ -71,7 +71,7 @@ $uri = Uri::root();
             echo $this->form->renderFieldset("details");
             
 			if($info->pdfPath != null){
-				$pdfDownload = $uri . "media/com_catalogsystem/uploads/pdf/" . $info->pdfPath;
+				$pdfDownload = $uri . "media/com_catalogsystem/uploads/pdf/" . $info->pdfPath  . ".pdf";
 				echo "<p>Problem PDF: <a href='$pdfDownload'>Download</a></p>";
 			} else {
 				echo "<p>Problem PDF: N/A</p>";
@@ -79,7 +79,7 @@ $uri = Uri::root();
 			echo $this->form->renderField("pdfupload");
 			
 			if($info->zipUrl != null){
-				$zipDownload = $uri . "media/com_catalogsystem/uploads/zip/" . $info->zipUrl;
+				$zipDownload = $uri . "media/com_catalogsystem/uploads/zip/" . $info->zipUrl  . ".zip";
 				echo "<p>Problem ZIP: <a href='$zipDownload' download>Download</a></p>";
 			} else {
 				echo "<p>Problem ZIP: N/A</p>";
