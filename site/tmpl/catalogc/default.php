@@ -192,8 +192,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <table class="catalog_table" id="myTable">
         <thead>
             <tr>
+              <?php
+                        $xmlStr = '<field name="toggle" class= "toggle" type="checkbox" onclick= "toggleAll()" label=""/>';
+                        $xml = new SimpleXMLElement($xmlStr);
+                        $this->form2->setField($xml);
+                    ?>
               <th id="checkcolumn">
-                  <input id="toggle" class="checkcolumn" type="checkbox"  name="toggle" label=" " onclick="toggleAll()">
+                  <?php echo $this->form2->renderField("toggle");?>
               </th>
                 <th><?php echo JHTML::_( 'grid.sort', 'Name', 'name', $this->sortDirection, $this->sortColumn); ?></th>
             <th><?php echo JHTML::_( 'grid.sort', 'Category', 'category', $this->sortDirection, $this->sortColumn); ?></th>

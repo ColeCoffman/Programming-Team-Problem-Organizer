@@ -63,9 +63,9 @@ $urlStr = "index.php?option=com_catalogsystem&view=catalog&set=";
             <tr>
                 <th><?php echo JHTML::_( 'grid.sort', 'Name', 'name', $this->sortDirection, $this->sortColumn); ?></th>
                 <th><?php echo JHTML::_( 'grid.sort', 'Number of Problems', 'numProblems', $this->sortDirection, $this->sortColumn); ?></th>
-                <th id="Col2" class="unsorted">Zip Download</th>
                 <th><?php echo JHTML::_( 'grid.sort', 'First Used', 'firstUsed', $this->sortDirection, $this->sortColumn); ?></th>
                 <th><?php echo JHTML::_( 'grid.sort', 'Last Used', 'lastUsed', $this->sortDirection, $this->sortColumn); ?></th>
+				<th id="zip">Zip Download</th>
             </tr>
         </thead>
         <tbody>
@@ -73,11 +73,11 @@ $urlStr = "index.php?option=com_catalogsystem&view=catalog&set=";
                 <tr>
                     <td><?php $url = Route::_($urlStr . $row->set_id); echo "<a href='$url'>$row->name</a>";?></td>
                     <td><?php echo $row->numProblems; ?></td>
-                    <td><?php 
+                    <td><?php echo $row->firstUsed; ?></td>
+                    <td><?php echo $row->lastUsed; ?></td>
+					<td><?php 
 						if($row->zip!=null) echo "<a href='$row->zip' target='_blank' rel='noopener noreferrer'>Download</a>"; 
 					?></td>
-                        <td><?php echo $row->firstUsed; ?></td>
-                        <td><?php echo $row->lastUsed; ?></td>
               </tr>
             <?php endforeach; ?>
         </tbody>

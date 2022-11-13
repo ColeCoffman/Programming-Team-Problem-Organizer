@@ -64,8 +64,8 @@ echo "</div></div>";
 			<table class='catalog_table'>
                 <thead>
                     <tr>
-                        <th class= 'unsorted'>Date Used</th>
-                        <th class='unsorted'>Used By</th>
+                        <th>Date Used</th>
+                        <th>Used By</th>
                     </tr>
                 </thead>
                 <tbody>";
@@ -87,7 +87,7 @@ echo "</div></div>";
 				<table class='catalog_table'>
 					<thead>
 							<tr>
-									<th class= 'unsorted'>Sets Included</th>
+									<th>Sets Included</th>
 							</tr>
 					</thead>
                 <tbody>";

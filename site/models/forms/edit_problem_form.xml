@@ -28,7 +28,7 @@
 			showon="cattoggle:0"/>
         <field
             name="newcategory"
-            label="Input new Category"
+            label="Input New Category"
             required="false"
             type="text"
             default=""
@@ -54,7 +54,7 @@
 			showon="sourcetoggle:0"/>
         <field
             name="newsource"
-            label="Input new Source"
+            label="Input New Source"
             required="false"
             type="text"
             default=""

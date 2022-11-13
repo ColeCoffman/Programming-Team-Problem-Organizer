@@ -26,6 +26,16 @@ $uri = Uri::root();
 ?>
 
 <?php 
+echo "<script language='javascript' type='text/javascript'>
+    function tableOrdering( order, dir, task )
+    {
+        var form = document.adminForm;
+
+        form.filter_order.value = order;
+        form.filter_order_Dir.value = dir;
+        document.adminForm.submit( task );
+    }
+</script>";
 		$info = $this->details;
 		
 		$pdfExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem/uploads/pdf/'.$info->pdfPath. '.pdf');
@@ -104,17 +114,22 @@ $uri = Uri::root();
 				</div>";
 			echo "<div class= 'tables'>";
 			echo "<div class= 'history_table'>";
-            echo "<div class= 'problem-header' style='text-align: center'><label id= 'remove_uses' class= 'upload-label'>Remove Uses?</label></div>";
-            echo "
+            echo "<div class= 'problem-header' style='text-align: center'><label id= 'remove_uses' class= 'upload-label'>Remove Uses</label></div>";
+            echo "<form action='index.php?option=com_catalogsystem&view=editproblem&id=$info->id'
+                method='post' name='adminForm' id='adminForm' enctype='multipart/form-data'>
 				<table class='catalog_table'>
-                    <thead>
-                        <tr>
-                            <th class='checkcolumn'>
-                                <input type='checkbox' id='toggle2' name='toggle2' label=' ' onclick='toggleAll(\"myTable2\", \"toggle2\")'>";
-                        echo "</th>
-                            <th>Date Used</th>
-                            <th>Used By</th>
-                        </tr>
+                    <thead>";
+						$xmlStr = '<field name="toggle" class= "toggle" type="checkbox" onclick= "toggleAll()" label=""/>';
+                        $xml = new SimpleXMLElement($xmlStr);
+                        $this->form->setField($xml);
+                        echo "<tr>";
+                        echo "<th id='checkcolumn'>";
+						echo $this->form->renderField("toggle");
+                        echo "</th> <th>";
+						echo JHTML::_( 'grid.sort', 'Date Used', 'dateUsed', $this->sortDirection, $this->sortColumn);
+                        echo "</th> <th>";
+						echo JHTML::_( 'grid.sort', 'Used By', 'usedBy', $this->sortDirection, $this->sortColumn);
+						echo" </th>
                     </thead>
                     <tbody>";
 
@@ -133,20 +148,25 @@ $uri = Uri::root();
 
             echo "</tbody>
                 </table>
+				</form>
 				{$this->historyPagination->getListFooter()}
 				{$this->historyPagination->getLimitBox()}
 				</div>";
 			echo "<div class= 'sets_table'>";
             echo "<div class= 'problem-header' style='text-align: center'><label id= 'remove_sets' class= 'upload-label'>Remove from Sets?</label></div>";
-            echo "
-				<table class='catalog_table'>
-                    <thead>
-                        <tr>
-                            <th class='checkcolumn'>
-                                <input type='checkbox' id='toggle' name='toggle' label=' ' onclick='toggleAll(\"myTable\", \"toggle\")'>";
-                        echo "</th>
-                            <th>Set Name</th>
-                        </tr>
+            echo "<form action='index.php?option=com_catalogsystem&view=editproblem&id=$info->id'
+                method='post' name='adminForm' id='adminForm' enctype='multipart/form-data'>
+				<table id= 'myTable2' class='catalog_table'>
+                    <thead>";
+					  $xmlStr = '<field name="toggle2" class= "toggle2" type="checkbox" onclick= "toggleAll(tableName=myTable2, toggleName=toggle2)" label=""/>';
+                      $xml = new SimpleXMLElement($xmlStr);
+                      $this->form->setField($xml);
+					  echo "<tr>";
+                      echo "<th id='checkcolumn'>";
+                      echo $this->form->renderField("toggle");
+                      echo "</th> <th>";
+                          echo JHTML::_( 'grid.sort', 'Set Name', 'setName', $this->sortDirection, $this->sortColumn);
+                        echo "</th></tr>
                     </thead>
                     <tbody>";
 
@@ -163,6 +183,9 @@ $uri = Uri::root();
             endforeach;
             echo "</tbody>
                 </table>
+				</form>
+				<input type='hidden' name='filter_order' value='<?php echo $this->sortColumn; ?>' />
+				<input type='hidden' name='filter_order_Dir' value='<?php echo $this->sortDirection; ?>' />
 				{$this->setsPagination->getListFooter()}
 				{$this->setsPagination->getLimitBox()}
 				</div>
