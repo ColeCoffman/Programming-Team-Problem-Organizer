@@ -134,8 +134,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		</div>
 		<div class= "rowoptions schedulers">
 			<div class= "date" style= "display: flex; flex: 2;">
-				<?php echo $this->form->renderField('sets_date_after');  ?>
 				<?php echo $this->form->renderField('sets_date_before');  ?>
+				<?php echo $this->form->renderField('sets_date_after');  ?>
 			</div>
 		</div>
 		<div class= "rowoptions schedulers">
@@ -157,14 +157,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <table class="catalog_table" id="myTable">
         <thead>
             <tr>
+			<?php
+                        $xmlStr = '<field name="toggle" class= "toggle" type="checkbox" onclick= "toggleAll()" label=""/>';
+                        $xml = new SimpleXMLElement($xmlStr);
+                        $this->form2->setField($xml);
+                    ?>
               <th id="checkcolumn">
-                  <input id="toggle" class="checkcolumn" type="checkbox"  name="toggle" label=" " onclick="toggleAll()">
+                  <?php echo $this->form2->renderField("toggle");?>
               </th>
                 <th><?php echo JHTML::_( 'grid.sort', 'Name', 'name', $this->sortDirection, $this->sortColumn); ?></th>
                 <th><?php echo JHTML::_( 'grid.sort', 'Number of Problems', 'numProblems', $this->sortDirection, $this->sortColumn); ?></th>
-                <th id="Col2" class="unsorted">Zip Download</th>
                 <th><?php echo JHTML::_( 'grid.sort', 'First Used', 'firstUsed', $this->sortDirection, $this->sortColumn); ?></th>
                 <th><?php echo JHTML::_( 'grid.sort', 'Last Used', 'lastUsed', $this->sortDirection, $this->sortColumn); ?></th>
+				<th id="zip">Zip Download</th>
             </tr>
         </thead>
         <tbody>
@@ -178,9 +183,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <td><?php echo $this->form2->renderField("$row->set_id");  ?></td>
                     <td><?php $url = Route::_($urlStr . $row->set_id); echo "<a href='$url'>$row->name</a>";?></td>
                     <td><?php echo $row->numProblems; ?></td>
-                    <td><?php echo "<a href='$row->zip'>Download</a>"; ?></td>
 					<td><?php echo $row->firstUsed; ?></td>
 					<td><?php echo $row->lastUsed; ?></td>
+					<td><?php echo "<a href='$row->zip'>Download</a>"; ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

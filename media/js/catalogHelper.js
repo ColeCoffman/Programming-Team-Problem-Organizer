@@ -77,9 +77,10 @@ function switchSort(n) {
     }
 }
 
+
 function toggleAll(tableName="myTable", toggleName="toggle") {
     var table = document.getElementById(tableName);
-    var toggle = document.getElementById(toggleName).checked;
+    var toggle = document.getElementsByClassName(toggleName)[0].checked;
     rows = table.rows;
     /* Loop through all table rows (except the
     first, which contains table headers): */
@@ -87,4 +88,4 @@ function toggleAll(tableName="myTable", toggleName="toggle") {
       // Start by saying there should be no switching:
       rows[i].getElementsByTagName("TD")[0].getElementsByTagName("input")[0].checked = toggle;
     }
-  }
+ }

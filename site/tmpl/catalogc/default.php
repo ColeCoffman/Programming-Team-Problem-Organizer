@@ -189,11 +189,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <form action="index.php?option=com_catalogsystem&view=catalogc"
     method="post" name="adminForm" id="adminForm" enctype="multipart/form-data">
-    <table class="catalog_table" id="myTable">
+    <table class="catalog_table" id="myTable2">
         <thead>
             <tr>
+              <?php
+                        $xmlStr = '<field name="toggle" class= "toggle" type="checkbox" onclick= "toggleAll(tableName= "myTable2")" label=""/>';
+                        $xml = new SimpleXMLElement($xmlStr);
+                        $this->form2->setField($xml);
+                    ?>
               <th id="checkcolumn">
-                  <input id="toggle" class="checkcolumn" type="checkbox"  name="toggle" label=" " onclick="toggleAll()">
+                  <?php echo $this->form2->renderField("toggle");?>
               </th>
                 <th><?php echo JHTML::_( 'grid.sort', 'Name', 'name', $this->sortDirection, $this->sortColumn); ?></th>
             <th><?php echo JHTML::_( 'grid.sort', 'Category', 'category', $this->sortDirection, $this->sortColumn); ?></th>
