@@ -73,7 +73,9 @@ $urlStr = "index.php?option=com_catalogsystem&view=catalog&set=";
                 <tr>
                     <td><?php $url = Route::_($urlStr . $row->set_id); echo "<a href='$url'>$row->name</a>";?></td>
                     <td><?php echo $row->numProblems; ?></td>
-                    <td><?php echo "<a href='$row->zip'>Download</a>"; ?></td>
+                    <td><?php 
+						if($row->zip!=null) echo "<a href='$row->zip' target='_blank' rel='noopener noreferrer'>Download</a>"; 
+					?></td>
                         <td><?php echo $row->firstUsed; ?></td>
                         <td><?php echo $row->lastUsed; ?></td>
               </tr>

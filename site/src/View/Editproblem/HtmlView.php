@@ -38,6 +38,12 @@ class HtmlView extends BaseHtmlView
     {
 		// Edit this problem according to the POST data (if there is any)
 		$this->details = $this->get('Item', 'ProblemDetails_Item');
+		if (is_null($this->details))
+		{
+        echo "<h2>Error: Problem does not exist</h2>";
+        echo "<h3>Include a valid id in the URL to edit problem.</h3>";
+		return;
+		}
 		$this->details->history = $this->get('Items', 'ProblemHistory_List');
 		$this->details->sets = $this->get('Items', 'ProblemSets_List');
 		$this->getModel('EditProblem_Write')->setState("details",$this->details);

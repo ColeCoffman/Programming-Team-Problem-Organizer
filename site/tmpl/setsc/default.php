@@ -178,7 +178,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <td><?php echo $this->form2->renderField("$row->set_id");  ?></td>
                     <td><?php $url = Route::_($urlStr . $row->set_id); echo "<a href='$url'>$row->name</a>";?></td>
                     <td><?php echo $row->numProblems; ?></td>
-                    <td><?php echo "<a href='$row->zip'>Download</a>"; ?></td>
+                    <td><?php if($row->zip!=null) echo "<a href='$row->zip' target='_blank' rel='noopener noreferrer'>Download</a>"; ?></td>
 					<td><?php echo $row->firstUsed; ?></td>
 					<td><?php echo $row->lastUsed; ?></td>
                 </tr>

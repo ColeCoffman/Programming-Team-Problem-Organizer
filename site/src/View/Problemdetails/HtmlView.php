@@ -32,6 +32,11 @@ class HtmlView extends BaseHtmlView
     public function display($template = null)
     {
         $this->item = $this->get('Item', 'ProblemDetails_Item');
+		if (is_null($this->item)){
+			echo "<h2>Error: Problem does not exist</h2>";
+			echo "<h3>Include a valid id in the URL to view problem details.</h3>";
+			return;
+		}
 		$this->item->history = $this->get('Items', 'ProblemHistory_List');
 		$this->item->sets = $this->get('Items', 'ProblemSets_List');
 		$this->historyPagination = $this->get('Pagination', 'ProblemHistory_List');

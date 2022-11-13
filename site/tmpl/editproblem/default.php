@@ -26,12 +26,6 @@ $uri = Uri::root();
 ?>
 
 <?php 
-    if (is_null($this->details)){
-        echo "<h2>Error: Problem does not exist</h2>";
-        echo "<h3>Include a valid id in the URL to edit problem.</h3>";
-    }
-	else
-	{
 		$info = $this->details;
 		
 		$pdfExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem/uploads/pdf/'.$info->pdfPath. '.pdf');
@@ -77,8 +71,8 @@ $uri = Uri::root();
             echo $this->form->renderFieldset("details");
 			
 			if($info->pdfPath != null){
-				$pdfDownload = $uri . "media/com_catalogsystem/uploads/pdf/" . $info->pdfPath  . ".pdf";
-				echo "<div class= 'problem-header' style='display: flex;'><label id= 'pdf' class= 'upload-label'>Problem PDF:</label> <a class= 'title' href='$pdfDownload'>Download</a></div>";
+				$pdfDownload = $uri . "media/com_catalogsystem/uploads/pdf/" . $info->pdfPath;
+				echo "<div class= 'problem-header' style='display: flex;'><label id= 'pdf' class= 'upload-label'>Problem PDF:</label> <a class= 'title' href='$pdfDownload' target='_blank' rel='noopener noreferrer'>Download</a></div>";
 			} else {
 				echo "<div class= 'problem-header'><label id= 'pdf'>Problem PDF:</label> <div class= 'title'>Not Available</div></div>";
 			}
@@ -88,8 +82,8 @@ $uri = Uri::root();
 			echo "</div>";
 			
 			if($info->zipUrl != null){
-				$zipDownload = $uri . "media/com_catalogsystem/uploads/zip/" . $info->zipUrl  . ".zip";
-				echo "<div class= 'problem-header' style='display: flex;'><label class= 'upload-label' id= 'zip'>Problem ZIP:</label> <a class= 'title' href='$zipDownload' download>Download</a></div>";
+				$zipDownload = $uri . "media/com_catalogsystem/uploads/zip/" . $info->zipUrl;
+				echo "<div class= 'problem-header' style='display: flex;'><label class= 'upload-label' id= 'zip'>Problem ZIP:</label> <a class= 'title' href='$zipDownload' target='_blank' rel='noopener noreferrer' download>Download</a></div>";
 			} else {
 				echo "<div class= 'problem-header'><label id= 'pdf'>Problem ZIP:</label> <div class= 'title'>Not Available</div>";
 			}
@@ -176,5 +170,4 @@ $uri = Uri::root();
 					echo "<div class= 'end-content'>";
             echo "<button type='submit' class='submit-button'>Confirm Changes</button>";
         echo "</div></form>";
-    }
 ?>

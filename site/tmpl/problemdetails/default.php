@@ -27,16 +27,13 @@ $zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem
     $urlStr = Route::_("index.php?option=com_catalogsystem&view=catalog");
     echo "<a href='$urlStr'>Back</a>";
 
-    if (is_null($this->item)){
-        echo "<h2>Error: Problem does not exist</h2>";
-        echo "<h3>Include a valid id in the URL to view problem details.</h3>";
-    }else{
+    
         $info = $this->item;
 		if($info->pdfPath != null && $pdfExists){
-			$pdfDownload = $uri . "media/com_catalogsystem/uploads/pdf/" . $info->pdfPath . ".pdf";
+			$pdfDownload = $uri . "media/com_catalogsystem/uploads/pdf/" . $info->pdfPath;
 		}
 		if($info->zipUrl != null && $zipExists){
-			$zipDownload = $uri . "media/com_catalogsystem/uploads/zip/" . $info->zipUrl . ".zip";
+			$zipDownload = $uri . "media/com_catalogsystem/uploads/zip/" . $info->zipUrl;
 		}
 		echo "<div class= 'info-box'>";
         echo "<div class='problem-title'>$info->name</div>
@@ -51,12 +48,12 @@ $zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem
 						<label id= 'source'>Source:</label>
 							<div class= 'title'> $info->source</div></div>";
 		if($info->pdfPath != null && $pdfExists){
-			echo "<div class= 'problem-header'><label id= 'pdf'>Problem PDF:</label> <a class= 'title' href='$pdfDownload'>Download</a></div>";
+			echo "<div class= 'problem-header'><label id= 'pdf'>Problem PDF:</label> <a class= 'title' href='$pdfDownload' target='_blank' rel='noopener noreferrer'>Download</a></div>";
 		} else {
 			echo "<div class= 'problem-header'><label id= 'pdf'>Problem PDF:</label> <div class= 'title'>Not Available</div></div>";
 		}
 		if($info->zipUrl != null && $zipExists){
-			echo "<div class= 'problem-header'><label id= 'zip'>Problem ZIP:</label> <a class= 'title' href='$zipDownload' download>Download</a></div>";
+			echo "<div class= 'problem-header'><label id= 'zip'>Problem ZIP:</label> <a class= 'title' href='$zipDownload' target='_blank' rel='noopener noreferrer' download>Download</a></div>";
 		} else {
 			echo "<div class= 'problem-header'><label id= 'pdf'>Problem ZIP:</label> <div class= 'title'>Not Available</div></div>";
 		}
@@ -108,5 +105,5 @@ echo "</div></div>";
 		{$this->setsPagination->getListFooter()}
 				</div>
 					</div>";
-    }
+    
 ?>
