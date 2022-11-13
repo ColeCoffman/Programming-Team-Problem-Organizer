@@ -1,0 +1,14 @@
+.tables {
+  display: flex;
+  margin: 1% auto;
+}
+
+.history_table {
+  flex: 1;
+  margin: 1%;
+}
+
+.sets_table {
+  flex: 1;
+  margin: 1%;
+}

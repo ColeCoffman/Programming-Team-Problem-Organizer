@@ -6,7 +6,25 @@ header.container-header {
   background-color: #FFCA06;
   color: #000000;
 }
+.info-box {
+    width: 90%;
+    display: flex;
+    margin: 1% auto;
+    flex-direction: column;
+    align-content: space-between;
+}
 
+.problem-header .title {
+flex: 3;
+font-weight: 400;
+font-size: 3vmin;
+justify-content: space-around;
+}
+.problem-title {
+  text-align: center;
+    font-weight: 500;
+    font-size: 4.5vmin;
+}
 .search-box {
   background-color: #FFFFFF;
   color: #000000;
@@ -81,7 +99,13 @@ header.container-header {
   align-items: center;
   margin-top: 0.5% !important;
 }
-
+.upload-label {
+    flex: 1;
+    color: #000000;
+     flex: 1; 
+     font-size: 3.25vmin;
+     font-weight: 600;
+}
 .rowoptions .form-control {
   width: 50%;
 }
@@ -115,7 +139,15 @@ header.container-header {
   font-size: 2.5vmin !important;
   border-radius: 0.6rem !important;
   min-height: 100% !important;
-  padding: 0.75vw 1.5vmin !important;
+  padding: 0.9vw 1.5vmin !important;
+}
+
+.choices__list--single {
+    width: auto !important;
+	
+}
+.choices__list.choices__list--single {
+	
 }
 .choices__input {
   padding: 0 !important;
@@ -125,6 +157,10 @@ header.container-header {
 
 .schedulers .input-group {
   width: 85%;
+}
+
+.schedulers.addproblem, .schedulers.inputuse .input-group {
+	width: 100% !important;
 }
 /*For schedulers*/
 .schedulers .btn {
@@ -136,7 +172,9 @@ header.container-header {
 .schedulers .form-control {
   border-radius: 0.6rem 0rem 0rem 0.6rem !important;
 }
-
+.form-check.form-check-inline {
+	padding-left: 0 !important;
+}
 .submit-button {
     background-color: #FFCA06;
     border: none;
@@ -223,6 +261,7 @@ input[type="file"]::file-selector-button {
 
 .js-btn.btn-prev-month, .js-btn.btn-next-month, .js-btn.btn-prev-year, .js-btn.btn-next-year {
     color: #000000 !important;
+	cursor: pointer;
 }
 
 
@@ -243,18 +282,31 @@ input[type="file"]::file-selector-button {
 .catalog_table input[type = "checkbox"] {
     height: 3vmin;
     width: 3vmin;
+	margin-right: auto;
+    margin-left: auto;
     vertical-align: middle;
 }
 
 .catalog_table > tbody > tr:first-child {
-  border: none !important;
+  border-top: none !important;
 }
 
 .catalog_table .checkcolumn {
-  width: 6%;
+  width: 15%;
   cursor: default;
 }
-
+.page-item.active .page-link {
+    color: white;
+    background-color: #FFCA06 !important;
+    border-color: #000000 !important;
+}
+.page-link {
+	color: #58585F !important;
+}
+.limit.form-select {
+	max-width: 40%;
+	
+}
 .catalog_table > thead >  tr > th {
   text-align: center !important;
   border-right: 0.15em solid #ffffff !important;

@@ -20,7 +20,7 @@ require_once dirname(__FILE__).'/../functionLib.php';
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useStyle('catalog')
     ->useScript('catalogHelper');
-//JHTML::script(Juri::base() . '/media/com_catalogsystem/js/categories.js');
+
 $urlStr = "index.php?option=com_catalogsystem&view=catalogc&set=";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -129,20 +129,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <form class= "search-box" action="index.php?option=com_catalogsystem&view=setsc"
     method="post" name="setsForm" id="setsForm" enctype="multipart/form-data">
 	<div>
-		<?php echo $this->form->renderField('sets_name');  ?>
-	</div>
-	<div style = "display: flex; flex-wrap: wrap;">
-        <?php echo $this->form->renderField('sets_date_after');  ?>
-        <?php echo $this->form->renderField('sets_date_before');  ?>
-    </div>
-	<div style = "display: flex; flex-wrap: wrap;">
-        <?php echo $this->form->renderField('sets_date_notbefore');  ?>
-        <?php echo $this->form->renderField('sets_date_notafter');  ?>
-    </div>
+		<div>
+			<?php echo $this->form->renderField('sets_name');  ?>
+		</div>
+		<div class= "rowoptions schedulers">
+			<div class= "date" style= "display: flex; flex: 2;">
+				<?php echo $this->form->renderField('sets_date_after');  ?>
+				<?php echo $this->form->renderField('sets_date_before');  ?>
+			</div>
+		</div>
+		<div class= "rowoptions schedulers">
+			<div class= "not_date" style= "display: flex; flex: 2;">
+				<?php echo $this->form->renderField('sets_date_notbefore');  ?>
+				<?php echo $this->form->renderField('sets_date_notafter');  ?>
+			</div>
+		</div>
 
-  <div class= "end-content">
-  <button  id="filter_clear" name="filter_clear" class="submit-button" type="submit"> Reset </button>
-     <button class = "submit-button" type="submit">Filter</button>
+	  <div class= "end-content">
+	  <button  id="filter_clear" name="filter_clear" class="submit-button" type="submit"> Reset </button>
+		 <button class = "submit-button" type="submit">Filter</button>
+	   </div>
    </div>
 </form>
 

@@ -18,7 +18,7 @@
             required="false"
             type="sql"
             default=""
-            class="inputbox"
+            class="inputbox problem-header"
             query="SELECT id, name FROM com_catalogsystem_category"
             key_field="name"
             value_field="name"
@@ -44,7 +44,7 @@
             required="false"
             type="sql"
             default=""
-            class="inputbox"
+            class="inputbox problem-header"
             query="SELECT id, name FROM com_catalogsystem_source"
             key_field="name"
             value_field="name"
@@ -66,17 +66,19 @@
             required="false"
             size="3"
             filter = "integer"
-            class="inputbox" />
+            class="inputbox problem-header" />
 	</fieldset>
     <field name="pdfupload"
         type="file"
         label="Upload New PDF"
+		labelclass="problem-header"
         description="Upload a PDF file for the problem"
         size="40"
         class="inputbox" />
     <field name="zipupload"
         type="file"
         label="Upload New ZIP"
+		labelclass="problem-header"
         description="Upload a ZIP file for the problem"
         size="40"
         class="inputbox"/>
