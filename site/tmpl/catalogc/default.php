@@ -189,11 +189,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <form action="index.php?option=com_catalogsystem&view=catalogc"
     method="post" name="adminForm" id="adminForm" enctype="multipart/form-data">
-    <table class="catalog_table" id="myTable2">
+    <table class="catalog_table" id="myTable">
         <thead>
             <tr>
               <?php
-                        $xmlStr = '<field name="toggle" class= "toggle" type="checkbox" onclick= "toggleAll(tableName= "myTable2")" label=""/>';
+                        $xmlStr = '<field name="toggle" class= "toggle" type="checkbox" onclick= "toggleAll()" label=""/>';
                         $xml = new SimpleXMLElement($xmlStr);
                         $this->form2->setField($xml);
                     ?>
