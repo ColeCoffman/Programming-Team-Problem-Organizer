@@ -4877,6 +4877,9 @@ INSERT INTO `com_catalogsystem_team` (`id`, `name`) VALUES
 (2, 'JV'),
 (3, 'All');
 
+UPDATE com_catalogsystem_problem SET pdf_link=CONCAT(pdf_link,'.pdf');
+UPDATE com_catalogsystem_problem SET zip_link=CONCAT(zip_link,'.zip');
+
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS=1;
