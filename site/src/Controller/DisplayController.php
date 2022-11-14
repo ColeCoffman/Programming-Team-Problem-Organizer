@@ -107,6 +107,7 @@ class DisplayController extends BaseController
 			$view->setModel($this->getModel('Sets_List'));
 			$view->setModel($this->getModel('Sets_Form'));
 			$view->setModel($this->getModel('SetsOp_Form'));
+			$view->setModel($this->getModel('SetsOp_Write'));
 		}
 		else
 		{

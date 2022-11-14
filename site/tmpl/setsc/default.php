@@ -22,97 +22,6 @@ $wa->useStyle('catalog')
     ->useScript('catalogHelper');
 
 $urlStr = "index.php?option=com_catalogsystem&view=catalogc&set=";
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-	// Retrieve POST input and file uploads
-	$app  = Factory::getApplication();
-	$postData = $app->input->post->get('jform2', array(), "array");
-	if($postData)
-	{
-		$operation = $postData['op'];
-		unset($postData['op']);
-		$selected = array_keys($postData);
-		$db    = Factory::getContainer()->get('DatabaseDriver');
-		$query = $db->getQuery(true);
-//        var_dump($operation);
-		switch ($operation['desiredOp']){
-            case 0: // Record Use
-                if($selected){
-                    if(!$operation['useDate']){
-	                    //$app->enqueueMessage("Please select a date", "error");
-                        break;
-                    }
-
-	            foreach ($selected as $SetID){ // Each set
-		            $query->clear();
-                    $query->select($db->quoteName(array('problem_id', 'set_id', 'id')));
-                    $query->from($db->quoteName('com_catalogsystem_problemset'));
-                    $query->where($db->quoteName('set_id') . ' = ' . $db->quote($SetID));
-		            $db->setQuery($query);
-		            $problems = $db->loadAssocList();
-//                    echo "SET ID: " . $SetID;
-//                    var_dump($problems);
-
-	                    foreach($problems as $problem)
-	                    { // Record Use for each problem
-		                    $query->clear();
-		                    $columns = array('problem_id', 'team_id', 'date');
-                            
-                            $teamID = 'NULL';
-                            $q_teamID = $db->getQuery(true);
-                            $q_teamID->select('t.id AS tId')
-                                ->from('com_catalogsystem_team AS t')
-                                ->where('t.name = ' . sqlString($operation['useTeam']));
-                            $db->setQuery($q_teamID);
-                            $r_teamID = $db->loadObject();
-                            $teamID = sqlInt(objGet($r_teamID, 'tId'), 1);
-                            
-		                    $values  = array(sqlInt($problem['problem_id']), $teamID, sqlDate($operation['useDate']));
-		                    $query->insert('com_catalogsystem_history')
-			                    ->columns($db->quoteName($columns))
-			                    ->values(implode(',', $values));
-		                    $db->setQuery($query);
-		                    $db->execute();
-	                    }
-                }
-                } else {
-	                //$app->enqueueMessage("Please select at least one set", "error");
-                    break;
-                }
-	            $app->enqueueMessage("Usage record updated successfully");
-                break;
-            case 2: // Delete
-                if($selected)
-                {
-	                foreach ($selected as $SetID)
-	                {
-		                $query->clear();
-		                $query->delete($db->quoteName('com_catalogsystem_set'));
-		                $query->where($db->quoteName('id') . ' = ' . $db->quote($SetID));
-		                $db->setQuery($query);
-		                if ($db->execute() != 1)
-		                {
-			                $query->clear();
-			                $query->select($db->quoteName(array('id', 'name')));
-			                $query->from($db->quoteName('com_catalogsystem_set'));
-			                $query->where($db->quoteName('id') . ' = ' . $db->quoteName($SetID));
-			                $db->setQuery($query);
-			                $setName = $db->loadResult();
-			                $app->enqueueMessage("There was an error deleting set $setName}", "error");
-			                $query->clear();
-		                }
-	                }
-                } else {
-	                //$app->enqueueMessage("Please select at least one set", "error");
-	                break;
-                }
-	            echo "<meta http-equiv='refresh' content='0'>";
-	            break;
-        }
-	}
-
-}
-
 ?>
 
 <script language="javascript" type="text/javascript">
@@ -169,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <th><?php echo JHTML::_( 'grid.sort', 'Number of Problems', 'numProblems', $this->sortDirection, $this->sortColumn); ?></th>
                 <th><?php echo JHTML::_( 'grid.sort', 'First Used', 'firstUsed', $this->sortDirection, $this->sortColumn); ?></th>
                 <th><?php echo JHTML::_( 'grid.sort', 'Last Used', 'lastUsed', $this->sortDirection, $this->sortColumn); ?></th>
-				<th id="zip">Zip Download</th>
+				<th id="zip">Zip Link</th>
             </tr>
         </thead>
         <tbody>
@@ -185,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <td><?php echo $row->numProblems; ?></td>
 					<td><?php echo $row->firstUsed; ?></td>
 					<td><?php echo $row->lastUsed; ?></td>
-					<td><?php if($row->zip!=null) echo "<a href='$row->zip' target='_blank' rel='noopener noreferrer'>Download</a>"; ?></td>
+					<td><?php if($row->zip!=null) echo "<a href='$row->zip' target='_blank' rel='noopener noreferrer'>Link</a>"; ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

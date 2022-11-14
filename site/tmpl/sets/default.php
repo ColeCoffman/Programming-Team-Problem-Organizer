@@ -65,7 +65,7 @@ $urlStr = "index.php?option=com_catalogsystem&view=catalog&set=";
                 <th><?php echo JHTML::_( 'grid.sort', 'Number of Problems', 'numProblems', $this->sortDirection, $this->sortColumn); ?></th>
                 <th><?php echo JHTML::_( 'grid.sort', 'First Used', 'firstUsed', $this->sortDirection, $this->sortColumn); ?></th>
                 <th><?php echo JHTML::_( 'grid.sort', 'Last Used', 'lastUsed', $this->sortDirection, $this->sortColumn); ?></th>
-				<th id="zip">Zip Download</th>
+				<th id="zip">Zip Link</th>
             </tr>
         </thead>
         <tbody>
@@ -76,7 +76,7 @@ $urlStr = "index.php?option=com_catalogsystem&view=catalog&set=";
                     <td><?php echo $row->firstUsed; ?></td>
                     <td><?php echo $row->lastUsed; ?></td>
 					<td><?php 
-						if($row->zip!=null) echo "<a href='$row->zip' target='_blank' rel='noopener noreferrer'>Download</a>"; 
+						if($row->zip!=null) echo "<a href='$row->zip' target='_blank' rel='noopener noreferrer'>Link</a>"; 
 					?></td>
               </tr>
             <?php endforeach; ?>

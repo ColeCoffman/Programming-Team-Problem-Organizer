@@ -126,9 +126,9 @@ echo "<script language='javascript' type='text/javascript'>
                         echo "<th id='checkcolumn'>";
 						echo $this->form->renderField("toggle");
                         echo "</th> <th>";
-						echo JHTML::_( 'grid.sort', 'Date Used', 'dateUsed', $this->sortDirection, $this->sortColumn);
+						echo JHTML::_( 'grid.sort', 'Date Used', 'dateUsed', $this->sortDirectionHist, $this->sortColumnHist);
                         echo "</th> <th>";
-						echo JHTML::_( 'grid.sort', 'Used By', 'usedBy', $this->sortDirection, $this->sortColumn);
+						echo JHTML::_( 'grid.sort', 'Used By', 'usedBy', $this->sortDirectionHist, $this->sortColumnHist);
 						echo" </th>
                     </thead>
                     <tbody>";
@@ -165,7 +165,7 @@ echo "<script language='javascript' type='text/javascript'>
                       echo "<th id='checkcolumn'>";
                       echo $this->form->renderField("toggle");
                       echo "</th> <th>";
-                          echo JHTML::_( 'grid.sort', 'Set Name', 'setName', $this->sortDirection, $this->sortColumn);
+                          echo JHTML::_( 'grid.sort', 'Set Name', 'setName', $this->sortDirectionSets, $this->sortColumnSets);
                         echo "</th></tr>
                     </thead>
                     <tbody>";
@@ -184,8 +184,8 @@ echo "<script language='javascript' type='text/javascript'>
             echo "</tbody>
                 </table>
 				</form>
-				<input type='hidden' name='filter_order' value='<?php echo $this->sortColumn; ?>' />
-				<input type='hidden' name='filter_order_Dir' value='<?php echo $this->sortDirection; ?>' />
+				<input type='hidden' name='filter_order' value='<?php echo $this->sortColumnSets; ?>' />
+				<input type='hidden' name='filter_order_Dir' value='<?php echo $this->sortDirectionSets; ?>' />
 				{$this->setsPagination->getListFooter()}
 				{$this->setsPagination->getLimitBox()}
 				</div>

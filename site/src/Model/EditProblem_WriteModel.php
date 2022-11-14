@@ -336,14 +336,6 @@ class EditProblem_WriteModel extends ItemModel
 				{
 					if(sqlString($inputSet)!=='NULL')
 					{
-						// QUERY: Get the next id in the problemset table
-						$q_ProblemSetMaxId = $db->getQuery(true);
-						$q_ProblemSetMaxId->select('MAX(ps.id) AS "maxId"')
-							->from('com_catalogsystem_problemset AS ps');
-						$db->setQuery($q_ProblemSetMaxId);
-						$r_ProblemSetMaxId = $db->loadObject();
-						$newProbSetId = sqlInt(objGet($r_ProblemSetMaxId,'maxId'),0,NULL,0) + 1;
-						
 						// QUERY: Get the set id that matches the given set name
 						$q_SetName = $db->getQuery(true);
 						$q_SetName->select('e.id AS "eid"')
@@ -352,6 +344,27 @@ class EditProblem_WriteModel extends ItemModel
 						$db->setQuery($q_SetName);
 						$r_SetName = $db->loadObject();
 						$newProbSetEid = sqlInt(objGet($r_SetName,'eid'),0);
+						
+						// QUERY: Make sure the relationship does not already exist
+						$q_ProblemSetCheckId = $db->getQuery(true);
+						$q_ProblemSetCheckId->select('MAX(ps.id) AS "maxId"')
+							->from('com_catalogsystem_problemset AS ps')
+							->where('ps.set_id='.sqlInt($newProbSetEid).' AND ps.problem_id='.sqlInt($info->id));
+						$db->setQuery($q_ProblemSetCheckId);
+						$r_ProblemSetCheckId = $db->loadObject();
+						// If the relationship does already exist, skip this set
+						if(sqlInt(objGet($r_ProblemSetCheckId,'maxId'),0)!='NULL')
+						{
+							continue;
+						}
+						
+						// QUERY: Get the next id in the problemset table
+						$q_ProblemSetMaxId = $db->getQuery(true);
+						$q_ProblemSetMaxId->select('MAX(ps.id) AS "maxId"')
+							->from('com_catalogsystem_problemset AS ps');
+						$db->setQuery($q_ProblemSetMaxId);
+						$r_ProblemSetMaxId = $db->loadObject();
+						$newProbSetId = sqlInt(objGet($r_ProblemSetMaxId,'maxId'),0,NULL,0) + 1;
 						
 						if($newProbSetEid === 'NULL')
 						{

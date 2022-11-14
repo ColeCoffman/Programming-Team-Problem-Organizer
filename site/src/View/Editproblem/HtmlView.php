@@ -36,7 +36,7 @@ class HtmlView extends BaseHtmlView
      */
     public function display($template = null)
     {
-		// Edit this problem according to the POST data (if there is any)
+		// Make sure that a valid problem is being shown
 		$this->details = $this->get('Item', 'ProblemDetails_Item');
 		if (is_null($this->details))
 		{
@@ -44,6 +44,8 @@ class HtmlView extends BaseHtmlView
         echo "<h3>Include a valid id in the URL to edit problem.</h3>";
 		return;
 		}
+		
+		// Edit this problem according to the POST data (if there is any)
 		$this->details->history = $this->get('Items', 'ProblemHistory_List');
 		$this->details->sets = $this->get('Items', 'ProblemSets_List');
 		$this->getModel('EditProblem_Write')->setState("details",$this->details);
@@ -58,6 +60,13 @@ class HtmlView extends BaseHtmlView
         $this->setsPagination = $this->get('Pagination', 'ProblemSets_List');
 		
         $this->form = $this->get('form', 'EditProblem_Form');
+		
+		$stateHist = $this->get('State', 'ProblemHistory_List');
+		$this->sortDirectionHist = $stateHist->get('list.direction');
+        $this->sortColumnHist = $stateHist->get('list.ordering');
+		$stateSets = $this->get('State', 'ProblemSets_List');
+		$this->sortDirectionSets = $stateSets->get('list.direction');
+        $this->sortColumnSets = $stateSets->get('list.ordering');
 		
         parent::display($template);
     }

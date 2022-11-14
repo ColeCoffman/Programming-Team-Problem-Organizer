@@ -7,9 +7,21 @@
                 <option value="0">Record Use</option>
                 <option value="2">Delete</option>
             </field>
-            <field name="newSet" type="text" label="New Set Name" showon="desiredOp:1"/>
-            <field name="newZip" type="text" label="Link to Set Zip" showon="desiredOp:1"/>
-            <field name="useDate" type="calendar" label="Select Date" showon="desiredOp:0"/>
+            <field name="newSet"
+				type="text" 
+				label="New Set Name" 
+				showon="desiredOp:1"
+			/>
+			<field name="newZip"
+				type="text" 
+				label="URL Link to zip file" 
+				showon="desiredOp:1"
+			/>
+            <field name="useDate" 
+				type="calendar" 
+				label="Select Date" 
+				showon="desiredOp:0"
+			/>
             <field name="useTeam"
                type = "sql"
                label="Used By"

@@ -25,15 +25,17 @@ class HtmlView extends BaseHtmlView
     protected $pagination;
     protected $form;
     protected $form2;
+	protected $result;
 
     public function display($template = null)
     {
-        // Call the parent display to display the layout file
+		// Update sets in database if POST commands were sent
+		$this->result = $this->get('Item', 'SetsOp_Write');
+        // Read Sets info for display
         $this->items = $this->get('Items', 'Sets_List');
         $this->pagination = $this->get('Pagination', 'Sets_List');
         $this->form = $this->get('form', 'Sets_Form');
         $this->form2 = $this->get('form', 'SetsOp_Form');
-        //$this->categories = $this->get('CategoryTags');
         $state = $this->get('State', 'Sets_List');
         $this->sortDirection = $state->get('list.direction');
         $this->sortColumn = $state->get('list.ordering');
