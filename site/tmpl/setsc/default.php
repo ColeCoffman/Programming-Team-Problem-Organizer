@@ -107,9 +107,10 @@ $urlStr = "index.php?option=com_catalogsystem&view=catalogc&set=";
     <input type="hidden" name="filter_order" value="<?php echo $this->sortColumn; ?>" />
 	<input type="hidden" name="filter_order_Dir" value="<?php echo $this->sortDirection; ?>" />
     
-    <div class="search-box">
-        <?php echo $this->form2->renderFieldset("opPanel"); ?>
-        <button type="submit">Confirm</button>
-    </div>
-
+	<div class="panel-box">
+			<?php echo $this->form2->renderFieldset("opPanel"); ?>
+			<div class= "end-content">
+			<button class = "submit-button" type="submit">Confirm</button>
+		  </div>
+	</div>
 </form>

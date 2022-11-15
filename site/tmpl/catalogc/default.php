@@ -240,11 +240,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <input type="hidden" name="filter_order" value="<?php echo $this->sortColumn; ?>" />
 	<input type="hidden" name="filter_order_Dir" value="<?php echo $this->sortDirection; ?>" />
     
-    <div class="panel-box">
-        <?php echo $this->form2->renderFieldset("opPanel"); ?>
-        <div class= "end-content">
-        <button class = "op-button" type="submit">Confirm</button>
-      </div>
-    </div>
+	<div class="panel-box">
+			<?php echo $this->form2->renderFieldset("opPanel"); ?>
+			<div class= "end-content">
+			<button class = "submit-button" type="submit">Confirm</button>
+		  </div>
+	</div>
 
 </form>
