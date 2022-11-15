@@ -26,6 +26,7 @@ $uri = Uri::root();
 ?>
 
 <?php 
+/*
 echo "<script language='javascript' type='text/javascript'>
     function tableOrdering( order, dir, task )
     {
@@ -36,6 +37,7 @@ echo "<script language='javascript' type='text/javascript'>
         document.adminForm.submit( task );
     }
 </script>";
+*/
 		$info = $this->details;
 		
 		$pdfExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem/uploads/pdf/'.$info->pdfPath. '.pdf');
@@ -55,14 +57,13 @@ echo "<script language='javascript' type='text/javascript'>
 		
 		$urlStr = Route::_("index.php?option=com_catalogsystem&view=catalogc");
         echo "<a href='$urlStr'>Back</a>";
-		echo "<div class= 'info-box'>";
 		echo "<div class='problem-title'>Edit Problem: $info->name</div>";
         
         echo "<form action='index.php?option=com_catalogsystem&view=editproblem&id=$info->id'
                 method='post' name='editForm' id='editForm' enctype='multipart/form-data'>";
-			
-			echo "<div class='details'>
-				<div class= 'problem-header'>";
+			echo "<div class= 'info-box'>";// opens info-box
+			echo "<div class='details'>";// opens details
+			echo "<div class= 'problem-header'>";
             $this->form->setValue("name", "", $info->name);
 			echo "</div>";
 			
@@ -109,9 +110,9 @@ echo "<script language='javascript' type='text/javascript'>
 			echo "</div>";
 			echo "<div class= 'problem-header'>";
             echo $this->form->renderField("useTeam");
-			echo "</div>";
-			echo "</div>
-				</div>";
+			echo "</div>";// closing problem-header
+			echo "</div>";// closing details
+			echo "</div>";// closing info-box
 			echo "<div class= 'tables'>";
 			echo "<div class= 'history_table'>";
             echo "<div class= 'problem-header' style='text-align: center'><label id= 'remove_uses' class= 'upload-label'>Remove Uses</label></div>";
