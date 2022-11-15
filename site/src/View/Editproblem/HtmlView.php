@@ -45,13 +45,13 @@ class HtmlView extends BaseHtmlView
 		return;
 		}
 		
-		// Edit this problem according to the POST data (if there is any)
+		// EDIT THIS PROBLEM according to the POST data (if there is any)
 		$this->details->history = $this->get('Items', 'ProblemHistory_List');
 		$this->details->sets = $this->get('Items', 'ProblemSets_List');
 		$this->getModel('EditProblem_Write')->setState("details",$this->details);
 		$this->result = $this->get('Item', 'EditProblem_Write');
 		
-		// Get the new details of this problem, after it was edited
+		// GET THE NEW DETAILS of this problem, after it was edited
 		$this->details = $this->get('Item', 'ProblemDetails_Item');
 		$this->details->history = $this->get('Items', 'ProblemHistory_List');
 		$this->details->sets = $this->get('Items', 'ProblemSets_List');

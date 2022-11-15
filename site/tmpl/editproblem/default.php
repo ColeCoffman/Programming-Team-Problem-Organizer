@@ -115,11 +115,9 @@ echo "<script language='javascript' type='text/javascript'>
 			echo "<div class= 'tables'>";
 			echo "<div class= 'history_table'>";
             echo "<div class= 'problem-header' style='text-align: center'><label id= 'remove_uses' class= 'upload-label'>Remove Uses</label></div>";
-            echo "<form action='index.php?option=com_catalogsystem&view=editproblem&id=$info->id'
-                method='post' name='adminForm' id='adminForm' enctype='multipart/form-data'>
-				<table class='catalog_table'>
+				echo "<table id= 'myTableHist' class='catalog_table'>
                     <thead>";
-						$xmlStr = '<field name="toggle" class= "toggle" type="checkbox" onclick= "toggleAll()" label=""/>';
+						$xmlStr = '<field name="toggle" class= "toggle" type="checkbox" onclick= "toggleAll(tableName=\'myTableHist\', toggleName=\'toggle\')" label=""/>';
                         $xml = new SimpleXMLElement($xmlStr);
                         $this->form->setField($xml);
                         echo "<tr>";
@@ -147,23 +145,20 @@ echo "<script language='javascript' type='text/javascript'>
             endforeach;
 
             echo "</tbody>
-                </table>
-				</form>
-				{$this->historyPagination->getListFooter()}
-				{$this->historyPagination->getLimitBox()}
-				</div>";
+                </table>";
+				//echo "{$this->historyPagination->getListFooter()}";
+				//echo "{$this->historyPagination->getLimitBox()}";
+				echo "</div>";
 			echo "<div class= 'sets_table'>";
             echo "<div class= 'problem-header' style='text-align: center'><label id= 'remove_sets' class= 'upload-label'>Remove from Sets?</label></div>";
-            echo "<form action='index.php?option=com_catalogsystem&view=editproblem&id=$info->id'
-                method='post' name='adminForm' id='adminForm' enctype='multipart/form-data'>
-				<table id= 'myTable2' class='catalog_table'>
+				echo "<table id= 'myTableSets' class='catalog_table'>
                     <thead>";
-					  $xmlStr = '<field name="toggle2" class= "toggle2" type="checkbox" onclick= "toggleAll(tableName=myTable2, toggleName=toggle2)" label=""/>';
+					  $xmlStr = '<field name="toggle2" class= "toggle2" type="checkbox" onclick= "toggleAll(tableName=\'myTableSets\', toggleName=\'toggle2\')" label=""/>';
                       $xml = new SimpleXMLElement($xmlStr);
                       $this->form->setField($xml);
 					  echo "<tr>";
                       echo "<th id='checkcolumn'>";
-                      echo $this->form->renderField("toggle");
+                      echo $this->form->renderField("toggle2");
                       echo "</th> <th>";
                           echo JHTML::_( 'grid.sort', 'Set Name', 'setName', $this->sortDirectionSets, $this->sortColumnSets);
                         echo "</th></tr>
@@ -182,13 +177,12 @@ echo "<script language='javascript' type='text/javascript'>
                 </tr>";
             endforeach;
             echo "</tbody>
-                </table>
-				</form>
-				<input type='hidden' name='filter_order' value='<?php echo $this->sortColumnSets; ?>' />
-				<input type='hidden' name='filter_order_Dir' value='<?php echo $this->sortDirectionSets; ?>' />
-				{$this->setsPagination->getListFooter()}
-				{$this->setsPagination->getLimitBox()}
-				</div>
+                </table>";
+				echo "<input type='hidden' name='filter_order' value='<?php echo $this->sortColumnSets; ?>' />
+				<input type='hidden' name='filter_order_Dir' value='<?php echo $this->sortDirectionSets; ?>' />";
+				//echo "{$this->setsPagination->getListFooter()}";
+				//echo "{$this->setsPagination->getLimitBox()}";
+				echo "</div>
 					</div>";
 					echo "<div class= 'end-content'>";
             echo "<button type='submit' class='submit-button'>Confirm Changes</button>";

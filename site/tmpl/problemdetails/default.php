@@ -17,8 +17,8 @@ $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('catalogHelper')
     ->useStyle('info');
 
-$pdfExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem/uploads/pdf/'.$this->item->pdfPath. '.pdf');
-$zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem/uploads/zip/'.$this->item->zipUrl. '.zip');
+$pdfExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem/uploads/pdf/'.$this->item->pdfPath);
+$zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem/uploads/zip/'.$this->item->zipUrl);
 ?>
 
 <?php
@@ -60,8 +60,8 @@ $zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem
 echo "</div></div>";
 		echo "<div class= 'tables'>";
 		echo "<div class= 'history_table'>";
-        echo "{$this->historyPagination->getLimitBox()}
-			<table class='catalog_table'>
+        //echo "{$this->historyPagination->getLimitBox()}";
+			echo "<table class='catalog_table'>
                 <thead>
                     <tr>
                         <th>Date Used</th>
@@ -78,13 +78,13 @@ echo "</div></div>";
         endforeach;
 
     echo "</tbody>
-        </table>
-		{$this->historyPagination->getListFooter()}
-		 </div>";
+        </table>";
+		//echo "{$this->historyPagination->getListFooter()}";
+		echo "</div>";
 
 		echo "<div class= 'sets_table'>";
-        echo "{$this->setsPagination->getLimitBox()}
-				<table class='catalog_table'>
+        //echo "{$this->setsPagination->getLimitBox()}";
+				echo "<table class='catalog_table'>
 					<thead>
 							<tr>
 									<th>Sets Included</th>
@@ -101,9 +101,9 @@ echo "</div></div>";
 
     echo "</tbody>
 
-        </table>
-		{$this->setsPagination->getListFooter()}
-				</div>
+        </table>";
+		//echo "{$this->setsPagination->getListFooter()}";
+				echo "</div>
 					</div>";
     
 ?>
