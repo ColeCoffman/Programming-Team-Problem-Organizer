@@ -26,7 +26,7 @@ $uri = Uri::root();
 ?>
 
 <?php 
-/*
+
 echo "<script language='javascript' type='text/javascript'>
     function tableOrdering( order, dir, task )
     {
@@ -37,7 +37,7 @@ echo "<script language='javascript' type='text/javascript'>
         document.adminForm.submit( task );
     }
 </script>";
-*/
+
 		$info = $this->details;
 		
 		$pdfExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem/uploads/pdf/'.$info->pdfPath. '.pdf');
@@ -56,7 +56,8 @@ echo "<script language='javascript' type='text/javascript'>
 		
 		
 		$urlStr = Route::_("index.php?option=com_catalogsystem&view=catalogc");
-        echo "<a href='$urlStr'>Back</a>";
+        echo "<a href='$urlStr'><button class='return-button'><label class='return-label'>Back</label></button></a>";
+		echo "<div class= 'info-box'>";
 		echo "<div class='problem-title'>Edit Problem: $info->name</div>";
         
         echo "<form action='index.php?option=com_catalogsystem&view=editproblem&id=$info->id'
@@ -85,7 +86,7 @@ echo "<script language='javascript' type='text/javascript'>
 				$pdfDownload = $uri . "media/com_catalogsystem/uploads/pdf/" . $info->pdfPath;
 				echo "<div class= 'problem-header' style='display: flex;'><label id= 'pdf' class= 'upload-label'>Problem PDF:</label> <a class= 'title' href='$pdfDownload' target='_blank' rel='noopener noreferrer'>Download</a></div>";
 			} else {
-				echo "<div class= 'problem-header'><label id= 'pdf'>Problem PDF:</label> <div class= 'title'>Not Available</div></div>";
+				echo "<div class= 'problem-header' style='display: flex;'><label id= 'pdf' class= 'upload-label'>Problem PDF:</label> <div class= 'title'>Not Available</div></div>";
 			}
 			
 			echo "<div class= 'problem-header'>";
@@ -96,7 +97,7 @@ echo "<script language='javascript' type='text/javascript'>
 				$zipDownload = $uri . "media/com_catalogsystem/uploads/zip/" . $info->zipUrl;
 				echo "<div class= 'problem-header' style='display: flex;'><label class= 'upload-label' id= 'zip'>Problem ZIP:</label> <a class= 'title' href='$zipDownload' target='_blank' rel='noopener noreferrer' download>Download</a></div>";
 			} else {
-				echo "<div class= 'problem-header'><label id= 'pdf'>Problem ZIP:</label> <div class= 'title'>Not Available</div>";
+				echo "<div class= 'problem-header' style='display: flex;'><label class= 'upload-label' id= 'zip'>Problem ZIP:</label> <div class= 'title'>Not Available</div>";
 			}
 			
 			echo "<div class= 'problem-header'>";
@@ -115,8 +116,9 @@ echo "<script language='javascript' type='text/javascript'>
 			echo "</div>";// closing info-box
 			echo "<div class= 'tables'>";
 			echo "<div class= 'history_table'>";
-            echo "<div class= 'problem-header' style='text-align: center'><label id= 'remove_uses' class= 'upload-label'>Remove Uses</label></div>";
-				echo "<table id= 'myTableHist' class='catalog_table'>
+            echo "<div class= 'problem-header' style='text-align: center'><label id= 'remove_uses' class= 'upload-label'>Remove Uses?</label></div>";
+			echo "<table id= 'myTableHist' class='catalog_table'>
+
                     <thead>";
 						$xmlStr = '<field name="toggle" class= "toggle" type="checkbox" onclick= "toggleAll(tableName=\'myTableHist\', toggleName=\'toggle\')" label=""/>';
                         $xml = new SimpleXMLElement($xmlStr);
@@ -154,7 +156,7 @@ echo "<script language='javascript' type='text/javascript'>
             echo "<div class= 'problem-header' style='text-align: center'><label id= 'remove_sets' class= 'upload-label'>Remove from Sets?</label></div>";
 				echo "<table id= 'myTableSets' class='catalog_table'>
                     <thead>";
-					  $xmlStr = '<field name="toggle2" class= "toggle2" type="checkbox" onclick= "toggleAll(tableName=\'myTableSets\', toggleName=\'toggle2\')" label=""/>';
+					  $xmlStr = '<field name="toggle2" class= "toggle2" type="checkbox" onclick= "toggleAll()" label=""/>';
                       $xml = new SimpleXMLElement($xmlStr);
                       $this->form->setField($xml);
 					  echo "<tr>";

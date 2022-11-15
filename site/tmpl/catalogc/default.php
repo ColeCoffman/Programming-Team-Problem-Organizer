@@ -144,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <?php
     $linkStr = Route::_("index.php?option=com_catalogsystem&view=addproblem");
-    echo "<a href='$linkStr'>Add New Problem</a>";
+    echo "<a href='$linkStr'><button class='return-button'><label class='add-label'>Add New Problem</label></button></a>";
 ?>
 
 <form class= "search-box" action="index.php?option=com_catalogsystem&view=catalogc"

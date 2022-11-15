@@ -25,7 +25,7 @@ $zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem
 	use Joomla\CMS\Uri\Uri;
 	$uri = Uri::root();
     $urlStr = Route::_("index.php?option=com_catalogsystem&view=catalog");
-    echo "<a href='$urlStr'>Back</a>";
+    echo "<a href='$urlStr'><button class='return-button'><label class='return-label'>Back</label></button></a>";
 
     
         $info = $this->item;

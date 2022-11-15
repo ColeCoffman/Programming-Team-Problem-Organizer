@@ -7,7 +7,7 @@
                 <option value="1">Add to Set</option>
                 <option value="2">Delete</option>
             </field>
-            <field name="useDate" type="calendar" label="Select Date" showon="desiredOp:0"/>
+            <field name="useDate" type="calendar" class= "schedulers" label="Select Date" showon="desiredOp:0"/>
              <field name="useTeam"
                type = "sql"
                label="Used By"

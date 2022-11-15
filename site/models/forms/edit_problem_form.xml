@@ -61,12 +61,13 @@
             class="inputbox"
             showon="sourcetoggle:1"/>
         <field name="dif"
-            type="text"
+            type="number"
             label="Difficulty"
             required="false"
+			min="0"
             size="3"
             filter = "integer"
-            class="inputbox problem-header" />
+            class="inputbox problem-header"/>
 	</fieldset>
     <field name="pdfupload"
         type="file"

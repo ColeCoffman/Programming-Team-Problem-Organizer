@@ -1,5 +1,6 @@
 body.site {
   background-color: #FFFFFF;
+  z-index: 1;
 }
 
 header.container-header {
@@ -31,19 +32,27 @@ justify-content: space-around;
   width: 85%;
   margin: 3% auto;
 }
+
 .panel-box {
-  background-color: #FFFFFF;
-  color: #000000;
-  width: 50%;
-  margin: 3% auto;
+    background-color: #FBFEF9;
+    color: #000000;
+    width: 55%;
+    padding: 2%;
+    border-radius: 0.1rem;
+    margin: 5% auto;
+    box-shadow: 0rem 0rem 1rem 0rem #70656359;
 }
+
 .add-box {
   background-color: #FFFFFF;
   color: #000000;
-  width: 85%;
+  width: 90%;
   margin: 3% auto;
 }
 
+.panel-box .js-calendar.open{
+	z-index: 2;
+}
 .unsorted:after {
   display: inline-block;
   content:"";
@@ -91,7 +100,9 @@ justify-content: space-around;
   font-size: 3.25vmin;
   font-weight: 600;
 }
-
+.panel-box fieldset {
+    margin: 1em 0;
+}
 .control-group {
   display: flex !important;
   justify-content: space-around;
@@ -159,7 +170,7 @@ justify-content: space-around;
   line-height: 1 !important;
 }
 
-.schedulers .input-group {
+.rowoptions.schedulers .input-group {
   width: 85%;
 }
 
@@ -167,13 +178,13 @@ justify-content: space-around;
 	width: 100% !important;
 }
 /*For schedulers*/
-.schedulers .btn {
+.schedulers .btn, .panel-box .field-calendar .btn{
   background-color: #ffca06 !important;
   border-color: #ffca06 !important;
   color: #ffffff;
   padding: 0.4em 0.8em;
 }
-.schedulers .form-control {
+.schedulers .form-control, .panel-box .field-calendar .form-control {
   border-radius: 0.6rem 0rem 0rem 0.6rem !important;
 }
 .form-check.form-check-inline {
@@ -189,15 +200,14 @@ justify-content: space-around;
     padding: 1% 10%;
 }
 
-.op-button {
-    background-color: #233F57;
-    color: #ffffff
+.return-button {
+    background-color: #FFCA06;
     border: none;
-    font-weight: 500;
+    font-weight: 600;
     border-radius: 0.5rem;
-    margin: 3%;
-    font-size: 3vmin;
-    /* padding: 1% 10%; */
+    margin-bottom: 1%;
+    font-size: 2.5vmin;
+    padding: 0.75% 2%;
 }
 
 #filter_clear {
@@ -318,8 +328,8 @@ input[type="file"]::file-selector-button {
   word-wrap: break-word;
   /*prevents user from accidentally highlighting column due to constant clicking*/
   user-select: none;
-  -webkit-user-select: none; /* Safari */
-  -ms-user-select: none; /* IE 10+ */
+  -webkit-user-select: none; /* For: Safari */
+  -ms-user-select: none; /* For: IE 10+ */
 }
 .catalog_table > thead >  tr > th:hover {
   cursor: pointer;
@@ -332,6 +342,7 @@ input[type="file"]::file-selector-button {
 .catalog_table > thead > tr {
   border: none !important;
 }
+
 
 .catalog_table > tbody > tr {
   border: 1px rgba(0, 0, 0, 0.3) !important;
@@ -349,6 +360,39 @@ input[type="file"]::file-selector-button {
   word-wrap: break-word;
 }
 
+#overlay {
+  position: sticky; /* Sit on top of the page content */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 10%;
+  z-index: 3; /* Specify a stack order in case you're using a different order for other elements */
+}
+
+.return-label, .add-label {
+	cursor: pointer;
+}
+.return-label:before {
+	right: 3%;
+    width: 1.85vmin;
+    height: 2.75vmin;
+    vertical-align: middle;
+    display: inline-block;
+    content: "";
+    position: relative;
+	background: no-repeat url('../../com_catalogsystem/images/chevron-left-solid.svg');
+}
+
+.add-label:before {
+    right: 3%;
+    width: 2.65vmin;
+    height: 3.5vmin;
+    vertical-align: middle;
+    display: inline-block;
+    content: "";
+    position: relative;
+    background: no-repeat url('../../com_catalogsystem/images/plus-solid.svg');
+}
 .hidden {
   display: none !important;
 }
