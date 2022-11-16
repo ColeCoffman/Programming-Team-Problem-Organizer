@@ -67,11 +67,16 @@ $wa->useStyle('catalog')
 		</div>
     </div>
     <div class= "end-content">
-	<button  id="filter_clear" name="filter_clear" class="submit-button" type="submit"> Reset </button>
-	<button class = "submit-button" type="submit">Filter</button>
+	<button id="filter_submit" name="filter_submit" class = "submit-button" type="submit">Filter</button>
+	<button id="filter_clear" name="filter_clear" class="submit-button" type="submit"> Reset </button>
+	
 </div>
    </div>
 </form>
+<div>
+        <span>Rows Per Page: </span>
+        <?php echo $this->pagination->getLimitBox(); ?>
+    </div>
 <form id="adminForm" method="post" name="adminForm">
     <table class="catalog_table" id="myTable">
         <thead>
@@ -105,10 +110,6 @@ $wa->useStyle('catalog')
         </tbody>
     </table>
     <?php echo $this->pagination->getListFooter(); ?>
-    <div>
-        <span>Rows Per Page: </span>
-        <?php echo $this->pagination->getLimitBox(); ?>
-    </div>
     <input type="hidden" name="filter_order" value="<?php echo $this->sortColumn; ?>" />
 	<input type="hidden" name="filter_order_Dir" value="<?php echo $this->sortDirection; ?>" />
 </form>

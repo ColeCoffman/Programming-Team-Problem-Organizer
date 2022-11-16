@@ -32,7 +32,9 @@ class HtmlView extends BaseHtmlView
 
     public function display($template = null)
     {
-        // Call the parent display to display the layout file
+		// Update problems in database if POST commands were sent
+		$this->result = $this->get('Item', 'CatalogOp_Write');
+        // Read problem info for display
         $this->items = $this->get('Items', 'Catalog_List');
         $this->pagination = $this->get('Pagination', 'Catalog_List');
         $this->form = $this->get('form', 'Catalog_Form');

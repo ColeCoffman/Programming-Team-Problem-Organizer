@@ -82,6 +82,7 @@ class DisplayController extends BaseController
 			$view->setModel($this->getModel('Catalog_List'), true);
 			$view->setModel($this->getModel('Catalog_Form'));
 			$view->setModel($this->getModel('CatalogOp_Form'));
+			$view->setModel($this->getModel('CatalogOp_Write'));
 		}
 		else if($viewName==='editproblem')
 		{
