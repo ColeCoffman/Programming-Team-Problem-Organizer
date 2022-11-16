@@ -22,11 +22,8 @@ class HtmlView extends BaseHtmlView
 {
     
     protected $details;
-    protected $pagination;
     protected $form;
 	protected $result;
-	protected $historyPagination;
-	protected $setsPagination;
 
 	/**
      * Display the view
@@ -56,17 +53,7 @@ class HtmlView extends BaseHtmlView
 		$this->details->history = $this->get('Items', 'ProblemHistory_List');
 		$this->details->sets = $this->get('Items', 'ProblemSets_List');
 		
-		$this->historyPagination = $this->get('Pagination', 'ProblemHistory_List');
-        $this->setsPagination = $this->get('Pagination', 'ProblemSets_List');
-		
         $this->form = $this->get('form', 'EditProblem_Form');
-		
-		$stateHist = $this->get('State', 'ProblemHistory_List');
-		$this->sortDirectionHist = $stateHist->get('list.direction');
-        $this->sortColumnHist = $stateHist->get('list.ordering');
-		$stateSets = $this->get('State', 'ProblemSets_List');
-		$this->sortDirectionSets = $stateSets->get('list.direction');
-        $this->sortColumnSets = $stateSets->get('list.ordering');
 		
         parent::display($template);
     }

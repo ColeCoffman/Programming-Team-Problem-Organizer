@@ -45,23 +45,23 @@ if(is_object($this->result))
       <div>
         <?php echo $this->form->renderField('name');  ?>
       </div>
-    <div>
-        <?php echo $this->form->renderField('cattoggle');  ?>
-    </div>
       <div>
         <?php echo $this->form->renderField('category');  ?>
       </div>
       <div>
         <?php echo $this->form->renderField('newcategory');  ?>
       </div>
-      <div>
-        <?php echo $this->form->renderField('sourcetoggle');  ?>
-      </div>
+        <div>
+        <?php echo $this->form->renderField('cattoggle');  ?>
+    </div>
       <div>
         <?php echo $this->form->renderField('source');  ?>
       </div>
       <div>
         <?php echo $this->form->renderField('newsource');  ?>
+      </div>
+        <div>
+        <?php echo $this->form->renderField('sourcetoggle');  ?>
       </div>
       <div>
         <?php echo $this->form->renderField('dif');  ?>

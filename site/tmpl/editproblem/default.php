@@ -27,16 +27,16 @@ $uri = Uri::root();
 
 <?php 
 
-echo "<script language='javascript' type='text/javascript'>
-    function tableOrdering( order, dir, task )
-    {
-        var form = document.adminForm;
-
-        form.filter_order.value = order;
-        form.filter_order_Dir.value = dir;
-        document.adminForm.submit( task );
-    }
-</script>";
+//echo "<script language='javascript' type='text/javascript'>
+//    function tableOrdering( order, dir, task )
+//    {
+//        var form = document.adminForm;
+//
+//        form.filter_order.value = order;
+//        form.filter_order_Dir.value = dir;
+//        document.adminForm.submit( task );
+//    }
+//</script>";
 
 		$info = $this->details;
 		
@@ -127,9 +127,9 @@ echo "<script language='javascript' type='text/javascript'>
                         echo "<th id='checkcolumn'>";
 						echo $this->form->renderField("toggle");
                         echo "</th> <th>";
-						echo JHTML::_( 'grid.sort', 'Date Used', 'dateUsed', $this->sortDirectionHist, $this->sortColumnHist);
+						echo "Date Used";
                         echo "</th> <th>";
-						echo JHTML::_( 'grid.sort', 'Used By', 'usedBy', $this->sortDirectionHist, $this->sortColumnHist);
+						echo "Used By";
 						echo" </th>
                     </thead>
                     <tbody>";
@@ -156,14 +156,14 @@ echo "<script language='javascript' type='text/javascript'>
             echo "<div class= 'problem-header' style='text-align: center'><label id= 'remove_sets' class= 'upload-label'>Remove from Sets?</label></div>";
 				echo "<table id= 'myTableSets' class='catalog_table'>
                     <thead>";
-					  $xmlStr = '<field name="toggle2" class= "toggle2" type="checkbox" onclick= "toggleAll()" label=""/>';
+					  $xmlStr = '<field name="toggle2" class= "toggle2" type="checkbox" onclick= "toggleAll(tableName=\'myTableSets\', toggleName=\'toggle2\')" label=""/>';
                       $xml = new SimpleXMLElement($xmlStr);
                       $this->form->setField($xml);
 					  echo "<tr>";
                       echo "<th id='checkcolumn'>";
                       echo $this->form->renderField("toggle2");
                       echo "</th> <th>";
-                          echo JHTML::_( 'grid.sort', 'Set Name', 'setName', $this->sortDirectionSets, $this->sortColumnSets);
+                          echo "Set Name";
                         echo "</th></tr>
                     </thead>
                     <tbody>";
@@ -181,8 +181,6 @@ echo "<script language='javascript' type='text/javascript'>
             endforeach;
             echo "</tbody>
                 </table>";
-				echo "<input type='hidden' name='filter_order' value='<?php echo $this->sortColumnSets; ?>' />
-				<input type='hidden' name='filter_order_Dir' value='<?php echo $this->sortDirectionSets; ?>' />";
 				//echo "{$this->setsPagination->getListFooter()}";
 				//echo "{$this->setsPagination->getLimitBox()}";
 				echo "</div>

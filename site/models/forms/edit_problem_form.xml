@@ -8,10 +8,6 @@
             size="40"
             class="inputbox"
             required="true" />
-        <field name="cattoggle" type="radio" default="0" label="" description="">
-                <option value="0">Use existing Category</option>
-                <option value="1">Create new Category</option>
-        </field>
         <field
             name="category"
             label="Category"
@@ -34,9 +30,9 @@
             default=""
             class="inputbox"
             showon="cattoggle:1"/>
-        <field name="sourcetoggle" type="radio" default="0" label="" description="">
-                <option value="0">Use existing Source</option>
-                <option value="1">Create new Source</option>
+        <field name="cattoggle" type="radio" default="0" label="" description="">
+                <option value="0">Use existing Category</option>
+                <option value="1">Create new Category</option>
         </field>
         <field
             name="source"
@@ -60,6 +56,10 @@
             default=""
             class="inputbox"
             showon="sourcetoggle:1"/>
+        <field name="sourcetoggle" type="radio" default="0" label="" description="">
+                <option value="0">Use existing Source</option>
+                <option value="1">Create new Source</option>
+        </field>
         <field name="dif"
             type="number"
             label="Difficulty"

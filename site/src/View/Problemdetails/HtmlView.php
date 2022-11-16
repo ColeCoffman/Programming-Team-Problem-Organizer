@@ -26,8 +26,6 @@ class HtmlView extends BaseHtmlView
      * @return  void
      */
     protected $item;
-	protected $historyPagination;
-	protected $setsPagination;
 
     public function display($template = null)
     {
@@ -39,8 +37,6 @@ class HtmlView extends BaseHtmlView
 		}
 		$this->item->history = $this->get('Items', 'ProblemHistory_List');
 		$this->item->sets = $this->get('Items', 'ProblemSets_List');
-		$this->historyPagination = $this->get('Pagination', 'ProblemHistory_List');
-        $this->setsPagination = $this->get('Pagination', 'ProblemSets_List');
 		
         parent::display($template);
     }
