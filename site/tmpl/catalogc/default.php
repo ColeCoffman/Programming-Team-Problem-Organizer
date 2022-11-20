@@ -76,8 +76,8 @@ $urlStr = "index.php?option=com_catalogsystem&view=editproblem&id=";
 		</div>
     </div>
     <div class= "end-content">
-	<button  id="filter_clear" name="filter_clear" class="submit-button" type="submit"> Reset </button>
-	<button class = "submit-button" type="submit">Filter</button>
+        <button class = "submit-button" type="submit">Filter</button>
+        <button  id="filter_clear" name="filter_clear" class="submit-button" type="submit"> Reset </button>
 </div>
    </div>
 </form>

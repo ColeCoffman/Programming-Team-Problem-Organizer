@@ -38,10 +38,12 @@ class Sets_ListModel extends ListModel
 		$app  = Factory::getApplication();
 		$data = $app->input->post->get('jform', array(), "array");
         
-        if (isset($_POST['filter_clear']))
-            $data = array();
-        else if (empty($data))
-            $data = $app->getUserState('com_catalogsystem.setsearch', array());
+        if (!isset($_POST['filter_clear'])){
+			if (empty($data))
+				$data = $app->getUserState('com_catalogsystem.catalogsearch', array());
+		} else {
+			$data = array();
+		}
 		
 		// Build the WHERE and HAVING clauses for the SQL Query:
 		// (This defaults to a true statement because the '->where()' function always requires a parameter)

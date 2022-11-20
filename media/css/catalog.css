@@ -219,6 +219,7 @@ justify-content: space-around;
     display: flex;
     justify-content: space-evenly;
     align-items: stretch;
+    flex-direction: row-reverse;
 }
 
 .fileupload .control-group  {
