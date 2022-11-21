@@ -420,7 +420,9 @@ class EditProblem_WriteModel extends ItemModel
 				if($localDebug) echo '<br/><br/>Exeucted SQL Query:<br/>' . $q_DeleteSet->__toString();
 			}
 			
-			
+			// After the database has been changed, refresh the page.
+			// This forces Joomla to reload its ListModels, since it only allows the SQL to run once
+			echo "<meta http-equiv='refresh' content='0'>";
 			
 		}//End of 'if(POST)' section
         

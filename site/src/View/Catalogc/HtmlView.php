@@ -33,6 +33,7 @@ class HtmlView extends BaseHtmlView
     public function display($template = null)
     {
 		// Update problems in database if POST commands were sent
+		// NOTE: If the database was changed, this triggers a refresh to update the page
 		$this->result = $this->get('Item', 'CatalogOp_Write');
         // Read problem info for display
         $this->items = $this->get('Items', 'Catalog_List');

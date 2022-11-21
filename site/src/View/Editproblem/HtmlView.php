@@ -43,15 +43,11 @@ class HtmlView extends BaseHtmlView
 		}
 		
 		// EDIT THIS PROBLEM according to the POST data (if there is any)
+		// NOTE: If the database was changed, this triggers a refresh to update the page
 		$this->details->history = $this->get('Items', 'ProblemHistory_List');
-		$this->details->sets = $this->get('Items', 'ProblemSets_List');
+		$this->details->sets = $this->get('Items','ProblemSets_List');
 		$this->getModel('EditProblem_Write')->setState("details",$this->details);
 		$this->result = $this->get('Item', 'EditProblem_Write');
-		
-		// GET THE NEW DETAILS of this problem, after it was edited
-		$this->details = $this->get('Item', 'ProblemDetails_Item');
-		$this->details->history = $this->get('Items', 'ProblemHistory_List');
-		$this->details->sets = $this->get('Items', 'ProblemSets_List');
 		
         $this->form = $this->get('form', 'EditProblem_Form');
 		

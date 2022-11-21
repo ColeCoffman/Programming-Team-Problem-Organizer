@@ -91,6 +91,8 @@ class CatalogOp_WriteModel extends ItemModel
 						$db->setQuery($query);
 						$db->execute();
 					}
+					// After the database has been changed, refresh the page.
+					// This forces Joomla to reload its ListModels, since it only allows the SQL to run once
 					echo "<meta http-equiv='refresh' content='0'>";
 					break;
 				case 1: // Add to Set
@@ -129,6 +131,8 @@ class CatalogOp_WriteModel extends ItemModel
 						}
 	
 					}
+					// After the database has been changed, refresh the page.
+					// This forces Joomla to reload its ListModels, since it only allows the SQL to run once
 					echo "<meta http-equiv='refresh' content='0'>";
 					break;
 				case 2: // Delete
@@ -153,6 +157,8 @@ class CatalogOp_WriteModel extends ItemModel
 						}
 						
 					}
+					// After the database has been changed, refresh the page.
+					// This forces Joomla to reload its ListModels, since it only allows the SQL to run once
 					echo "<meta http-equiv='refresh' content='0'>";
 					break;
 				default:
