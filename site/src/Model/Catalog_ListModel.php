@@ -38,10 +38,12 @@ class Catalog_ListModel extends ListModel
 		$app  = Factory::getApplication();
 		$data = $app->input->post->get('jform', array(), "array");
         
-        if (isset($_POST['filter_clear']))
-            $data = array();
-        else if (empty($data))
-            $data = $app->getUserState('com_catalogsystem.catalogsearch', array());
+        if (!isset($_POST['filter_clear'])){
+			if (empty($data))
+				$data = $app->getUserState('com_catalogsystem.catalogsearch', array());
+		} else {
+			$data = array();
+		}
         
         
 		
