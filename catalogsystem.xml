@@ -5,7 +5,6 @@
     <name>Catalog System</name>
     <!-- The following elements are optional and free of formatting constraints -->
     <creationDate>August 2022</creationDate>
-    <!-- Dummy author, feel free to replace anywhere you see it-->
     <author>Group 9</author>
     <authorUrl></authorUrl>
     <copyright>UCF Programming Team</copyright>
@@ -41,13 +40,6 @@
             <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
         </sql>
     </uninstall>
-	<!-- The sql/updates folder was removed because it was out of date
-    <update>
-        <schemas>
-            <schemapath type="mysql">sql/updates/mysql</schemapath>
-        </schemas>
-    </update>
-	-->
 
     <files folder="site/">
         <folder>src</folder>

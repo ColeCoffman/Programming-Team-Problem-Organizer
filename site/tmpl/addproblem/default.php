@@ -1,14 +1,14 @@
 <?php
 
- // No direct access to this file
+// This file holds the HTML and display information associated with the Add Problem page
+// No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
 
+// Imports
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Uri\Uri;
-require_once dirname(__FILE__).'/../functionLib.php';
 
+// Imports through WebAssetManager
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useStyle('catalog')
     ->useScript('catalogHelper');
@@ -26,11 +26,13 @@ if(is_object($this->result))
 		echo "<br/><b>Problem Failed to Add:</b><br/>$this->result->msg<br/>";
 	}
 }
-	$uri = Uri::root();
-	$urlStr = Route::_("index.php?option=com_catalogsystem&view=catalogc");
-    echo "<a href='$urlStr'><button class='return-button'><label class='return-label'>Back</label></button></a>";
+
+// Link back to the catalog
+$urlStr = Route::_("index.php?option=com_catalogsystem&view=catalogc");
+echo "<a href='$urlStr'><button class='return-button'><label class='return-label'>Back</label></button></a>";
 ?>
 
+<!--Holds all the fields for adding a problem-->
 <form action="index.php?option=com_catalogsystem&view=addproblem" class="add-box"
     method="post" name="com_catalogsystem.AddProblem" id="com_catalogsystem.AddProblem" enctype="multipart/form-data">
     <div class= "details">
@@ -43,16 +45,16 @@ if(is_object($this->result))
       <div>
         <?php echo $this->form->renderField('newcategory');  ?>
       </div>
-        <div>
+      <div>
         <?php echo $this->form->renderField('cattoggle');  ?>
-    </div>
+      </div>
       <div>
         <?php echo $this->form->renderField('source');  ?>
       </div>
       <div>
         <?php echo $this->form->renderField('newsource');  ?>
       </div>
-        <div>
+      <div>
         <?php echo $this->form->renderField('sourcetoggle');  ?>
       </div>
       <div>
@@ -76,6 +78,6 @@ if(is_object($this->result))
     </div>
 
     <div class= "end-content">
-  <button class = "submit-button" type="submit">Add Problem</button>
-  </div>
+        <button class = "submit-button" type="submit">Add Problem</button>
+    </div>
 </form>

@@ -1,15 +1,16 @@
 <?php
-
+// This file holds the View information for the Edit Problem page
 namespace ProgrammingTeam\Component\CatalogSystem\Site\View\EditProblem;
-
+// No direct access to this file
 defined('_JEXEC') or die;
 
+// Imports
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
 
 class HtmlView extends BaseHtmlView
 {
-    
+    // These are the variables the template will use to render the Edit Problem page
     protected $details;
     protected $form;
 	protected $result;
@@ -25,9 +26,9 @@ class HtmlView extends BaseHtmlView
 		// NOTE: This usually happens after timing out and logging back in while on the editproblem page
 		if (is_null($this->details))
 		{
-        echo "<h2>Error: Problem does not exist</h2>";
-        echo "<h3>Include a valid id in the URL to edit problem.</h3>";
-		return;
+            echo "<h2>Error: Problem does not exist</h2>";
+            echo "<h3>Include a valid id in the URL to edit problem.</h3>";
+            return;
 		}
 		
 		// Build the rest of the details (after verifying that "$this->details" is not null)
@@ -43,9 +44,11 @@ class HtmlView extends BaseHtmlView
 		
 		// Get the form that will be accept the data for editing a problem
         $this->form = $this->get('form', 'EditProblem_Form');
+        // Get the form that will be accept the data for editing a problem
+        $this->form = $this->get('form', 'EditProblem_Form');
 		
 		
-		// Call the parent display to display the template file
+        // Call the parent display to display the template file
 		// Specifically, this View displays "site/tmpl/editproblem/default.php"
         parent::display($template);
     }

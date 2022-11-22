@@ -1,23 +1,24 @@
 <?php
 
+// This file holds the HTML and other display information for the Coach version of the Catalog Page
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
 
+// Imports
 use Joomla\CMS\Factory;
-use ProgrammingTeam\Component\CatalogSystem\Site\Helper\ajaxCategories;
 use Joomla\CMS\Router\Route;
 
-require_once dirname(__FILE__).'/../functionLib.php';
-
+// Imports through WebAssetManager
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('catalogHelper')
     ->useStyle('catalog');
 
-// Take coaches from the catalogc to editproblem (instead of problemdetails)
+// This is used to generate the link to each problem's edit page
 $urlStr = "index.php?option=com_catalogsystem&view=editproblem&id=";
 
 ?>
 
+<!--This script must be included to make Joomla's built in pagination functional-->
 <script language="javascript" type="text/javascript">
     function tableOrdering( order, dir, task )
     {
@@ -29,70 +30,80 @@ $urlStr = "index.php?option=com_catalogsystem&view=editproblem&id=";
     }
 </script>
 
+<!--Code for the Add Problem button-->
 <?php
     $linkStr = Route::_("index.php?option=com_catalogsystem&view=addproblem");
     echo "<a href='$linkStr'><button class='return-button'><label class='add-label'>Add New Problem</label></button></a>";
 ?>
 
+<!--This form holds the search panel-->
 <form class= "search-box" action="index.php?option=com_catalogsystem&view=catalogc"
     method="post" name="searchForm" id="searchForm" enctype="multipart/form-data">
     <div>
       <div>
-  			<?php echo $this->form->renderField('catalog_name');  ?>
-  		</div>
-  		<div>
-  			<?php echo $this->form->renderField('catalog_set');  ?>
-  		</div>
-  		<div>
-  			<?php echo $this->form->renderField('catalog_category');  ?>
-  		</div>
-  		<div>
-  			<?php echo $this->form->renderField('catalog_source');  ?>
-  		</div>
+        <?php echo $this->form->renderField('catalog_name');  ?>
+      </div>
+      <div>
+        <?php echo $this->form->renderField('catalog_set');  ?>
+      </div>
+      <div>
+  		<?php echo $this->form->renderField('catalog_category');  ?>
+      </div>
+      <div>
+        <?php echo $this->form->renderField('catalog_source');  ?>
+      </div>
       <div class= "rowoptions">
         <div class= "dif" style= "display: flex; flex: 2;">
-           <?php echo $this->form->renderField('catalog_mindif');  ?>
-          <?php echo $this->form->renderField('catalog_maxdif');  ?>
+            <?php echo $this->form->renderField('catalog_mindif');  ?>
+            <?php echo $this->form->renderField('catalog_maxdif');  ?>
         </div>
       </div>
       <div class= "rowoptions schedulers">
   		<div class= "date" style= "display: flex; flex: 2;">
-        <?php echo $this->form->renderField('catalog_date_before');  ?>
-  			<?php echo $this->form->renderField('catalog_date_after');  ?>
+            <?php echo $this->form->renderField('catalog_date_before');  ?>
+            <?php echo $this->form->renderField('catalog_date_after');  ?>
   		</div>
-    </div>
-  <div class= "rowoptions schedulers">
+      </div>
+      <div class= "rowoptions schedulers">
 		<div class=  "not_date" style= "display: flex; flex: 2;">
 			<?php echo $this->form->renderField('catalog_date_notbefore');  ?>
 			<?php echo $this->form->renderField('catalog_date_notafter');  ?>
 		</div>
-    </div>
-    <div class= "end-content">
+      </div>
+      <div class= "end-content">
         <button class = "submit-button" type="submit">Filter</button>
         <button  id="filter_clear" name="filter_clear" class="submit-button" type="submit"> Reset </button>
-</div>
+      </div>
    </div>
 </form>
 
+<!--This form holds the results table and Coach Operations Panel-->
 <form action="index.php?option=com_catalogsystem&view=catalogc"
     method="post" name="adminForm" id="adminForm" enctype="multipart/form-data">
+    <!--This generates the Pagination limit selector so users can decide how many results show per page-->
+    <div>
+        <span>Rows Per Page: </span>
+        <?php echo $this->pagination->getLimitBox(); ?>
+    </div>
     <table class="catalog_table" id="myTable">
         <thead>
             <tr>
+              <!--This code generates the select/deselect all box at the top of the results table-->
               <?php
-                        $xmlStr = '<field name="toggle" class= "toggle" type="checkbox" onclick= "toggleAll()" label=""/>';
-                        $xml = new SimpleXMLElement($xmlStr);
-                        $this->form2->setField($xml);
-                    ?>
+                $xmlStr = '<field name="toggle" class= "toggle" type="checkbox" onclick= "toggleAll()" label=""/>';
+                $xml = new SimpleXMLElement($xmlStr);
+                $this->form2->setField($xml);
+              ?>
               <th id="checkcolumn">
                   <?php echo $this->form2->renderField("toggle");?>
               </th>
-                <th><?php echo JHTML::_( 'grid.sort', 'Name', 'name', $this->sortDirection, $this->sortColumn); ?></th>
-            <th><?php echo JHTML::_( 'grid.sort', 'Category', 'category', $this->sortDirection, $this->sortColumn); ?></th>
-            <th><?php echo JHTML::_( 'grid.sort', 'Difficulty', 'difficulty', $this->sortDirection, $this->sortColumn); ?></th>
-            <th><?php echo JHTML::_( 'grid.sort', 'Source', 'source', $this->sortDirection, $this->sortColumn); ?></th>
-            <th><?php echo JHTML::_( 'grid.sort', 'First Used', 'firstUsed', $this->sortDirection, $this->sortColumn); ?></th>
-            <th><?php echo JHTML::_( 'grid.sort', 'Last Used', 'lastUsed', $this->sortDirection, $this->sortColumn); ?></th>
+              <!--JHTML is used with Pagination to achieve sort by column functionality-->
+              <th><?php echo JHTML::_( 'grid.sort', 'Name', 'name', $this->sortDirection, $this->sortColumn); ?></th>
+              <th><?php echo JHTML::_( 'grid.sort', 'Category', 'category', $this->sortDirection, $this->sortColumn); ?></th>
+              <th><?php echo JHTML::_( 'grid.sort', 'Difficulty', 'difficulty', $this->sortDirection, $this->sortColumn); ?></th>
+              <th><?php echo JHTML::_( 'grid.sort', 'Source', 'source', $this->sortDirection, $this->sortColumn); ?></th>
+              <th><?php echo JHTML::_( 'grid.sort', 'First Used', 'firstUsed', $this->sortDirection, $this->sortColumn); ?></th>
+              <th><?php echo JHTML::_( 'grid.sort', 'Last Used', 'lastUsed', $this->sortDirection, $this->sortColumn); ?></th>
             </tr>
         </thead>
         <tbody>
@@ -102,10 +113,12 @@ $urlStr = "index.php?option=com_catalogsystem&view=editproblem&id=";
 				foreach ($this->items as $i => $row)
 				{
 					echo '<tr>';
+                    // This code generates the checkbox for each row of the table
 					$xmlStr = '<field name="' . $row->id . '" type="checkbox" label=" "/>';
                     $xml = new SimpleXMLElement($xmlStr);
                     $this->form2->setField($xml);
 					echo '<td>' . $this->form2->renderField("$row->id") . '</td>';
+                    // Here we generate the link to each problem's edit page
 					$url = Route::_($urlStr . $row->id);
 					echo "<td><a href='$url'>$row->name</a></td>";
 					echo "<td>$row->category</td>";
@@ -119,19 +132,16 @@ $urlStr = "index.php?option=com_catalogsystem&view=editproblem&id=";
 			?>
         </tbody>
     </table>
+    <!--This generates the Pagination footer. The hidden inputs are required by Joomla-->
     <?php echo $this->pagination->getListFooter(); ?>
-    <div>
-        <span>Rows Per Page: </span>
-        <?php echo $this->pagination->getLimitBox(); ?>
-    </div>
     <input type="hidden" name="filter_order" value="<?php echo $this->sortColumn; ?>" />
 	<input type="hidden" name="filter_order_Dir" value="<?php echo $this->sortDirection; ?>" />
     
+    <!--This generates the Coach Operations Panel-->
 	<div class="panel-box">
 			<?php echo $this->form2->renderFieldset("opPanel"); ?>
 			<div class= "end-content">
-			<button class = "submit-button" type="submit">Confirm</button>
-		  </div>
+                <button class = "submit-button" type="submit">Confirm</button>
+            </div>
 	</div>
-
 </form>
