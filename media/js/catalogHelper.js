@@ -1,6 +1,6 @@
-function sortTable(n) {
+function sortTable(n, tableName) {
   var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-  table = document.getElementById("myTable");
+  table = document.getElementById(tableName);
   switching = true;
 
   // Set the sorting direction to ascending:
@@ -20,6 +20,7 @@ function sortTable(n) {
       one from current row and one from the next: */
       x = rows[i].getElementsByTagName("TD")[n];
       y = rows[i + 1].getElementsByTagName("TD")[n];
+      // This ensures we get the content of a link rather than the link itself
       if (x.childElementCount !== 0) {
         x = x.firstElementChild;
         y = y.firstElementChild;
@@ -56,36 +57,18 @@ function sortTable(n) {
       }
     }
   }
-    switchSort(n);
-}
-
-function switchSort(n) {
-  var table = document.getElementById("myTable");
-  var switchCol = "Col"+n;
-    for (let i = 0; i < table.rows[0].cells.length; i++) {
-    if(table.rows[0].cells[i].id === switchCol) {
-        if(document.getElementById(switchCol).classList.contains("sorted-asc")) {
-          document.getElementById(switchCol).className = "sorted-desc";
-        }
-        else {
-          document.getElementById(switchCol).className = "sorted-asc";
-        }
-      }
-      else if(table.rows[0].cells[i].id != "checkcolumn") {
-        document.getElementById(table.rows[0].cells[i].id).className = "unsorted";
-      }
-    }
 }
 
 
 function toggleAll(tableName="myTable", toggleName="toggle") {
     var table = document.getElementById(tableName);
+    // checks if we are checking or unchecking everything
     var toggle = document.getElementsByClassName(toggleName)[0].checked;
     rows = table.rows;
     /* Loop through all table rows (except the
     first, which contains table headers): */
     for (i = 1; i < (rows.length); i++) {
-      // Start by saying there should be no switching:
+      // set the state to match the checkAll box
       rows[i].getElementsByTagName("TD")[0].getElementsByTagName("input")[0].checked = toggle;
     }
  }

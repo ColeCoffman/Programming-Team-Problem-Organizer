@@ -1,26 +1,16 @@
 <?php
-
+// This file holds the View information for the Edit Problem page
 namespace ProgrammingTeam\Component\CatalogSystem\Site\View\EditProblem;
-
+// No direct access to this file
 defined('_JEXEC') or die;
 
+// Imports
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
 
-/**
- * @package     Joomla.Site
- * @subpackage  com_catalogsystem
- *
- * @copyright   Copyright (C) 2020 John Smith. All rights reserved.
- * @license     GNU General Public License version 3; see LICENSE
- */
-
-/**
- * View for the user identity validation form
- */
 class HtmlView extends BaseHtmlView
 {
-    
+    // These are the variables the template will use to render the Edit Problem page
     protected $details;
     protected $form;
 	protected $result;
@@ -37,9 +27,9 @@ class HtmlView extends BaseHtmlView
 		$this->details = $this->get('Item', 'ProblemDetails_Item');
 		if (is_null($this->details))
 		{
-        echo "<h2>Error: Problem does not exist</h2>";
-        echo "<h3>Include a valid id in the URL to edit problem.</h3>";
-		return;
+            echo "<h2>Error: Problem does not exist</h2>";
+            echo "<h3>Include a valid id in the URL to edit problem.</h3>";
+            return;
 		}
 		
 		// EDIT THIS PROBLEM according to the POST data (if there is any)
@@ -49,8 +39,10 @@ class HtmlView extends BaseHtmlView
 		$this->getModel('EditProblem_Write')->setState("details",$this->details);
 		$this->result = $this->get('Item', 'EditProblem_Write');
 		
+        // This loads the form for editing the problem
         $this->form = $this->get('form', 'EditProblem_Form');
 		
+        // Call the parent to display the layout file
         parent::display($template);
     }
 }

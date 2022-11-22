@@ -1,29 +1,22 @@
 <?php
-
-/**
- * @package     Joomla.Administrator
- * @subpackage  com_helloworld
- *
- * @copyright   Copyright (C) 2020 John Smith. All rights reserved.
- * @license     GNU General Public License version 3; see LICENSE
- */
-
+//This file holds the HTML and other display information for the Coach version of the Sets Page
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
 
+// Imports
 use Joomla\CMS\Factory;
-use ProgrammingTeam\Component\CatalogSystem\Site\Helper\ajaxCategories;
 use Joomla\CMS\Router\Route;
 
-require_once dirname(__FILE__).'/../functionLib.php';
-
+// Imports through WebAssetManager
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useStyle('catalog')
     ->useScript('catalogHelper');
 
+// This will be used to generate links back to the catalog page to see all the problems associated with a given set
 $urlStr = "index.php?option=com_catalogsystem&view=catalogc&set=";
 ?>
 
+<!--This script must be included to make Joomla's built in pagination functional-->
 <script language="javascript" type="text/javascript">
     function tableOrdering( order, dir, task )
     {
@@ -35,6 +28,7 @@ $urlStr = "index.php?option=com_catalogsystem&view=catalogc&set=";
     }
 </script>
 
+<!--This form holds the search panel-->
 <form class= "search-box" action="index.php?option=com_catalogsystem&view=setsc"
     method="post" name="setsForm" id="setsForm" enctype="multipart/form-data">
 	<div>
@@ -53,27 +47,34 @@ $urlStr = "index.php?option=com_catalogsystem&view=catalogc&set=";
 				<?php echo $this->form->renderField('sets_date_notafter');  ?>
 			</div>
 		</div>
-
-	  <div class= "end-content">
-          <button class = "submit-button" type="submit">Filter</button>
-          <button  id="filter_clear" name="filter_clear" class="submit-button" type="submit"> Reset </button>
-	   </div>
+        <div class= "end-content">
+            <button class = "submit-button" type="submit">Filter</button>
+            <button  id="filter_clear" name="filter_clear" class="submit-button" type="submit"> Reset </button>
+        </div>
    </div>
 </form>
 
+<!--This form holds the results table and Coach Operations Panel-->
 <form action="index.php?option=com_catalogsystem&view=setsc"
     method="post" name="adminForm" id="adminForm" enctype="multipart/form-data">
+    <div>
+        <!--This generates the Pagination limit selector so users can decide how many results show per page-->
+        <span>Rows Per Page: </span>
+        <?php echo $this->pagination->getLimitBox(); ?>
+    </div>
     <table class="catalog_table" id="myTable">
         <thead>
             <tr>
-			<?php
-                        $xmlStr = '<field name="toggle" class= "toggle" type="checkbox" onclick= "toggleAll()" label=""/>';
-                        $xml = new SimpleXMLElement($xmlStr);
-                        $this->form2->setField($xml);
-                    ?>
-              <th id="checkcolumn">
-                  <?php echo $this->form2->renderField("toggle");?>
-              </th>
+                <!--This code generates the select/deselect all box at the top of the results table-->
+                <?php
+                    $xmlStr = '<field name="toggle" class= "toggle" type="checkbox" onclick= "toggleAll()" label=""/>';
+                    $xml = new SimpleXMLElement($xmlStr);
+                    $this->form2->setField($xml);
+                ?>
+                <th id="checkcolumn">
+                    <?php echo $this->form2->renderField("toggle");?>
+                </th>
+                <!--JHTML is used with Pagination to achieve sort by column functionality-->
                 <th><?php echo JHTML::_( 'grid.sort', 'Name', 'name', $this->sortDirection, $this->sortColumn); ?></th>
                 <th><?php echo JHTML::_( 'grid.sort', 'Number of Problems', 'numProblems', $this->sortDirection, $this->sortColumn); ?></th>
                 <th><?php echo JHTML::_( 'grid.sort', 'First Used', 'firstUsed', $this->sortDirection, $this->sortColumn); ?></th>
@@ -84,6 +85,7 @@ $urlStr = "index.php?option=com_catalogsystem&view=catalogc&set=";
         <tbody>
             <?php foreach ($this->items as $i => $row) : ?>
                 <tr>
+                    <!--This code generates the checkbox for each row of the table-->
                     <?php
                         $xmlStr = '<field name="' . $row->set_id . '" type="checkbox" label=" "/>';
                         $xml = new SimpleXMLElement($xmlStr);
@@ -99,18 +101,16 @@ $urlStr = "index.php?option=com_catalogsystem&view=catalogc&set=";
             <?php endforeach; ?>
         </tbody>
     </table>
+    <!--This generates the Pagination footer. The hidden inputs are required by Joomla-->
     <?php echo $this->pagination->getListFooter(); ?>
-    <div>
-        <span>Rows Per Page: </span>
-        <?php echo $this->pagination->getLimitBox(); ?>
-    </div>
     <input type="hidden" name="filter_order" value="<?php echo $this->sortColumn; ?>" />
 	<input type="hidden" name="filter_order_Dir" value="<?php echo $this->sortDirection; ?>" />
     
+    <!--This generates the Coach Operations Panel-->
 	<div class="panel-box">
 			<?php echo $this->form2->renderFieldset("opPanel"); ?>
 			<div class= "end-content">
-			<button class = "submit-button" type="submit">Confirm</button>
-		  </div>
+			     <button class = "submit-button" type="submit">Confirm</button>
+            </div>
 	</div>
 </form>

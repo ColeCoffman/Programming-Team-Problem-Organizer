@@ -1,27 +1,19 @@
 <?php
-
-/**
- * @package     Joomla.Administrator
- * @subpackage  com_helloworld
- *
- * @copyright   Copyright (C) 2020 John Smith. All rights reserved.
- * @license     GNU General Public License version 3; see LICENSE
- */
-
+// This file holds the HTML and other display information for the Student version of the Catalog Page
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
 
+// Imports
 use Joomla\CMS\Factory;
-use ProgrammingTeam\Component\CatalogSystem\Site\Helper\ajaxCategories;
 use Joomla\CMS\Router\Route;
 
-require_once dirname(__FILE__).'/../functionLib.php';
-
+// Imports through WebAssetManager
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useStyle('catalog')
     ->useScript('catalogHelper');
 ?>
 
+<!--This script must be included to make Joomla's built in pagination functional-->
 <script language="javascript" type="text/javascript">
     function tableOrdering( order, dir, task )
     {
@@ -33,12 +25,13 @@ $wa->useStyle('catalog')
     }
 </script>
 
+<!--This form holds the search panel-->
 <form class= "search-box" action="index.php?option=com_catalogsystem&view=catalog"
     method="post" name="com_catalogsystem.catalogsearch" id="com_catalogsystem.catalogsearch" enctype="multipart/form-data">
     <div>
-      <div>
+        <div>
   			<?php echo $this->form->renderField('catalog_name');  ?>
-  		</div>
+        </div>
   		<div>
   			<?php echo $this->form->renderField('catalog_set');  ?>
   		</div>
@@ -48,38 +41,41 @@ $wa->useStyle('catalog')
   		<div>
   			<?php echo $this->form->renderField('catalog_source');  ?>
   		</div>
-      <div class= "rowoptions">
-        <div class= "dif" style= "display: flex; flex: 2;">
-           <?php echo $this->form->renderField('catalog_mindif');  ?>
-          <?php echo $this->form->renderField('catalog_maxdif');  ?>
+        <div class= "rowoptions">
+            <div class= "dif" style= "display: flex; flex: 2;">
+               <?php echo $this->form->renderField('catalog_mindif');  ?>
+              <?php echo $this->form->renderField('catalog_maxdif');  ?>
+            </div>
         </div>
-      </div>
-      <div class= "rowoptions schedulers">
-  		<div class= "date" style= "display: flex; flex: 2;">
-        <?php echo $this->form->renderField('catalog_date_before');  ?>
-  			<?php echo $this->form->renderField('catalog_date_after');  ?>
-  		</div>
-    </div>
-  <div class= "rowoptions schedulers">
-		<div class=  "not_date" style= "display: flex; flex: 2;">
-			<?php echo $this->form->renderField('catalog_date_notbefore');  ?>
-			<?php echo $this->form->renderField('catalog_date_notafter');  ?>
-		</div>
-    </div>
-    <div class= "end-content">
-      <button id="filter_submit" name="filter_submit" class = "submit-button" type="submit">Filter</button>
-      <button id="filter_clear" name="filter_clear" class="submit-button" type="submit"> Reset </button>
-	
-</div>
+        <div class= "rowoptions schedulers">
+  		    <div class= "date" style= "display: flex; flex: 2;">
+                <?php echo $this->form->renderField('catalog_date_before');  ?>
+                <?php echo $this->form->renderField('catalog_date_after');  ?>
+  		    </div>
+        </div>
+        <div class= "rowoptions schedulers">
+            <div class=  "not_date" style= "display: flex; flex: 2;">
+                <?php echo $this->form->renderField('catalog_date_notbefore');  ?>
+                <?php echo $this->form->renderField('catalog_date_notafter');  ?>
+            </div>
+        </div>
+        <div class= "end-content">
+          <button id="filter_submit" name="filter_submit" class = "submit-button" type="submit">Filter</button>
+          <button id="filter_clear" name="filter_clear" class="submit-button" type="submit"> Reset </button>
+        </div>
    </div>
 </form>
+
+<!--This generates the Pagination limit selector so users can decide how many results show per page-->
 <div>
-        <span>Rows Per Page: </span>
-        <?php echo $this->pagination->getLimitBox(); ?>
-    </div>
+    <span>Rows Per Page: </span>
+    <?php echo $this->pagination->getLimitBox(); ?>
+</div>
+<!--This form holds the results table. It must be wrapped in a form for Joomla Pagination-->
 <form id="adminForm" method="post" name="adminForm">
     <table class="catalog_table" id="myTable">
         <thead>
+          <!--JHTML is used with Pagination to achieve sort by column functionality-->
           <tr>
             <th><?php echo JHTML::_( 'grid.sort', 'Name', 'name', $this->sortDirection, $this->sortColumn); ?></th>
             <th><?php echo JHTML::_( 'grid.sort', 'Category', 'category', $this->sortDirection, $this->sortColumn); ?></th>
@@ -91,24 +87,26 @@ $wa->useStyle('catalog')
         </thead>
         <tbody>
             <?php
-            if(is_array($this->items))
-            {
-                foreach ($this->items as $i => $row)
+                if(is_array($this->items))
                 {
-                    echo '<tr>';
-                    $url = Route::_("index.php?option=com_catalogsystem&view=problemdetails&id=" . $row->id);
-                    echo "<td><a href='$url'>$row->name</a></td>";
-                    echo "<td>$row->category</td>";
-                    echo "<td>$row->difficulty</td>";
-                    echo "<td>$row->source</td>";
-                    echo "<td>$row->firstUsed</td>";
-                    echo "<td>$row->lastUsed</td>";
-                    echo '</tr>';
+                    foreach ($this->items as $i => $row)
+                    {
+                        echo '<tr>';
+                        // Here we generate the link to each problem's details page
+                        $url = Route::_("index.php?option=com_catalogsystem&view=problemdetails&id=" . $row->id);
+                        echo "<td><a href='$url'>$row->name</a></td>";
+                        echo "<td>$row->category</td>";
+                        echo "<td>$row->difficulty</td>";
+                        echo "<td>$row->source</td>";
+                        echo "<td>$row->firstUsed</td>";
+                        echo "<td>$row->lastUsed</td>";
+                        echo '</tr>';
+                    }
                 }
-            }
             ?>
         </tbody>
     </table>
+    <!--This generates the Pagination footer. The hidden inputs are required by Joomla-->
     <?php echo $this->pagination->getListFooter(); ?>
     <input type="hidden" name="filter_order" value="<?php echo $this->sortColumn; ?>" />
 	<input type="hidden" name="filter_order_Dir" value="<?php echo $this->sortDirection; ?>" />
