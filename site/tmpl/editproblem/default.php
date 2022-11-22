@@ -1,13 +1,5 @@
 <?php
 
-/**
- * @package     Joomla.Administrator
- * @subpackage  com_helloworld
- *
- * @copyright   Copyright (C) 2020 John Smith. All rights reserved.
- * @license     GNU General Public License version 3; see LICENSE
- */
-
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
 
@@ -26,17 +18,6 @@ $uri = Uri::root();
 ?>
 
 <?php 
-
-//echo "<script language='javascript' type='text/javascript'>
-//    function tableOrdering( order, dir, task )
-//    {
-//        var form = document.adminForm;
-//
-//        form.filter_order.value = order;
-//        form.filter_order_Dir.value = dir;
-//        document.adminForm.submit( task );
-//    }
-//</script>";
 
 		$info = $this->details;
 		
@@ -149,8 +130,6 @@ $uri = Uri::root();
 
             echo "</tbody>
                 </table>";
-				//echo "{$this->historyPagination->getListFooter()}";
-				//echo "{$this->historyPagination->getLimitBox()}";
 				echo "</div>";
 			echo "<div class= 'sets_table'>";
             echo "<div class= 'problem-header' style='text-align: center'><label id= 'remove_sets' class= 'upload-label'>Remove from Sets?</label></div>";
@@ -181,8 +160,6 @@ $uri = Uri::root();
             endforeach;
             echo "</tbody>
                 </table>";
-				//echo "{$this->setsPagination->getListFooter()}";
-				//echo "{$this->setsPagination->getLimitBox()}";
 				echo "</div>
 					</div>";
 					echo "<div class= 'end-content'>";

@@ -1,5 +1,9 @@
 <?php
 
+
+// This is a small library of functions that are commonly used across several model and template files
+
+
 // Safely get a property from an object.
 // If $obj is not a non-null object, this returns NULL.
 function objGet($obj, string $propertyName)
@@ -9,6 +13,7 @@ function objGet($obj, string $propertyName)
 	return $obj->$propertyName;
 }
 
+
 // Safely get an index from an array.
 // If $arr is not an array, or if $key is not a valid key, this returns NULL.
 function arrGet($arr, string $key)
@@ -17,6 +22,7 @@ function arrGet($arr, string $key)
 	if(!is_string($key) || !array_key_exists($key, $arr)) return NULL;
 	return $arr[$key];
 }
+
 
 // Sanitize strings for use in SQL Queries
 function sqlString($str, bool $wrapQuotes = true, int $maxLength = 250)
@@ -30,6 +36,7 @@ function sqlString($str, bool $wrapQuotes = true, int $maxLength = 250)
 	return $str;
 }
 
+
 // Sanitize strings for use with the SQL LIKE operator
 function sqlStringLike($str, bool $wrapPercent = true, bool $wrapQuotes = true, int $maxLength = 250)
 {
@@ -41,6 +48,7 @@ function sqlStringLike($str, bool $wrapPercent = true, bool $wrapQuotes = true, 
 	if(is_bool($wrapQuotes) && $wrapQuotes) $str = '"'.$str.'"';
 	return $str;
 }
+
 
 // Sanitize dates for use in SQL Queries (format is yyyy-mm-dd)
 function sqlDate($date, bool $wrapQuotes = true)
@@ -62,6 +70,7 @@ function sqlDate($date, bool $wrapQuotes = true)
 	if(is_bool($wrapQuotes) && $wrapQuotes) $date = '"'.$date.'"';
 	return $date;
 }
+
 
 // Sanitize integers for use in SQL Queries
 // This accepts integers (45) or string integers ("45"), and returns a regular integer

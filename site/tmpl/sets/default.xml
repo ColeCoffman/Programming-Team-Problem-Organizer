@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- This xml file allows this page to show up as an option when you are creating a menu link on the Joomla administrator page-->
 <metadata>
     <layout title="Sets (Student)">
         <message><![CDATA[This is the student view for the sets page]]></message>

@@ -12,25 +12,10 @@ use Joomla\CMS\Filesystem\File;
 
 require_once dirname(__FILE__).'/../../tmpl/functionLib.php';
 
-/**
- * @package     Joomla.Site
- * @subpackage  com_catalogsystem
- *
- * @copyright
- * @license     GNU General Public License version 3; see LICENSE
- */
-
-/**
- * Catalog System Message Model
- * @since 0.0.5
- */
 class EditProblem_WriteModel extends ItemModel
 {
-    /**
-     * 
-     * @param integer $pk Primary key of the "message item", currently unused
-     * @return object Message object
-     */
+    // Overrides ItemModel, the View file calls this function to preform an operation
+	// This specific function is used in the editproblem page to edit the data for a specified problem id
     public function getItem($pk= null)
     {
 		// If true, debug will be echoed to the webpage
@@ -44,6 +29,8 @@ class EditProblem_WriteModel extends ItemModel
 		$result->msg = 'Unknown';
 		$result->state = 1;
 		
+		// Retrieve the details of the current problem
+		// (This state is set by "site/src/View/Editproblem/HtmlView.php")
 		$info = $this->getState("details");
 		if($localDebug)
 		{
@@ -52,16 +39,19 @@ class EditProblem_WriteModel extends ItemModel
 			echo '<br/>----------<br/>';
 		}
 		
+		// If there is no POST data, do nothing
 		if($_SERVER['REQUEST_METHOD'] !== 'POST')
 		{
 			$result->msg = 'No POST request';
 			$result->state = 2;
 		}
+		// If there is no problem details, report an error (this should never happen)
 		else if(is_null($info))
 		{
 			$result->msg = 'FAILED: getState("details") was NULL';
 			$result->state = -1;
 		}
+		// If there is POST data and problem details, then edit any problem data that was changed
 		else
 		{
 			$result->msg = 'Problem updated successfully';

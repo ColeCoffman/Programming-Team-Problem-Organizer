@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- This form contains all of the input fields for the addproblem page -->
 <form>
 	<fieldset>
+	<!--This is the only required field, since every problem must have a name-->
 	<field
 		name="name"
 		type="text"
@@ -8,10 +10,12 @@
 		size="40"
 		class="inputbox"
 		required="true" />
-    <field name="cattoggle" type="radio" default="0" label="" description="">
+    <!--This toggle determines which of the next two inputs should be used-->
+	<field name="cattoggle" type="radio" default="0" label="" description="">
         <option value="0">Use existing Category</option>
         <option value="1">Create new Category</option>
     </field>
+	<!--If "Use existing Category" is selected, this input provides a dropdown of all existing categories-->
 	<field
         name="category"
         label="Category"
@@ -25,6 +29,7 @@
         value_field="name"
         layout="joomla.form.field.list-fancy-select"
     />
+	<!--If "Create new Category" is selected, this input provides a text box for the name of the new category-->
     <field
         name="newcategory"
         label="Input new Category"
@@ -33,10 +38,12 @@
         default=""
         class="inputbox"
         showon="cattoggle:1"/>
+	<!--This toggle determines which of the next two inputs should be used-->
     <field name="sourcetoggle" type="radio" default="0" label="" description="">
             <option value="0">Use existing Source</option>
             <option value="1">Create new Source</option>
     </field>
+	<!--If "Use existing Source" is selected, this input provides a dropdown of all existing sources-->
 	<field
         name="source"
         label="Source"
@@ -50,6 +57,7 @@
         value_field="name"
         layout="joomla.form.field.list-fancy-select"
     />
+	<!--If "Create new Source" is selected, this input provides a text box for the name of the new source-->
     <field
         name="newsource"
         label="Input new Source"
@@ -58,6 +66,7 @@
         default=""
         class="inputbox"
         showon="sourcetoggle:1"/>
+	<!--The difficulty of a problem cannot be less than 0-->
     <field name="dif"
 		type="number"
 		label="Difficulty"
@@ -67,6 +76,7 @@
         filter = "integer"
 		class="inputbox"
     />
+	<!-- All dates must be formatted as YYYY-MM-DD -->
     <field name="firstUse"
        type = "calendar"
        label="Initially Used"
@@ -86,27 +96,31 @@
        custom="true"
     />
 	<field
-			name="set"
-			label="Include in Problem Sets:"
-			required="false"
-			type="sql"
-			default=""
-			class="inputbox"
-			query="SELECT id, name FROM com_catalogsystem_set"
-			key_field="name"
-			value_field="name"
-			layout="joomla.form.field.list-fancy-select"
-			multiple="true"
-			custom="true"
+		name="set"
+		label="Include in Problem Sets:"
+		required="false"
+		type="sql"
+		default=""
+		class="inputbox"
+		query="SELECT id, name FROM com_catalogsystem_set"
+		key_field="name"
+		value_field="name"
+		layout="joomla.form.field.list-fancy-select"
+		multiple="true"
+		custom="true"
     />
-		<field name="pdfupload"
-			type="file"
-			label="Upload PDF"
-			labelclass ="labelFile"
-			size="40"
-					accept="application/pdf"
-			class="custom-file-input" />
-	<field name="zipupload"
+	<!-- All Joomla file uploads include the extension as part of the filename-->
+	<!--(Ex: "myFile.pdf", not just "myFile")-->
+	<field 
+		name="pdfupload"
+		type="file"
+		label="Upload PDF"
+		labelclass ="labelFile"
+		size="40"
+		accept="application/pdf"
+		class="custom-file-input" />
+	<field 
+		name="zipupload"
 		type="file"
 		label="Upload ZIP"
 		labelclass ="labelFile"

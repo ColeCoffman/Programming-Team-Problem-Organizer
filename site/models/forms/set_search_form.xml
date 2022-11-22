@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- This form contains all of the input fields for the search box at the top of the sets and setsc pages -->
 <form>
 	<fieldset addfieldpath="/administrator/components/com_catalogsystem/models/fields">
 		<field 
@@ -9,6 +10,7 @@
 			class="inputbox" 
 			required="false"
 		></field>
+		<!-- Format is YYYY-MM-DD. This will show sets with ANY usages after this date -->
 		<field
 			name="sets_date_after"
 			type="calendar"
@@ -16,6 +18,7 @@
 			required="false"
 			size="8"
 			></field>
+		<!-- Format is YYYY-MM-DD. This will show sets with ANY usages before this date -->
 		<field
 			name="sets_date_before"
 			type="calendar"
@@ -23,6 +26,7 @@
 			required="false"
 			size="8"
 			></field>
+		<!-- Format is YYYY-MM-DD. This will show sets with NO usages before this date -->
 		<field
 			name="sets_date_notbefore"
 			type="calendar"
@@ -30,6 +34,8 @@
 			required="false"
 			size="8"
 			></field>
+		<!-- Format is YYYY-MM-DD. This will show sets with NO usages after this date -->
+		<!-- Ex: "sets that have not yet been used in 2022" would be found by putting "2022-01-01" in this field-->
 		<field
 			name="sets_date_notafter"
 			type="calendar"

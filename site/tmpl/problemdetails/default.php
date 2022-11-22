@@ -1,13 +1,5 @@
 <?php
 
-/**
- * @package     Joomla.Administrator
- * @subpackage  com_helloworld
- *
- * @copyright   Copyright (C) 2020 John Smith. All rights reserved.
- * @license     GNU General Public License version 3; see LICENSE
- */
-
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
 use Joomla\CMS\Factory;
@@ -60,7 +52,6 @@ $zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem
 echo "</div></div>";
 		echo "<div class= 'tables'>";
 		echo "<div class= 'history_table'>";
-        //echo "{$this->historyPagination->getLimitBox()}";
 			echo "<table class='catalog_table'>
                 <thead>
                     <tr>
@@ -79,11 +70,9 @@ echo "</div></div>";
 
     echo "</tbody>
         </table>";
-		//echo "{$this->historyPagination->getListFooter()}";
 		echo "</div>";
 
 		echo "<div class= 'sets_table'>";
-        //echo "{$this->setsPagination->getLimitBox()}";
 				echo "<table class='catalog_table'>
 					<thead>
 							<tr>
@@ -102,7 +91,6 @@ echo "</div></div>";
     echo "</tbody>
 
         </table>";
-		//echo "{$this->setsPagination->getListFooter()}";
 				echo "</div>
 					</div>";
     

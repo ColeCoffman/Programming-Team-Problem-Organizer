@@ -9,25 +9,11 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 
 require_once dirname(__FILE__).'/../../tmpl/functionLib.php';
-/**
- * @package     Joomla.Site
- * @subpackage  com_catalogsystem
- *
- * @copyright
- * @license     GNU General Public License version 3; see LICENSE
- */
 
-/**
- * Catalog System Message Model
- * @since 0.0.5
- */
 class Catalog_ListModel extends ListModel
 {
-    /**
-     * Returns a message for display
-     * @param integer $pk Primary key of the "message item", currently unused
-     * @return object Message object
-     */
+	// Overrides ListModel, Joomla calls this function to get the SQL query for a list
+	// This specific function returns all of the problem info that is displayed in the catalog and catalogc pages
     protected function getListQuery()
     {
 		
@@ -38,10 +24,13 @@ class Catalog_ListModel extends ListModel
 		$app  = Factory::getApplication();
 		$data = $app->input->post->get('jform', array(), "array");
         
+		// If the 'Reset' button was NOT clicked, then retrieve the search filers
         if (!isset($_POST['filter_clear'])){
 			if (empty($data))
 				$data = $app->getUserState('com_catalogsystem.catalogsearch', array());
-		} else {
+		} 
+		// If the 'Reset' button was clicked, clear the search filers
+		else {
 			$data = array();
 		}
         
@@ -132,6 +121,8 @@ class Catalog_ListModel extends ListModel
 		
 		$db = Factory::getContainer()->get('DatabaseDriver');
 		$catalogQuery = $db->getQuery(true);
+		
+		// Get all of the problems and their related info, filtered by the generated WHERE and HAVING clauses
 		/*
 		SELECT p.name AS name, p.difficulty AS difficulty, p.id AS id, c.name AS category, s.name AS source, MIN(h.date) AS firstUsed, MAX(h.date) AS lastUsed
 		FROM com_catalogsystem_problem AS p
@@ -163,10 +154,12 @@ class Catalog_ListModel extends ListModel
 		return $catalogQuery;
     }
     
+	// Overrides ListModel, Joomla calls this function to get the default sorting info
     protected function populateState($ordering = null, $direction = null) {
 	   parent::populateState('name', 'ASC');
     }
     
+	// Overrides ListModel, Joomla calls this function to get the names of the columns that should be sorted
     public function __construct($config = array())
 	{   
 		$config['filter_fields'] = array(

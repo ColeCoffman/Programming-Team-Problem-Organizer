@@ -1,27 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- This form contains all of the input fields for the OpPanel at the bottom of the setsc page -->
 <form>
     <fields name="op">
         <fieldset name="opPanel">
+			<!--This toggle determines which inputs should be used-->
             <field name="desiredOp" type="radio" default="0" label="Select an Operation" description="">
                 <option value="1">Create New Set</option>
                 <option value="0">Record Use</option>
                 <option value="2">Delete</option>
             </field>
+			<!-- If "Create New Set" is selected, this input accepts the name of the new set-->
             <field name="newSet"
 				type="text" 
 				label="New Set Name" 
 				showon="desiredOp:1"
 			/>
+			<!-- If "Create New Set" is selected, this input accepts an optional zip file for the set-->
 			<field name="newZip"
 				type="text" 
 				label="URL Link to zip file" 
 				showon="desiredOp:1"
 			/>
+			<!--If "Record Use" is selected, this input accepts a date with the format YYYY-MM-DD-->
             <field name="useDate" 
 				type="calendar" 
 				label="Select Date" 
 				showon="desiredOp:0"
 			/>
+			<!--If "Record Use" is selected, this second input provides a dropdown for selecting the team-->
             <field name="useTeam"
                type = "sql"
                label="Used By"
@@ -36,6 +42,7 @@
                 custom="true"
                 showon="desiredOp:0"
             />
+			<!--If "Delete" is selected, no additional inputs are required-->
         </fieldset>
     </fields>
 </form>

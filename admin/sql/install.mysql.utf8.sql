@@ -3,6 +3,8 @@ SET time_zone = "-05:00";
 
 SET FOREIGN_KEY_CHECKS=0;
 
+-- Create the tables
+
 CREATE TABLE `com_catalogsystem_category` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL
@@ -47,6 +49,8 @@ CREATE TABLE `com_catalogsystem_team` (
   `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Setup the primary keys
+
 ALTER TABLE `com_catalogsystem_category`
   ADD PRIMARY KEY (`id`);
 
@@ -90,6 +94,9 @@ ALTER TABLE `com_catalogsystem_source`
 ALTER TABLE `com_catalogsystem_team`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
+-- Add cascade deletes
+-- (ex: when a problem is deleted, its history and problemset relationships are also deleted)
+
 ALTER TABLE `com_catalogsystem_problemset` ADD CONSTRAINT `ProblemSetProblemID` FOREIGN KEY (`problem_id`) REFERENCES `com_catalogsystem_problem`(`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- Delete Problems from set if problem is deleted
 ALTER TABLE `com_catalogsystem_history` ADD CONSTRAINT `HistoryProblemID` FOREIGN KEY (`problem_id`) REFERENCES `com_catalogsystem_problem`(`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- Delete History if problem is deleted
 ALTER TABLE `com_catalogsystem_problem` ADD CONSTRAINT `SourceCascade` FOREIGN KEY (`source_id`) REFERENCES `com_catalogsystem_source`(`id`) ON DELETE SET NULL ON UPDATE SET NULL; -- Set source to null if source is deleted in problem
@@ -97,6 +104,8 @@ ALTER TABLE `com_catalogsystem_problemset` ADD CONSTRAINT `ProblemSetSetID` FORE
 ALTER TABLE `com_catalogsystem_problem` ADD CONSTRAINT `CategoryCascade` FOREIGN KEY (`category_id`) REFERENCES `com_catalogsystem_category`(`id`) ON DELETE SET NULL ON UPDATE SET NULL; -- Set category to null if category is deleted in problem
 ALTER TABLE `com_catalogsystem_history` ADD  CONSTRAINT `HistoryTeamID` FOREIGN KEY (`team_id`) REFERENCES `com_catalogsystem_team`(`id`) ON DELETE SET NULL ON UPDATE SET NULL; -- Set team to null if team is deleted
 ALTER TABLE `com_catalogsystem_history` ADD CONSTRAINT `TeamSetNull` FOREIGN KEY (`team_id`) REFERENCES `com_catalogsystem_team`(`id`) ON DELETE SET NULL ON UPDATE SET NULL;
+
+-- Add in the data that was collected from rtpc
 
 INSERT INTO `com_catalogsystem_history` (`id`, `problem_id`, `team_id`, `date`) VALUES
 (1, 1, 3, '2022-07-23'),
@@ -4853,6 +4862,8 @@ INSERT INTO `com_catalogsystem_team` (`id`, `name`) VALUES
 (1, 'Varsity'),
 (2, 'JV'),
 (3, 'All');
+
+-- Add file extensions to the end of the rtpc links, so that it matches the Joomla format
 
 UPDATE com_catalogsystem_problem SET pdf_link=CONCAT(pdf_link,'.pdf');
 UPDATE com_catalogsystem_problem SET zip_link=CONCAT(zip_link,'.zip');

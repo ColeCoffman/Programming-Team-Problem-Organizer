@@ -9,33 +9,19 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Factory;
 
-/**
- * @package     Joomla.Site
- * @subpackage  com_catalogsystem
- *
- * @copyright
- * @license     GNU General Public License version 3; see LICENSE
- */
-
-/**
- * Catalog System Message Model
- * @since 0.0.5
- */
 class ProblemDetails_ItemModel extends ItemModel
 {
-    /**
-     * Returns a message for display
-     * @param integer $pk Primary key of the "message item", currently unused
-     * @return object Message object
-     */
+    // Overrides ItemModel, the View file calls this function to get an object (it can contain any kind of info)
+	// This specific function returns all of the details for a specified problem id
+	// This specific function is used by the problemdetails and editproblem pages
     public function getItem($pk= null)
     {
-		//echo '<br/><b>ProblemDetailsModel:getItem()</b><br/>';
         $db = Factory::getContainer()->get('DatabaseDriver');
         $uri = Uri::getInstance();
         $idvar = $uri->getVar('id');
         $query = $db->getQuery(true);
-
+		
+		// Make sure the problem id is valid
 		if($idvar == NULL){
 			echo '<br/>ERROR: URL id is missing<br/>';
 			return NULL;
@@ -50,9 +36,6 @@ class ProblemDetails_ItemModel extends ItemModel
 		    ->join('LEFT', $db->quoteName('com_catalogsystem_source', 'source') . ' ON (' . $db->quoteName('com_catalogsystem_problem.source_id') . ' = ' . $db->quoteName('source.id') . ')')
 		    ->where($db->quoteName('com_catalogsystem_problem.id') . " = " . $db->quote($idvar));
 
-        
-        // Order by
-        // $query->order('name');
 	    $db->setQuery($query);
 	    $result = $db->loadobject();
 

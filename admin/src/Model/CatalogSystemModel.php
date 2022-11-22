@@ -1,5 +1,10 @@
 <?php
 
+
+// This is the default admin model.
+// Since our component only adds site pages, this is unused
+
+
 namespace ProgrammingTeam\Component\CatalogSystem\Administrator\Model;
 
 defined('_JEXEC') or die;

@@ -7,25 +7,9 @@ defined('_JEXEC') or die;
 use Joomla\CMS\MVC\Model\ItemModel;
 use Joomla\CMS\Language\Text;
 
-/**
- * @package     Joomla.Site
- * @subpackage  com_catalogsystem
- *
- * @copyright
- * @license     GNU General Public License version 3; see LICENSE
- */
-
-/**
- * Catalog System Message Model
- * @since 0.0.5
- */
 class MessageModel extends ItemModel
 {
-    /**
-     * Returns a message for display
-     * @param integer $pk Primary key of the "message item", currently unused
-     * @return object Message object
-     */
+    // This is Joomla's default site model. It is never used.
     public function getItem($pk= null): object
     {
         $item = new \stdClass();

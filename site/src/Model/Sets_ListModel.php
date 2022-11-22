@@ -10,25 +10,10 @@ use Joomla\CMS\Factory;
 
 require_once dirname(__FILE__).'/../../tmpl/functionLib.php';
 
-/**
- * @package     Joomla.Site
- * @subpackage  com_catalogsystem
- *
- * @copyright
- * @license     GNU General Public License version 3; see LICENSE
- */
-
-/**
- * Catalog System Message Model
- * @since 0.0.5
- */
 class Sets_ListModel extends ListModel
 {
-    /**
-     * Returns a message for display
-     * @param integer $pk Primary key of the "message item", currently unused
-     * @return object Message object
-     */
+    // Overrides ListModel, Joomla calls this function to get the SQL query for a list
+	// This specific function returns all of the set info that is displayed in the sets and setsc pages
     protected function getListQuery()
     {
         // enable/disable debug displays for this method
@@ -81,6 +66,8 @@ class Sets_ListModel extends ListModel
 		
 		$db = Factory::getContainer()->get('DatabaseDriver');
 		$setsQuery = $db->getQuery(true);
+		
+		// Get all of the sets and their related info, filtered by the generated WHERE and HAVING clauses
 		/*
 		SELECT e.id AS set_id, e.name AS name, e.zip_link AS zip, COUNT(ps.problem_id) AS numProblems, MIN(h.date) AS firstUsed, MAX(h.date) AS lastUsed
 		FROM com_catalogsystem_set AS e
@@ -110,10 +97,12 @@ class Sets_ListModel extends ListModel
 		return $setsQuery;
     }
     
+	// Overrides ListModel, Joomla calls this function to get the default sorting info
     protected function populateState($ordering = null, $direction = null) {
 	   parent::populateState('name', 'ASC');
     }
     
+	// Overrides ListModel, Joomla calls this function to get the names of the columns that should be sorted
     public function __construct($config = array())
 	{   
 		$config['filter_fields'] = array(

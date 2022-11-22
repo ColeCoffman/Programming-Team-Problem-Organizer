@@ -1,3 +1,8 @@
+
+
+
+// This function sorts a non-paginated table that is named "MyTable"
+// This function is no longer being used, since it is not compatible with pagination
 function sortTable(n) {
   var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
   table = document.getElementById("myTable");
@@ -59,6 +64,8 @@ function sortTable(n) {
     switchSort(n);
 }
 
+// Switches the sorting order for a non-paginated table that is named "MyTable"
+// This is a helper function for the above function sortTable(n)
 function switchSort(n) {
   var table = document.getElementById("myTable");
   var switchCol = "Col"+n;
@@ -77,7 +84,9 @@ function switchSort(n) {
     }
 }
 
-
+// Toggels all of the checkboxes in a given table
+// This function is called by the master checkbox in the header of various lists
+// (used in: site/tmpl/catalogc/default.php, site/tmpl/setc/default.php, site/tmpl/editproblem/default.php)
 function toggleAll(tableName="myTable", toggleName="toggle") {
     var table = document.getElementById(tableName);
     var toggle = document.getElementsByClassName(toggleName)[0].checked;

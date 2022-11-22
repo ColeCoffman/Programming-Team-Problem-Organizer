@@ -1,29 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- This form contains all of the input fields for the OpPanel at the bottom of the catalogc page -->
 <form>
     <fields name="op">
         <fieldset name="opPanel">
+			<!--This toggle determines which inputs should be used-->
             <field name="desiredOp" type="radio" default="0" label="Select an Operation" description="">
                 <option value="0">Record Use</option>
                 <option value="1">Add to Set</option>
                 <option value="2">Delete</option>
             </field>
-            <field name="useDate" type="calendar" class= "schedulers" label="Select Date" showon="desiredOp:0"/>
-             <field name="useTeam"
-               type = "sql"
-               label="Used By"
-               required = "false" 
-                default=""
-                class="inputbox"
-                query="SELECT id, name FROM com_catalogsystem_team"
-                key_field="name"
-                value_field="name"
-                layout="joomla.form.field.list-fancy-select"
-                multiple="false"
-                custom="true"
-                showon="desiredOp:0"
+            <!--If "Record Use" is selected, this input accepts a date with the format YYYY-MM-DD-->
+			<field 
+				name="useDate" 
+				type="calendar" 
+				class= "schedulers" 
+				label="Select Date" 
+				showon="desiredOp:0" 
+				/>
+			<!--If "Record Use" is selected, this second input provides a dropdown for selecting the team-->
+            <field 
+				name="useTeam"
+				type = "sql"
+				label="Used By"
+				required = "false" 
+				default=""
+				class="inputbox"
+				query="SELECT id, name FROM com_catalogsystem_team"
+				key_field="name"
+				value_field="name"
+				layout="joomla.form.field.list-fancy-select"
+				multiple="false"
+				custom="true"
+				showon="desiredOp:0"
             />
-            <field name="setName" type="sql" label="Select Set" showon="desiredOp:1" default="" class="inputbox" query="SELECT id, name FROM com_catalogsystem_set" key_field="id" value_field="name" layout="joomla.form.field.list-fancy-select"
-			multiple="true"/>
+			<!--If "Add to Set" is selected, this input provides a dropdown for selecting the set-->
+            <field 
+				name="setName" 
+				type="sql" 
+				label="Select Set" 
+				showon="desiredOp:1" 
+				default="" 
+				class="inputbox" 
+				query="SELECT id, name FROM com_catalogsystem_set" 
+				key_field="id" 
+				value_field="name" 
+				layout="joomla.form.field.list-fancy-select"
+				multiple="true"
+			/>
+			<!--If "Delete" is selected, no additional inputs are required-->
         </fieldset>
     </fields>
 </form>

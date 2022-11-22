@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- This form contains all of the input fields for the editproblem page -->
 <form>
+	<!-- This fieldset is the first main block at the top of the page -->
     <fieldset name="details">
+		<!--This is the only required field, since every problem must have a name-->
         <field
             name="name"
             type="text"
@@ -8,6 +11,7 @@
             size="40"
             class="inputbox"
             required="true" />
+		<!--If "Use existing Category" is selected, this input provides a dropdown of all existing categories-->
         <field
             name="category"
             label="Category"
@@ -22,7 +26,8 @@
             multiple="false"
             custom="true"
 			showon="cattoggle:0"/>
-        <field
+        <!--If "Create new Category" is selected, this input provides a text box for the name of the new category-->
+		<field
             name="newcategory"
             label="Input New Category"
             required="false"
@@ -30,11 +35,13 @@
             default=""
             class="inputbox"
             showon="cattoggle:1"/>
+		<!--This toggle determines which of the previous two inputs should be used-->
         <field name="cattoggle" type="radio" default="0" label="" description="">
                 <option value="0">Use existing Category</option>
                 <option value="1">Create new Category</option>
         </field>
-        <field
+        <!--If "Use existing Source" is selected, this input provides a dropdown of all existing sources-->
+		<field
             name="source"
             label="Source"
             required="false"
@@ -48,7 +55,8 @@
             multiple="false"
             custom="true"
 			showon="sourcetoggle:0"/>
-        <field
+        <!--If "Create new Source" is selected, this input provides a text box for the name of the new source-->
+		<field
             name="newsource"
             label="Input New Source"
             required="false"
@@ -56,11 +64,13 @@
             default=""
             class="inputbox"
             showon="sourcetoggle:1"/>
+		<!--This toggle determines which of the previous two inputs should be used-->
         <field name="sourcetoggle" type="radio" default="0" label="" description="">
                 <option value="0">Use existing Source</option>
                 <option value="1">Create new Source</option>
         </field>
-        <field name="dif"
+        <!--The difficulty of a problem cannot be less than 0-->
+		<field name="dif"
             type="number"
             label="Difficulty"
             required="false"
@@ -69,6 +79,9 @@
             filter = "integer"
             class="inputbox problem-header"/>
 	</fieldset>
+	<!-- These file uploads are displayed directly below the "details" fieldset -->
+    <!-- All Joomla file uploads include the extension as part of the filename -->
+	<!--(Ex: "myFile.pdf", not just "myFile")-->
     <field name="pdfupload"
         type="file"
         label="Upload New PDF"
@@ -95,7 +108,8 @@
         value_field="name"
         layout="joomla.form.field.list-fancy-select"
         multiple="true"/>
-    <field name="add_use"
+    <!-- All dates must be formatted as YYYY-MM-DD -->
+	<field name="add_use"
        type = "calendar"
        label="Record Use"
        required = "false" />
@@ -112,4 +126,6 @@
         multiple="false"
         custom="true"
     />
+	<!-- There are more procedurally generated fields that are added to the end of this list -->
+	<!-- These fields are generated in site/tmpl/editproblem/default.php, see that file for more info -->
 </form>

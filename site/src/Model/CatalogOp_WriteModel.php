@@ -12,25 +12,10 @@ use Joomla\CMS\Filesystem\File;
 
 require_once dirname(__FILE__).'/../../tmpl/functionLib.php';
 
-/**
- * @package     Joomla.Site
- * @subpackage  com_catalogsystem
- *
- * @copyright
- * @license     GNU General Public License version 3; see LICENSE
- */
-
-/**
- * Catalog System Message Model
- * @since 0.0.5
- */
 class CatalogOp_WriteModel extends ItemModel
 {
-    /**
-     * 
-     * @param integer $pk Primary key of the "message item", currently unused
-     * @return object Message object
-     */
+    // Overrides ItemModel, the View file calls this function to preform an operation
+	// This specific function is used in the catalogc page to preform operations on a group of problems
     public function getItem($pk= null)
     {
 		// If true, debug will be echoed to the webpage
@@ -49,22 +34,28 @@ class CatalogOp_WriteModel extends ItemModel
 			
 		}
 		
+		// If there is no POST data, do nothing
 		if($postData == NULL)
 		{
 			$result->msg = 'No POST request';
 			$result->state = 2;
 		}
+		// If there is POST data, preform the selected operation
 		else
 		{
 			$result->msg = 'No operation preformed';
 			$result->state = 3;
 			
+			// Read the fieldset
 			$operation = $postData['op'];
 			unset($postData['op']);
+			// Read the problem ids of the checkboxes that are selected
 			$selected = array_keys($postData);
 	
 			$db    = Factory::getContainer()->get('DatabaseDriver');
 			$query = $db->getQuery(true);
+			
+			// Determine what operation to perform
 			switch ($operation['desiredOp'])
 			{
 				case 0: // Record Use
