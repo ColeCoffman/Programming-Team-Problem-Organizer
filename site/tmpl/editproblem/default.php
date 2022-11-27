@@ -27,15 +27,14 @@ $zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem
 <?php
     // If a problem was edited successfully, display a temporary confirmation message
     if($this->result->state === 0)
-    {
-        echo '<br/><b>[Problem Updated Successfully]</b><br/>';
-    }
-    // If a problem failed to edit, display the error message
-    else if($this->result->state < 0)
-    {
-        echo "<br/><b>Problem Failed to Update:</b><br/>$this->result->msg<br/>";
-    }
-
+	{
+		JFactory::getApplication()->enqueueMessage('Problem Updated Successfully', 'success');
+	}
+	// If a problem failed to edit, display the error message
+	else if($this->result->state < 0)
+	{
+		JFactory::getApplication()->enqueueMessage($this->result->msg, 'error');
+	}
     // Auto populating the edit fields with existing problem information
     $this->form->setValue("name", "", $info->name);
     if($info->source !== NULL)
@@ -53,8 +52,8 @@ $zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem
 
     // Link back to the catalog
     $urlStr = Route::_("index.php?option=com_catalogsystem&view=catalogc");
-    echo "<a href='$urlStr'><button class='return-button'><label class='return-label'>Back</label></button></a>";
-
+    echo "<a onclick= 'onLoad()' href='$urlStr'><button class='return-button'><label class='return-label'>Back</label></button></a>";
+		
     echo "<div class= 'info-box'>";
         echo "<div class='problem-title'>Edit Problem: $info->name</div>";
         // This form holds all the edit fields associated with the problem
@@ -85,7 +84,6 @@ $zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem
                     } else {
                         echo "<div class= 'problem-header' style='display: flex;'><label class= 'upload-label' id= 'zip'>Problem ZIP:</label> <div class= 'title'>Not Available</div></div>";
                     }
-
                     echo "<div class= 'problem-header'>";
                         echo $this->form->renderField("zipupload");
                     echo "</div>";
@@ -177,8 +175,14 @@ $zipExists = file_exists(dirname(__FILE__).'/../../../../media/com_catalogsystem
             </div>";
 
             echo "<div class= 'end-content'>";
-                echo "<button type='submit' class='submit-button'>Confirm Changes</button>";
-            echo "</div>
-        </form>
+                echo "<button type='submit' onclick= 'onLoad()' class='submit-button'>Confirm Changes</button>";
+        //This generates the loading page
+		echo "</div>
+		<div id= 'pageloader'>
+			<svg  class='loader' viewBox='0 0 50 50'>
+				<circle class='path' cx='25' cy='25' r='20' fill='none' stroke-width='5'></circle>
+			</svg>
+		</div>
+		</form>
     </div>;"
 ?>

@@ -32,7 +32,7 @@
 	<!--If "Create new Category" is selected, this input provides a text box for the name of the new category-->
     <field
         name="newcategory"
-        label="Input new Category"
+        label="Input New Category"
         required="false"
         type="text"
         default=""
@@ -60,7 +60,7 @@
 	<!--If "Create new Source" is selected, this input provides a text box for the name of the new source-->
     <field
         name="newsource"
-        label="Input new Source"
+        label="Input New Source"
         required="false"
         type="text"
         default=""

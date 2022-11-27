@@ -1,6 +1,7 @@
 .tables {
   display: flex;
   margin: 1% auto;
+  margin-bottom: 2%;
 }
 
 .history_table {
@@ -15,6 +16,7 @@
 
 .return-button {
     background-color: #FFCA06;
+	color: #000000;
     border: none;
     font-weight: 600;
     border-radius: 0.5rem;
@@ -46,4 +48,337 @@
     content: "";
     position: relative;
     background: no-repeat url('../../com_catalogsystem/images/plus-solid.svg');
+}
+
+@media (min-width: 600px) and (max-width: 965px) and (orientation: portrait) {
+
+	.control-label {
+		font-size: 3vmin;
+	}
+	.panel-box {
+    width: 60%;
+    }
+	.form-control {
+		font-size: 2.5vmin !important;
+	}
+	
+	.schedulers .btn, .panel-box .field-calendar .btn {
+		padding: 0em 0.5em;
+	}
+	
+	.icon-calendar-alt:before, .icon-calendar:before {
+		font-size: 2vmax;
+	}
+
+	.submit-button {
+	    font-size: 2.75vmin;
+	}
+
+	.catalog_table {
+		font: 400 2.5vmin sans-serif;
+	}
+	.catalog_table > thead > tr > th {
+		font: normal 2.75vmin sans-serif;
+	}
+	.catalog_table input[type = "checkbox"] {
+		    height: 3.5vmin;
+		width: 3.5vmin;
+		margin-left: 15%;
+	}
+
+	.choices__inner {
+		font-size: 2.5vmin !important;
+		border-radius: 0.5rem !important;
+		padding: 1vw 1.75vmin !important;
+	}
+	.choices__input {
+		font-size: 2.5vmin !important;
+		line-height: 1 !important;
+	}
+	.choices__item {
+    font-size: 2.5vmin !important;
+ }
+}
+
+
+@media (min-width: 600px) and (max-width: 965px) and (orientation: landscape) {
+	.control-label, .upload-label {
+		font-size: 4.25vmin;
+	}
+	.problem-header .title {
+		font-size: 4.75vmin;
+	}
+	
+	.schedulers .form-control, .panel-box .field-calendar .form-control {
+    border-radius: 0.5rem 0rem 0rem 0.5rem !important;
+}
+	.form-control {
+		border-radius: 0.5rem !important;
+		font-size: 3.75vmin !important;
+		padding: 1vw 1.75vmin !important;
+	}
+	.problem-title {
+		text-align: center;
+		font-weight: 500;
+		font-size: 6.5vmin;
+	}
+	.schedulers .btn, .panel-box .field-calendar .btn {
+		padding: 0em 1em;
+	}
+	.submit-button {
+		font-size: 4vmin;
+	}
+	
+	.catalog_table {
+		font: 400 3.5vmin sans-serif;
+	}
+	.catalog_table > thead > tr > th {
+		font: normal 4vmin sans-serif;
+	}
+	.catalog_table input[type = "checkbox"] {
+		height: 5vmin;
+		width: 5vmin;
+	}
+	
+	.choices {
+    border-radius: 0.3rem !important;
+    line-height: 1 !important;
+    background-color: #FFFFFF;
+    max-width: 100%;
+	}
+	.choices__inner {
+		font-size: 4.75vmin !important;
+		border-radius: 0.5rem !important;
+		padding: 1vw 1.75vmin !important;
+	}
+	.choices__input {
+		font-size: 3.75vmin !important;
+		line-height: 1 !important;
+	}
+	.choices__item {
+    font-size: 3.75vmin !important;
+ }
+	
+	.panel-box {
+		width: 55%;
+	}
+	.form-check {
+		font-size: 4.2vmin;
+	}
+	#overlay {
+		bottom: 10%;
+	}
+	.return-button {
+		font-size: 4.2vmin;
+	}
+	
+	.add-label:before {
+		width: 3.65vmin;
+		height: 4.75vmin;
+	}
+	.return-label:before {
+		width: 2.18vmin;
+		height: 3.5vmin;
+	}
+	
+	input[type="file"]::file-selector-button {
+		font-size: 3.75vmin;
+		padding: 1vmin 2vmin !important;
+	}
+	.form-control[type=file] .btn {
+		font-size: 3.75vmin;
+	}
+	.problem-title {
+    text-align: center;
+    font-weight: 500;
+    font-size: 6.5vmin;
+	}
+}
+
+@media (max-width: 600px) and (orientation: portrait) {
+	.return-button {
+		border-radius: 0.4rem;
+	}
+	.controls {
+    font-size: 3.2vmin;
+	}
+	.form-check {
+		font-size: 2.75vmin;
+	}
+	input[type="file"]::file-selector-button {
+		font-size: 2.75vmin;
+		padding: 1vmin 2vmin !important;
+	}
+	.form-control[type=file] .btn {
+		font-size: 2.75vmin;
+	}
+	.tables {
+		display: flex;
+		margin-bottom: 2%;
+		margin: 1% auto;
+		width: 90%;	
+	}
+	.search-box {
+		width: 95%;
+	}
+	.panel-box {
+    width: 80%;
+	}
+	.schedulers .form-control, .panel-box .field-calendar .form-control {
+    border-radius: 0.3rem 0rem 0rem 0.3rem !important;
+}
+	.control-label {
+		font-size: 3.5vmin;
+	}
+	
+	.form-control {
+		font-size: 2.75vmin !important;
+		border-radius: 0.3rem !important;
+		padding: 1vmin 1.5vmin !important;
+	}
+	
+	.schedulers .btn, .panel-box .field-calendar .btn {
+		padding: 0em 0.5em;
+	}
+	
+	.icon-calendar-alt:before, .icon-calendar:before {
+		font-size: 2vmax;
+	}
+
+	.submit-button {
+	    font-size: 2.75vmin;
+	}
+
+	.catalog_table {
+		font: 400 2.65vmin sans-serif;
+	}
+	.catalog_table > thead > tr > th {
+		font: normal 2.85vmin sans-serif;
+	}
+	.catalog_table input[type = "checkbox"] {
+		    height: 3.5vmin;
+			width: 3.5vmin;
+			margin-left: 15%;
+	}
+
+	.choices__inner {
+		font-size: 2.5vmin !important;
+		border-radius: 0.5rem !important;
+		padding: 1.5vmin 1.75vmin !important;
+	}
+	.choices__input {
+		font-size: 2.5vmin !important;
+		line-height: 1 !important;
+	}
+	.choices__item {
+    font-size: 2.5vmin !important;
+ }
+	
+	
+	
+}
+
+@media (max-width: 600px) and (orientation: landscape) {
+	.control-label, .upload-label {
+		font-size: 4.25vmin;
+	}
+	.problem-header .title {
+		font-size: 3.75vmin;
+	}
+	.form-control {
+		border-radius: 0.5rem !important;
+		font-size: 3.75vmin !important;
+		padding: 1vw 1.75vmin !important;
+	
+	}
+	.problem-title {
+    text-align: center;
+    font-weight: 500;
+    font-size: 5.5vmin;
+	}
+	.schedulers .btn, .panel-box .field-calendar .btn {
+		padding: 0em 1em;
+	}
+	.submit-button {
+		font-size: 4vmin;
+	}
+	
+	.catalog_table {
+		font: 400 3.5vmin sans-serif;
+	}
+	.catalog_table > thead > tr > th {
+		font: normal 3.5vmin sans-serif;
+	}
+	.catalog_table input[type = "checkbox"] {
+		height: 5vmin;
+		width: 5vmin;
+	}
+	.edit-label {
+		width: 3.75vmin;
+		height: 3.75vmin;
+	}
+	
+	.choices__inner {
+		font-size: 3.75vmin !important;
+		border-radius: 0.5rem !important;
+		padding: 1vw 1.75vmin !important;
+	}
+	.choices__input {
+		font-size: 3.75vmin !important;
+		line-height: 1 !important;
+	}
+	.choices__item {
+    font-size: 3.75vmin !important;
+	}
+	
+	.panel-box {
+		width: 55%;
+	}
+	.form-check {
+		font-size: 3.2vmin;
+	}
+	#overlay {
+		bottom: 10%;
+	}
+	.return-button {
+		font-size: 3.2vmin;
+	}
+	
+	.add-label:before {
+		width: 2.65vmin;
+		height: 3.75vmin;
+	}
+	.return-label:before {
+		width: 1.18vmin;
+		height: 2.5vmin;
+	}
+	
+	input[type="file"]::file-selector-button {
+		font-size: 2.75vmin;
+		padding: 1vmin 2vmin !important;
+	}
+	.form-control[type=file] .btn {
+		font-size: 2.75vmin;
+	}
+	.problem-title {
+    text-align: center;
+    font-weight: 500;
+    font-size: 5.5vmin;
+	}
+}
+
+@media (min-width: 0) and (max-width: 600px) and (orientation: landscape) {
+.schedulers .btn, .panel-box .field-calendar .btn {
+    padding: 0vmax 0.3vmax;
+}
+.icon-calendar {
+	font-size: 3vmax;
+}
+
+.form-control {
+    border-radius: 0.3rem !important;
+    font-size: 2.75vmax !important;
+    padding: 0.75vw 1.5vmin !important;
+}
+
 }

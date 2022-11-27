@@ -33,7 +33,7 @@ $urlStr = "index.php?option=com_catalogsystem&view=editproblem&id=";
 <!--Code for the Add Problem button-->
 <?php
     $linkStr = Route::_("index.php?option=com_catalogsystem&view=addproblem");
-    echo "<a href='$linkStr'><button class='return-button'><label class='add-label'>Add New Problem</label></button></a>";
+    echo "<a onclick= 'onLoad()' href='$linkStr'><button class='return-button'><label class='add-label'>Add New Problem</label></button></a>";
 ?>
 
 <!--This form holds the search panel-->
@@ -69,11 +69,11 @@ $urlStr = "index.php?option=com_catalogsystem&view=editproblem&id=";
 			<?php echo $this->form->renderField('catalog_date_notbefore');  ?>
 			<?php echo $this->form->renderField('catalog_date_notafter');  ?>
 		</div>
-      </div>
-      <div class= "end-content">
-        <button class = "submit-button" type="submit">Filter</button>
-        <button  id="filter_clear" name="filter_clear" class="submit-button" type="submit"> Reset </button>
-      </div>
+    </div>
+    <div class= "end-content">
+	<button  id="filter_clear" name="filter_clear" onclick= "onLoad()" class="submit-button" type="submit"> Reset </button>
+	<button class = "submit-button" onclick= "onLoad()" type="submit">Filter</button>
+</div>
    </div>
 </form>
 
@@ -120,7 +120,7 @@ $urlStr = "index.php?option=com_catalogsystem&view=editproblem&id=";
 					echo '<td>' . $this->form2->renderField("$row->id") . '</td>';
                     // Here we generate the link to each problem's edit page
 					$url = Route::_($urlStr . $row->id);
-					echo "<td><a href='$url'>$row->name</a></td>";
+					echo "<td><a onclick='onLoad()' href='$url'>$row->name</a></td>";
 					echo "<td>$row->category</td>";
 					echo "<td>$row->difficulty</td>";
 					echo "<td>$row->source</td>";
@@ -138,10 +138,17 @@ $urlStr = "index.php?option=com_catalogsystem&view=editproblem&id=";
 	<input type="hidden" name="filter_order_Dir" value="<?php echo $this->sortDirection; ?>" />
     
     <!--This generates the Coach Operations Panel-->
-	<div class="panel-box">
+	<div id="overlay" class="panel-box">
 			<?php echo $this->form2->renderFieldset("opPanel"); ?>
 			<div class= "end-content">
-                <button class = "submit-button" type="submit">Confirm</button>
-            </div>
+			<button class = "submit-button" onClick= "onLoad()" type="submit">Confirm</button>
+		  </div>
+	</div>
+	<button id= "overlay-button" class= "edit-button" type="button" onclick="operation()"><label class="edit-label"/></button>
+	<!--This generates the loading screen-->
+	<div id= "pageloader">
+		<svg  class="loader" viewBox="0 0 50 50">
+			<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+		</svg>
 	</div>
 </form>

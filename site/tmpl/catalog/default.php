@@ -61,8 +61,8 @@ $wa->useStyle('catalog')
             </div>
         </div>
         <div class= "end-content">
-          <button id="filter_submit" name="filter_submit" class = "submit-button" type="submit">Filter</button>
-          <button id="filter_clear" name="filter_clear" class="submit-button" type="submit"> Reset </button>
+          <button  id="filter_clear" name="filter_clear" onClick= "onLoad()" class="submit-button" type="submit"> Reset </button>
+		<button class = "submit-button" onClick= "onLoad()" type="submit">Filter</button>
         </div>
    </div>
 </form>
@@ -95,7 +95,7 @@ $wa->useStyle('catalog')
                         echo '<tr>';
                         // Here we generate the link to each problem's details page
                         $url = Route::_("index.php?option=com_catalogsystem&view=problemdetails&id=" . $row->id);
-                        echo "<td><a href='$url'>$row->name</a></td>";
+                        echo "<td><a onClick= 'onLoad()' href='$url'>$row->name</a></td>";
                         echo "<td>$row->category</td>";
                         echo "<td>$row->difficulty</td>";
                         echo "<td>$row->source</td>";
@@ -109,6 +109,13 @@ $wa->useStyle('catalog')
     </table>
     <!--This generates the Pagination footer. The hidden inputs are required by Joomla-->
     <?php echo $this->pagination->getListFooter(); ?>
+	<!--This generates the loading screen-->
+	<div id= "pageloader">
+		<svg  class="loader" viewBox="0 0 50 50">
+			<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+		</svg>
+	</div>
+	
     <input type="hidden" name="filter_order" value="<?php echo $this->sortColumn; ?>" />
 	<input type="hidden" name="filter_order_Dir" value="<?php echo $this->sortDirection; ?>" />
 </form>

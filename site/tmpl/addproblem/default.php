@@ -18,18 +18,18 @@ if(is_object($this->result))
 	// If a problem was added successfully, display a temporary confirmation message
 	if($this->result->state === 0)
 	{
-		echo '<br/><b>[Problem Added Successfully]</b><br/>';
+		JFactory::getApplication()->enqueueMessage('Problem Added Successfully', 'success');
 	}
 	// If a problem failed to add, display the error message
 	else if($this->result->state < 0)
 	{
-		echo "<br/><b>Problem Failed to Add:</b><br/>$this->result->msg<br/>";
+		JFactory::getApplication()->enqueueMessage($this->result->msg, 'error');
 	}
 }
 
 // Link back to the catalog
 $urlStr = Route::_("index.php?option=com_catalogsystem&view=catalogc");
-echo "<a href='$urlStr'><button class='return-button'><label class='return-label'>Back</label></button></a>";
+echo "<a onclick= 'onLoad()' href='$urlStr'><button class='return-button'><label class='return-label'>Back</label></button></a>";
 ?>
 
 <!--Holds all the fields for adding a problem-->
@@ -78,6 +78,12 @@ echo "<a href='$urlStr'><button class='return-button'><label class='return-label
     </div>
 
     <div class= "end-content">
-        <button class = "submit-button" type="submit">Add Problem</button>
-    </div>
+  <button class = "submit-button" onclick= "onLoad()" type="submit">Add Problem</button>
+  </div>
+  <!--This generates the loading screen-->
+  <div id= "pageloader">
+		<svg  class="loader" viewBox="0 0 50 50">
+			<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+		</svg>
+	</div>
 </form>

@@ -26,8 +26,7 @@ $info = $this->item;
 <?php
     // Link back to the catalog
     $urlStr = Route::_("index.php?option=com_catalogsystem&view=catalog");
-    echo "<a href='$urlStr'><button class='return-button'><label class='return-label'>Back</label></button></a>";
-    
+    echo "<a onClick= 'onLoad()' href='$urlStr'><button class='return-button'><label class='return-label'>Back</label></button></a>";
     echo "<div class= 'info-box'>";
         echo "<div class='problem-title'>$info->name</div>
         <div class='details'>";
@@ -91,13 +90,18 @@ $info = $this->item;
                     // This code generates the link to the given problem set that the problem is associated with
                     $url = Route::_("index.php?option=com_catalogsystem&view=catalog&set=" . $row->id);
                     echo "<tr>
-                        <td> <a href='$url'>$row->name</a></td>
+                        <td> <a onClick= 'onLoad()' href='$url'>$row->name</a></td>
                     </tr>";
                 endforeach;
-
                 echo "</tbody>
 
             </table>";
         echo "</div>
     </div>"; 
+	//This generates the loading screen
+	echo "<div id= 'pageloader'>
+		<svg  class='loader' viewBox='0 0 50 50'>
+			<circle class='path' cx='25' cy='25' r='20' fill='none' stroke-width='5'></circle>
+		</svg>
+	</div>"
 ?>

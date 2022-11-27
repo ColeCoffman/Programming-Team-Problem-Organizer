@@ -47,10 +47,10 @@ $urlStr = "index.php?option=com_catalogsystem&view=catalogc&set=";
 				<?php echo $this->form->renderField('sets_date_notafter');  ?>
 			</div>
 		</div>
-        <div class= "end-content">
-            <button class = "submit-button" type="submit">Filter</button>
-            <button  id="filter_clear" name="filter_clear" class="submit-button" type="submit"> Reset </button>
-        </div>
+	  <div class= "end-content">
+	  <button  id="filter_clear" name="filter_clear" onclick= "onLoad()" class="submit-button" type="submit"> Reset </button>
+		 <button class = "submit-button" onclick= "onLoad()" type="submit">Filter</button>
+	   </div>
    </div>
 </form>
 
@@ -92,7 +92,7 @@ $urlStr = "index.php?option=com_catalogsystem&view=catalogc&set=";
                         $this->form2->setField($xml);
                     ?>
                     <td><?php echo $this->form2->renderField("$row->set_id");  ?></td>
-                    <td><?php $url = Route::_($urlStr . $row->set_id); echo "<a href='$url'>$row->name</a>";?></td>
+                    <td><?php $url = Route::_($urlStr . $row->set_id); echo "<a onclick= 'onLoad()' href='$url'>$row->name</a>";?></td>
                     <td><?php echo $row->numProblems; ?></td>
 					<td><?php echo $row->firstUsed; ?></td>
 					<td><?php echo $row->lastUsed; ?></td>
@@ -107,10 +107,17 @@ $urlStr = "index.php?option=com_catalogsystem&view=catalogc&set=";
 	<input type="hidden" name="filter_order_Dir" value="<?php echo $this->sortDirection; ?>" />
     
     <!--This generates the Coach Operations Panel-->
-	<div class="panel-box">
+	<div id="overlay" class="panel-box">
 			<?php echo $this->form2->renderFieldset("opPanel"); ?>
 			<div class= "end-content">
-			     <button class = "submit-button" type="submit">Confirm</button>
-            </div>
+			<button class = "submit-button" onClick= "onLoad()" type="submit">Confirm</button>
+		  </div>
+	</div>
+	<button id= "overlay-button" class= "edit-button" type="button" onclick="operation()"><label class="edit-label"/></button>
+	<!--This generates the loading screen-->
+	<div id= "pageloader">
+		<svg  class="loader" viewBox="0 0 50 50">
+			<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+		</svg>
 	</div>
 </form>

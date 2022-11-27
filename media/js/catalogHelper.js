@@ -77,3 +77,20 @@ function toggleAll(tableName="myTable", toggleName="toggle") {
       rows[i].getElementsByTagName("TD")[0].getElementsByTagName("input")[0].checked = toggle;
     }
  }
+
+//This function activates a loading screen when a submit button is pressed
+function onLoad() {
+	document.getElementById("pageloader").style.display = "block";
+}
+//activates the operation panel
+function operation() {
+	var panel = document.getElementsByClassName("panel-box")[0];
+	if (window.getComputedStyle(panel).display == "none") {
+		document.getElementsByClassName("panel-box")[0].style.display = "block";
+	}
+	else {
+		document.getElementsByClassName("panel-box")[0].style.display = "none";
+	}
+	
+}
+
