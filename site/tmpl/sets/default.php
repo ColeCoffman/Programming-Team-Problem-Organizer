@@ -48,8 +48,8 @@ $urlStr = "index.php?option=com_catalogsystem&view=catalog&set=";
 	  </div>
 	  </div>
 	  <div class= "end-content">
+	  <button class = "submit-button" onClick= "onLoad()" type="submit">Filter</button>
 	  <button  id="filter_clear" name="filter_clear" class="submit-button" onClick="onLoad()" type="submit"> Reset </button>
-		<button class = "submit-button" onClick= "onLoad()" type="submit">Filter</button>
 	  </div>
 	</div>
 </form>

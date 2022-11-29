@@ -61,8 +61,8 @@ $wa->useStyle('catalog')
             </div>
         </div>
         <div class= "end-content">
-          <button  id="filter_clear" name="filter_clear" onClick= "onLoad()" class="submit-button" type="submit"> Reset </button>
 		<button class = "submit-button" onClick= "onLoad()" type="submit">Filter</button>
+		<button  id="filter_clear" name="filter_clear" onClick= "onLoad()" class="submit-button" type="submit"> Reset </button>
         </div>
    </div>
 </form>

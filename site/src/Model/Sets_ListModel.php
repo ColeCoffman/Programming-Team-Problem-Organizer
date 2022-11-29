@@ -25,7 +25,7 @@ class Sets_ListModel extends ListModel
         
         if (!isset($_POST['filter_clear'])){
 			if (empty($data))
-				$data = $app->getUserState('com_catalogsystem.catalogsearch', array());
+				$data = $app->getUserState('com_catalogsystem.setsearch', array());
 		} else {
 			$data = array();
 		}
