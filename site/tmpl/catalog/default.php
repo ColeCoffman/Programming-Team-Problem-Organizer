@@ -67,14 +67,15 @@ $wa->useStyle('catalog')
    </div>
 </form>
 
-<!--This generates the Pagination limit selector so users can decide how many results show per page-->
-<div>
-    <span>Rows Per Page: </span>
-    <?php echo $this->pagination->getLimitBox(); ?>
-</div>
+
 <!--This form holds the results table. It must be wrapped in a form for Joomla Pagination-->
 <form id="adminForm" method="post" name="adminForm">
-    <table class="catalog_table" id="myTable">
+    <!--This generates the Pagination limit selector so users can decide how many results show per page-->
+	<div>
+		<span>Rows Per Page: </span>
+		<?php echo $this->pagination->getLimitBox(); ?>
+	</div>
+	<table class="catalog_table" id="myTable">
         <thead>
           <!--JHTML is used with Pagination to achieve sort by column functionality-->
           <tr>
