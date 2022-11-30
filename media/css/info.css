@@ -180,6 +180,10 @@ header.container-header {
     padding: 0.75% 2%;
 }
 
+.return-button:hover {
+    background-color: #BE9A35;
+}
+
 .return-label, .add-label {
 	cursor: pointer;
 }
